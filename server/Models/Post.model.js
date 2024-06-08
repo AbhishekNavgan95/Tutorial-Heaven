@@ -1,50 +1,53 @@
 const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema(
+  {
     thumbnail: {
-        type: Object,
-        required: true
+      type: Object,
+      required: true,
     },
     video: {
-        type: Object,
-        required: true
+      type: Object,
+      required: true,
     },
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    category : {
-        type: mongoose.Schema.ObjectId,
-        ref: "Category"
+    category: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Category",
     },
     tags: {
-        type: String,
+      type: String,
     },
     author: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true,
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: true,
     },
     comments: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: "Comment"
-        }
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Comment",
+      },
     ],
     likes: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: "User"
-        }
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
     ],
     status: {
-        type: String,
-        enum: ["published", "archived"]
-    }
-});
+      type: String,
+      enum: ["published", "archived"],
+    },
+  },
+  { timeseries: true }
+);
 
 module.exports = mongoose.model("Post", PostSchema);

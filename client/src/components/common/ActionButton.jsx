@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 const ActionButton = ({ children, to, active }) => {
   return (
     <Link to={to}>
-      <button 
-      className={`${active 
-        ? "bg-blue-300 hover:bg-blue-400 shadow-sm shadow-night-300" 
-        : " bg-night-500 hover:bg-night-600 shadow-sm shadow-night-300"} 
-      px-8 py-2 rounded-md transition-all  text-night-5 duration-300 `}>
+      <button
+        className={`${active
+          ? "bg-blue-300 hover:bg-blue-400 shadow-sm shadow-night-300 text-night-5"
+          : "border border-blue-300 hover:bg-blue-300 hover:text-night-5 text-blue-300  shadow-sm shadow-night-300"
+        } px-8 py-2 rounded-md transition-all duration-300 `}>
         {children}
       </button>
     </Link>

@@ -9,17 +9,16 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState(false);
 
     return (
-        <header className='fixed w-full shadow-sm shadow-night-300'>
+        <header className='fixed w-full shadow-sm bg-night-25 shadow-night-300 z-[5]'>
             <nav className='mx-auto max-w-maxContent'>
                 <div className='flex items-center justify-between px-3 py-3'>
 
                     {/* logo */}
                     <span>
                         <Link to="/">
-                            <img src={image} className='max-w-[200px]' alt="" />
+                            <img src={image} className='max-w-[230px]' alt="" />
                         </Link>
                     </span>
-
 
                     {/* search bar */}
                     <span className='flex overflow-hidden text-lg border rounded-md shadow-sm border-night-300 shadow-night-300'>

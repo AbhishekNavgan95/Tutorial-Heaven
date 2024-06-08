@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .random-move {
-  animation: randomMove 120s infinite;
+  animation: randomMove 120s infinite linear;
 }
 
 .random-move-2 {
-  animation: randomMoveOpposite 120s infinite;
+  animation: randomMoveOpposite 120s infinite linear;
 }
 
 @keyframes randomMove {

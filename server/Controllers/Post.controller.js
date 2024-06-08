@@ -481,7 +481,11 @@ exports.getAllPosts = async (req, res) => {
     const paginatedPosts = await Post.find({})
       .sort({ createdAt: -1 }) // Sort by creation date, newest first
       .skip(startIndex)
-      .limit(limit);
+      .limit(limit)
+      .populate({
+        path: "author",
+        select: "firstName lastName image",
+      });
 
     const finalPosts = shuffleArray(paginatedPosts);
 
@@ -595,7 +599,11 @@ exports.getCategoryAllPosts = async (req, res) => {
     const posts = await Post.find({ category: categoryId })
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .populate({
+        path: "author",
+        select: "firstName lastName image",
+      });
 
     return res.status(200).json({
       success: true,
@@ -615,4 +623,3 @@ exports.getCategoryAllPosts = async (req, res) => {
     });
   }
 };
-
