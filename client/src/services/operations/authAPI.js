@@ -1,8 +1,8 @@
 import { authEndpoints } from "../APIs";
 import { apiConnector } from "../apiConnector";
 import { setProgress } from "../../slices/loadingBarSlice";
-import { setToken } from "../../slices/authSlice";
-import { setUser } from "../../slices/userSlice";
+import { setToken, removeToken } from "../../slices/authSlice";
+import { setUser, removeUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 
 const {
@@ -168,3 +168,22 @@ export const resetPassword = async (data, token, dispatch) => {
   dispatch(setProgress(100));
   return false;
 };
+
+export function logout(navigate) {
+  return (dispatch) => {
+    dispatch(removeToken());
+    dispatch(removeUser());
+    toast.success("Log out Successfull", {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  };
+}

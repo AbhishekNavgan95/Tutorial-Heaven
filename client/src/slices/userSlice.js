@@ -11,12 +11,17 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     setUser(state, value) {
-      state.signupData = value.payload;
+      state.user = value.payload;
       localStorage.setItem("user", JSON.stringify(value.payload));
     },
+    removeUser(state, value) {
+      state.user = null
+      localStorage.removeItem("user");
+      // console.log("user removed");
+    }
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
 
 export default userSlice.reducer;
