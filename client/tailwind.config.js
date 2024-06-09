@@ -3,7 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
-      danger : "#721414",
+      danger : "#8e0200",
+      "danger-dark" : "#6a0100",
       white: "#fff",
       black: "#000",
       transparent: "#ffffff00",

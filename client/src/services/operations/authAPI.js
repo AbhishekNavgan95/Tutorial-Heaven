@@ -2,6 +2,7 @@ import { authEndpoints } from "../APIs";
 import { apiConnector } from "../apiConnector";
 import { setProgress } from "../../slices/loadingBarSlice";
 import { setToken } from "../../slices/authSlice";
+import { setUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 
 const {
@@ -26,8 +27,11 @@ export const login = async (email, password, dispatch) => {
       throw new Error("request failed : ", response.data.message);
     }
 
+    // set Token
     dispatch(setToken(response.data?.data?.token));
-    localStorage.setItem("token", response.data.data.token);
+
+    // set User
+    dispatch(setUser(response?.data?.data?.user));
 
     return true;
   } catch (e) {

@@ -15,7 +15,9 @@ function App() {
   const dispatch = useDispatch();
   const { progress } = useSelector(state => state.loadingBar);
   const { token } = useSelector(state => state.auth)
+  const { user } = useSelector(state => state.user);
   console.log("token : ", token);
+  console.log("user : ", user);
 
   return (
       <div className="w-full min-h-screen text-night-900 bg-night-25">
