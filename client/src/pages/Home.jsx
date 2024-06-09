@@ -6,6 +6,7 @@ import PostCard from '../components/core/Home/PostCard'
 import Button from "../components/common/Button"
 import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
+import Spinner from '../components/common/Spinner'
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -22,11 +24,24 @@ const Home = () => {
       setCategories(res?.data?.data)
     } catch (e) {
       console.log("Error fetching categories : ", error);
+      toast.error("Failed to load categories", {
+        style: {
+          border: '1px solid #5252B7',
+          padding: '8px 16px',
+          color: '#DFE2E2',
+          background: "#5252B7"
+        },
+        iconTheme: {
+          primary: '#5252B7',
+          secondary: '#DFE2E2',
+        },
+      })
     }
   }, []);
 
   const fetchPosts = useCallback(async () => {
     dispatch(setProgress(60))
+    setLoading(true);
     const endpoint = currentCategory === "All"
       ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=5`
       : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=5`
@@ -38,10 +53,23 @@ const Home = () => {
       setTotalPages(response?.data?.data?.totalPages)
     } catch (e) {
       console.log("post fetching failed : ", e);
+      toast.error("Failed to load posts", {
+        style: {
+          border: '1px solid #5252B7',
+          padding: '8px 16px',
+          color: '#DFE2E2',
+          background: "#5252B7"
+        },
+        iconTheme: {
+          primary: '#5252B7',
+          secondary: '#DFE2E2',
+        },
+      })
+    } finally {
+      setLoading(false);
+      dispatch(setProgress(100))
     }
-
-    dispatch(setProgress(100))
-  }, [page, currentCategory])
+  }, [page, currentCategory, dispatch])
 
   useEffect(() => {
     fetchCategories();
@@ -49,59 +77,81 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [page, currentCategory])
+  }, [fetchPosts, page, currentCategory])
 
   useEffect(() => {
     setPage(1);
   }, [currentCategory])
 
   return (
-    <>
-      <div className='pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
-        <div className='flex flex-wrap gap-3 px-3'>
-          <span
-            className={`px-4 py-2 shadow-sm shadow-night-600 rounded-lg cursor-pointer text-night-5 ${currentCategory === "All" ? "bg-blue-500 shadow-md" : "bg-blue-300 "} transition-all duration-300`}
-            onClick={() => setCurrentCategory("All")}
+    <div className='pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
+      <div className='flex flex-wrap gap-3 px-3'>
+        <CategoryButton
+          isActive={currentCategory === "All"}
+          onClick={() => setCurrentCategory("All")}
+        >
+          All
+        </CategoryButton>
+        {categories.map((category) => (
+          <CategoryButton
+            key={category._id}
+            isActive={currentCategory === category._id}
+            onClick={() => setCurrentCategory(category._id)}
           >
-            All
-          </span>
-          {
-            categories.map((category, index) => (
-              <span
-                key={index}
-                className={`px-4 py-2  shadow-sm shadow-night-600 rounded-lg cursor-pointer text-night-5 ${currentCategory === category._id ? "bg-blue-500 shadow-md" : "bg-blue-300 "} transition-all duration-300`}
-                onClick={() => setCurrentCategory(category._id)}
-              >
-                {category.title}
-              </span>
-            ))
-          }
-        </div>
-        <div className='grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 xl:gap-x-3 gap-y-3 xl:gap-y-5'>
-          {
-            posts.map((post, index) => (
-              <PostCard key={index} post={post} />
-            ))
-          }
-        </div>
+            {category.title}
+          </CategoryButton>
+        ))}
       </div>
-      <div className='bg-night-25 fixed bottom-0 w-full'>
-        <div className=' px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3 '>
-          <span>
-            Page : <span className='font-bold text-blue-300'>{page}</span> of <span className='font-bold text-blue-300'>{totalPages}</span>
-          </span>
-          <span className='flex items-start gap-3 py-2'>
-            {
-              page > 1 && (<Button styles={"w-max"} active action={() => setPage(page - 1)}>Prev</Button>)
-            }
-            {
-              page < totalPages && (<Button styles={"w-max"} action={() => setPage(page + 1)}>Next</Button>)
-            }
-          </span>
+      {loading ? (
+        <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
+          <Spinner />
+         </div>
+      ) : (
+        <div className='grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 xl:gap-x-3 gap-y-3 xl:gap-y-3'>
+          {posts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
         </div>
-      </div>
-    </>
-  )
-}
+      )}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={(newPage) => setPage(newPage)}
+      />
+    </div>
+  );
+};
 
-export default Home
+const CategoryButton = ({ isActive, onClick, children }) => (
+  <Button
+    active
+    styles={`w-max ${isActive ? "bg-blue-600" : ""}`}
+    action={onClick}
+  >
+    {children}
+  </Button>
+);
+
+const Pagination = ({ page, totalPages, onPageChange }) => (
+  <div className='bg-night-25 fixed bottom-0 left-0 w-full'>
+    <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
+      <span className='border my-2 border-blue-300 px-3 py-2 rounded-lg bg-blue-300 text-night-5'>
+        Page: {page} of {totalPages}
+      </span>
+      <span className='flex items-start gap-3 py-2'>
+        {page > 1 && (
+          <Button styles="w-max" active action={() => onPageChange(page - 1)}>
+            Previous
+          </Button>
+        )}
+        {page < totalPages && (
+          <Button styles="w-max" active action={() => onPageChange(page + 1)}>
+            Next
+          </Button>
+        )}
+      </span>
+    </div>
+  </div>
+);
+
+export default Home;

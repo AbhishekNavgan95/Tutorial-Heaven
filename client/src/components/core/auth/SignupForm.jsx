@@ -12,22 +12,46 @@ const SignupForm = () => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { register, setValue, getValues, formState: { errors }, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const submitHandler = async (data) => {
+    setLoading(true)
     // save signup data for next API call
     dispatch(setSignupData(data));
-
     // call API for OTP
     const res = await sendOtp(data, dispatch);
     if (res) {
-      toast.success("OTP sent!")
+      toast.success("OTP sent!", {
+        style: {
+          border: '1px solid #5252B7',
+          padding: '8px 16px',
+          color: '#DFE2E2',
+          background: "#5252B7"
+        },
+        iconTheme: {
+          primary: '#5252B7',
+          secondary: '#DFE2E2',
+        },
+      });
       navigate("../varify-otp")
     } else {
-      toast.error("OTP cannot be sent")
+      toast.error("OTP cannot be sent", {
+        style: {
+          border: '1px solid #5252B7',
+          padding: '8px 16px',
+          color: '#DFE2E2',
+          background: "#5252B7"
+        },
+        iconTheme: {
+          primary: '#5252B7',
+          secondary: '#DFE2E2',
+        },
+      });
     }
+    setLoading(false);
   }
 
   return (
@@ -108,7 +132,7 @@ const SignupForm = () => {
             errors.confirmPassword && <span className='font-semibold underline text-danger'>Confirm Password is required</span>
           }
         </span>
-        <Button type={"submit"} active >Submit</Button>
+        <Button disabled={loading} type={"submit"} active >Submit</Button>
         <p className='self-center transition-all duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
       </div>
     </form>

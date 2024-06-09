@@ -27,6 +27,8 @@ export const login = async (email, password, dispatch) => {
     }
 
     dispatch(setToken(response.data?.data?.token));
+    localStorage.setItem("token", response.data.data.token);
+
     return true;
   } catch (e) {
     console.log("LOGIN_API_ERROR : ", e);
@@ -86,10 +88,32 @@ export const resetPasswordToken = async (data, dispatch) => {
 
     dispatch(setProgress(100));
     console.log("SIGNUP_API_RESPONSE : ", response.data);
-    toast.success(response.data?.message);
+    toast.success(response.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
   } catch (e) {
     console.log("RESET_PASSWORD_TOKEN_API_ERROR : ", e);
-    toast.error(e.response?.data?.message);
+    toast.success(e.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
   }
   dispatch(setProgress(100));
 };
@@ -97,7 +121,11 @@ export const resetPasswordToken = async (data, dispatch) => {
 export const resetPassword = async (data, token, dispatch) => {
   dispatch(setProgress(60));
   try {
-    const response = await apiConnector("PUT", RESET_PASSWORD_API + token, data);
+    const response = await apiConnector(
+      "PUT",
+      RESET_PASSWORD_API + token,
+      data
+    );
 
     if (!response.data.success) {
       throw new Error(response.data?.data?.message);
@@ -105,11 +133,33 @@ export const resetPassword = async (data, token, dispatch) => {
 
     dispatch(setProgress(100));
     console.log("SIGNUP_API_RESPONSE : ", response.data);
-    toast.success(response.data?.message);
+    toast.success(response.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
     return true;
   } catch (e) {
     console.log("RESET_PASSWORD_TOKEN_API_ERROR : ", e);
-    toast.error(e.response?.data?.message);
+    toast.error(e.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
   }
   dispatch(setProgress(100));
   return false;

@@ -25,16 +25,15 @@ const PostCard = ({ post }) => {
                 onMouseLeave={handleMouseLeave}
                 className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group border-night-300 hover:border-night-300 hover:shadow-md hover:shadow-night-300'
             >
-                <span className='overflow-hidden rounded-lg relative'>
-                    {/* <img src={post?.thumbnail?.url} className='group-hover:scale-[1.025] transition-all duration-300' alt="" /> */}
+                <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
                         src={post?.thumbnail?.url}
-                        className='group-hover:opacity-0 transition-all delay-1000 duration-300' alt=""
+                        className='group-hover:opacity-0 transition-all delay-500 duration-100' alt=""
                     />
                     <video
                         muted
                         ref={videoRef}
-                        className='absolute top-0 opacity-0 group-hover:opacity-100 delay-1000 transition-all duration-300' src={post?.video?.url}
+                        className='absolute top-0 opacity-0 group-hover:opacity-100 delay-500 transition-all duration-100' src={post?.video?.url}
                     ></video>
                 </span>
                 <div className='flex items-start justify-center gap-3'>

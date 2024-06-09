@@ -11,19 +11,44 @@ import toast from 'react-hot-toast';
 const LoginForm = () => {
 
     const [hidePassword, setHidePassword] = useState(true);
+    const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const submitHandler = async (data) => {
+        setLoading(true)
         const { email, password } = data;
         const res = await login(email, password, dispatch);
         if (res) {
-            toast.success("Log In Successfull")
+            toast.success("Log In Successfull", {
+                style: {
+                    border: '1px solid #5252B7',
+                    padding: '8px 16px',
+                    color: '#DFE2E2',
+                    background: "#5252B7"
+                },
+                iconTheme: {
+                    primary: '#5252B7',
+                    secondary: '#DFE2E2',
+                },
+            })
             navigate("/");
         } else {
-            toast.error("Log In failed")
+            toast.error("Log In Failed", {
+                style: {
+                    border: '1px solid #5252B7',
+                    padding: '8px 16px',
+                    color: '#DFE2E2',
+                    background: "#5252B7"
+                },
+                iconTheme: {
+                    primary: '#5252B7',
+                    secondary: '#DFE2E2',
+                },
+            })
         }
+        setLoading(false)
     }
 
     return (
@@ -59,7 +84,7 @@ const LoginForm = () => {
                     {errors.password && <span className='font-semibold underline text-danger'>Password is required</span>}
                 </span>
                 <p className='self-end font-semibold text-blue-300 transition-all duration-300 cursor-pointer hover:text-blue-400'><Link to={"../forgot-password"}>Forgot Password?</Link></p>
-                <Button type={"submit"} active>Submit</Button>
+                <Button disabled={loading} type={"submit"} active>Submit</Button>
                 <p className='self-center transition-all duration-300'>Don't have an Account? <Link to={"/signup"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Sign up</Link></p>
             </div>
         </form>

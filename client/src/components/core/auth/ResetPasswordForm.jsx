@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 const ResetPasswordForm = () => {
 
+    const [loading, setLoading] = useState(false)
     const [hidePassword, setHidePassword] = useState(true);
     const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -23,12 +24,25 @@ const ResetPasswordForm = () => {
     const token = searchParams.get('token');
 
     const submitHandler = async (data) => {
+        setLoading(true)
         const res = await resetPassword(data, token, dispatch);
         if (res) {
             navigate("/");
         } else {
-            toast.error("try after sometime")
+            toast.error("try after sometime", {
+                style: {
+                    border: '1px solid #5252B7',
+                    padding: '8px 16px',
+                    color: '#DFE2E2',
+                    background: "#5252B7"
+                },
+                iconTheme: {
+                    primary: '#5252B7',
+                    secondary: '#DFE2E2',
+                },
+            })
         }
+        setLoading(false)
     }
 
     return (
@@ -70,7 +84,7 @@ const ResetPasswordForm = () => {
                     </span>
                     {errors.confirmPassword && <span className='font-semibold underline text-danger'>Confirm Password is required</span>}
                 </span>
-                <Button type={"submit"} active>Submit</Button>
+                <Button disabled={loading} type={"submit"} active>Submit</Button>
                 <Link to={"../login"} className='flex items-center self-center gap-3 cursor-pointer group'><span className='text-xl text-blue-300 transition-all duration-300 group-hover:-translate-x-2'><IoArrowBackOutline /></span> Back to Log in</Link>
             </div>
         </form>
