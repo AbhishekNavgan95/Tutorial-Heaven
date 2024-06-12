@@ -13,3 +13,9 @@ export const dataEndpoints = {
     GET_ALL_POSTS: BASE_URL + "post/get-all-posts",
     GET_ALL_CATEGORY_POSTS : BASE_URL + "post/get-all-category-posts"
 }
+
+export const userEndpoints = {
+    UPDATE_PROFILE_PICTURE: BASE_URL + "auth/update-pfp",
+    UPDATE_USERNAME: BASE_URL + "update-username",
+    UPDATE_PASSWORD: BASE_URL + "update-password",
+}

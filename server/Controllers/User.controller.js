@@ -5,9 +5,10 @@ const { uploadImageTocloudinary } = require("../Utils/uploadToCloudinary");
 
 // update profile picture ✅
 exports.updateProfilePicture = async (req, res) => {
+  console.log("here ");
   try {
     const userId = req.user.id;
-    const newPfp = req.files?.newPfp;
+    const newPfp = req.files?.image;
 
     if (!newPfp) {
       return res.status(400).json({
@@ -46,6 +47,7 @@ exports.updateProfilePicture = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Profile picture updated Successfully",
+      data: user
     });
   } catch (e) {
     return res.status(500).json({

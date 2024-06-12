@@ -56,7 +56,7 @@ const Navbar = () => {
                             }
                             {
                                 user?.accountType === "user" &&
-                                <Link to={"/dashboard/bookmarks"} className='bg-blue-300 p-3 shadow-sm shadow-night-300 hover:shadow-md hover:shadow-night-600 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-night-25' >
+                                <Link to={"/dashboard/bookmarks"} className='border border-blue-300 p-2 shadow-sm shadow-night-300 hover:shadow-md hover:shadow-night-600 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-blue-300' >
                                     <IoIosBookmark />
                                 </Link>
                             }
@@ -91,9 +91,11 @@ const ProfileDropDown = ({ setModalData }) => {
             >
                 {
                     dropDownLinks.map((link, index) => (
-                        <Link key={index} to={link.path} className='py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center'>
-                            <span >{link.title}</span>
-                        </Link>
+                        user.accountType === link.access || link.access === "all" ?
+                            <Link key={index} to={link.path} className='py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center'>
+                                <span >{link.title}</span>
+                            </Link>
+                            : null
                     ))
                 }
                 <button onClick={() =>

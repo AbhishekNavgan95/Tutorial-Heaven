@@ -9,6 +9,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { setProgress } from "./slices/loadingBarSlice"
 import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
+import Dashboard from "./pages/Dashboard"
+import Profile from "./pages/Profile"
+import Settings from "./pages/Settings"
+import PrivateRoute from "./components/common/PrivateRoute"
+import DashboardPageLayout from "./components/common/DashboardPageLayout"
 
 function App() {
 
@@ -33,11 +38,15 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/varify-otp" element={<VarifyOtp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="varify-otp" element={<VarifyOtp />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
+          <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
+          <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />
+        </Route>
       </Routes>
     </div>
   )

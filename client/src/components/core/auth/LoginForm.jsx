@@ -34,20 +34,8 @@ const LoginForm = () => {
                 },
             })
             navigate("/");
-        } else {
-            toast.error("Log In Failed", {
-                style: {
-                    border: '1px solid #5252B7',
-                    padding: '8px 16px',
-                    color: '#DFE2E2',
-                    background: "#5252B7"
-                },
-                iconTheme: {
-                    primary: '#5252B7',
-                    secondary: '#DFE2E2',
-                },
-            })
         }
+
         setLoading(false)
     }
 

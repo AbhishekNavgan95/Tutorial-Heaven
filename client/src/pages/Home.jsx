@@ -125,7 +125,7 @@ const Home = () => {
 const CategoryButton = ({ isActive, onClick, children }) => (
   <Button
     active
-    styles={`w-max ${isActive ? "bg-blue-600" : ""}`}
+    styles={`w-max hover:bg-blue-600 ${isActive ? "bg-blue-600" : ""}`}
     action={onClick}
   >
     {children}

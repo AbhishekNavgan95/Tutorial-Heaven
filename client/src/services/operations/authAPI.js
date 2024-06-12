@@ -36,6 +36,18 @@ export const login = async (email, password, dispatch) => {
     return true;
   } catch (e) {
     console.log("LOGIN_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
   }
   return false;
 };
@@ -185,5 +197,6 @@ export function logout(navigate) {
         secondary: "#DFE2E2",
       },
     });
+    navigate("/");
   };
 }
