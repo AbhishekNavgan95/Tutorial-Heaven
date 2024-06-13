@@ -11,7 +11,6 @@ const Settings = () => {
       <div className='flex flex-col gap-10 divide-y divide-blue-300'>
 
         <UpdateProfilePic user={user} />
-        <UpdateProfilePic user={user} />
 
       </div>
     </div>

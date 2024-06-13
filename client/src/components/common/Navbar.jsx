@@ -56,7 +56,7 @@ const Navbar = () => {
                             }
                             {
                                 user?.accountType === "user" &&
-                                <Link to={"/dashboard/bookmarks"} className='border border-blue-300 p-2 shadow-sm shadow-night-300 hover:shadow-md hover:shadow-night-600 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-blue-300' >
+                                <Link to={"/dashboard/bookmarks"} className='border border-blue-300 p-2 shadow-sm shadow-night-300 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-blue-300' >
                                     <IoIosBookmark />
                                 </Link>
                             }

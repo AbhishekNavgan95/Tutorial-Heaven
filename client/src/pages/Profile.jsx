@@ -28,7 +28,7 @@ const Profile = () => {
                         user?.createdAt &&
                         <span className='flex flex-col gap-1'>
                             <h4 className='text-xl font-semibold text-blue-300'>Joined</h4>
-                            <p className='text-xl text-night-900'>{formatDistanceToNow(new Date(user?.createdAt))} ago</p>
+                            <p className='text-xl text-night-900'>{formatDistanceToNow(new Date(user?.createdAt), { addSuffix: true })}</p>
                         </span>
                     }
                 </span>
