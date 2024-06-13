@@ -16,6 +16,6 @@ export const dataEndpoints = {
 
 export const userEndpoints = {
     UPDATE_PROFILE_PICTURE: BASE_URL + "auth/update-pfp",
-    UPDATE_USERNAME: BASE_URL + "update-username",
-    UPDATE_PASSWORD: BASE_URL + "update-password",
+    UPDATE_USERNAME: BASE_URL + "auth/update-username",
+    UPDATE_PASSWORD: BASE_URL + "auth/update-password",
 }
