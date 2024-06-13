@@ -9,8 +9,8 @@ const AuthLayout = ({ title, image, formType, description }) => {
   return (
     <div className={`flex ${(formType === "signup" || formType === "forgot-password") ? "flex-row-reverse" : ""} items-center justify-center gap-32 min-h-screen`}>
       <div className='flex flex-col w-[40%] gap-5 py-10 relative'>
-        <h3 className='font-thin text-7xl  relative z-[2]'>{title}</h3>
-        <p className='mt-3 text-xl relative z-[2]'>{description}</p>
+        <h3 className='font-thin text-7xl text-blue-300 relative z-[2]'>{title}</h3>
+        <p className='mt-3 text-xl text-blue-300  relative z-[2]'>{description}</p>
         {
           formType === "login" && <LoginForm />
         }
@@ -28,7 +28,7 @@ const AuthLayout = ({ title, image, formType, description }) => {
         {
           formType === "reset-password" && <ResetPasswordForm /> 
         }
-        <span className='absolute top-0 right-0 w-full h-full transition-all duration-300 rounded-full aspect-square random-move blur-3xl bg-blue-50'></span>
+        {/* <span className='absolute top-0 right-0 w-full h-full transition-all duration-300 rounded-full aspect-square random-move blur-3xl bg-blue-50'></span> */}
       </div>
       <div className='relative'>
         <img src={image} className='max-w-[500px] shadow-sm border-4 border-blue-300 relative z-[2]' alt="" />

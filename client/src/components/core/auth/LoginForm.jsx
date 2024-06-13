@@ -46,7 +46,8 @@ const LoginForm = () => {
                     <input
                         {...register('email', { required: true })}
                         placeholder='Email'
-                        className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-night-900 text-night-900 border-b-night-900'
+                        autoComplete="true"
+                        className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
                         type="email"
                     />
                     {
@@ -54,14 +55,15 @@ const LoginForm = () => {
                     }
                 </span>
                 <span className='flex flex-col gap-1'>
-                    <span className='flex items-center text-xl border-b border-b-night-900'>
+                    <span className='flex items-center text-xl border-b border-b-blue-300'>
                         <input
                             {...register('password', { required: true })}
                             placeholder='Password'
-                            className='w-full py-3 bg-transparent outline-none placeholder:text-night-900'
+                            autoComplete="true"
+                            className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
                             type={hidePassword ? "password" : "text"}
                         />
-                        <button type='button' onClick={() => setHidePassword(!hidePassword)} className=''>
+                        <button type='button' onClick={() => setHidePassword(!hidePassword)} className='text-2xl text-blue-300'>
                             {
                                 hidePassword
                                     ? <IoEyeOutline />

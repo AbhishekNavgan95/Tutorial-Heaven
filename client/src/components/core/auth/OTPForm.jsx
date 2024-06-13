@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../common/Button'
 import { useForm } from 'react-hook-form'
@@ -62,7 +62,7 @@ const OTPForm = () => {
                     <input
                         {...register('otp', { required: true })}
                         placeholder='OTP'
-                        className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-night-900 text-night-900 border-b-night-300'
+                        className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
                         type="number"
                     />
                     {

@@ -62,7 +62,8 @@ const SignupForm = () => {
             <input
               {...register('firstName', { required: true })}
               placeholder='First Name'
-              className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-night-900 text-night-900 border-b-night-900'
+              autoComplete="true"
+              className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
               type="text"
             />
             {
@@ -73,7 +74,8 @@ const SignupForm = () => {
             <input
               {...register('lastName', { required: true })}
               placeholder='Last Name'
-              className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-night-900 text-night-900 border-b-night-900'
+              autoComplete="true"
+              className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
               type="text"
             />
             {
@@ -85,7 +87,8 @@ const SignupForm = () => {
           <input
             {...register('email', { required: true })}
             placeholder='Email'
-            className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-night-900 text-night-900 border-b-night-900'
+            autoComplete="true"
+            className='w-full py-3 text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
             type="email"
           />
           {
@@ -93,14 +96,15 @@ const SignupForm = () => {
           }
         </span>
         <span className='flex flex-col w-full gap-1'>
-          <span className='flex items-center text-xl border-b placeholder:text-night-900 border-b-night-900'>
+          <span className='flex items-center text-xl border-b border-b-blue-300'>
             <input
               {...register('password', { required: true })}
               placeholder='Password'
-              className='w-full py-3 bg-transparent outline-none placeholder:text-night-900'
+              autoComplete="true"
+              className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
               type={hidePassword ? "password" : "text"}
             />
-            <button type='button' onClick={() => setHidePassword(!hidePassword)} className='p-2 text-2xl'>
+            <button type='button' onClick={() => setHidePassword(!hidePassword)} className='text-2xl text-blue-300'>
               {
                 hidePassword
                   ? <IoEyeOutline />
@@ -113,14 +117,19 @@ const SignupForm = () => {
           }
         </span>
         <span className='flex flex-col w-full gap-1'>
-          <span className='flex items-center text-xl border-b border-b-night-900'>
+          <span className='flex items-center text-xl border-b border-b-blue-300'>
             <input
-              {...register('confirmPassword', { required: true })}
+              {...register('confirmPassword', {
+                required: "Confirm Password is required",
+                validate: value =>
+                  value === getValues("password") || "Passwords do not match"
+              })}
               placeholder='Confirm Password'
-              className='w-full py-3 bg-transparent outline-none placeholder:text-night-900'
+              autoComplete="true"
+              className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
               type={hideConfirmPassword ? "password" : "text"}
             />
-            <button type='button' onClick={() => setHideConfirmPassword(!hideConfirmPassword)} className='p-2 text-2xl'>
+            <button type='button' onClick={() => setHideConfirmPassword(!hideConfirmPassword)} className='text-2xl text-blue-300'>
               {
                 hideConfirmPassword
                   ? <IoEyeOutline />
@@ -128,9 +137,7 @@ const SignupForm = () => {
               }
             </button>
           </span>
-          {
-            errors.confirmPassword && <span className='font-semibold underline text-danger'>Confirm Password is required</span>
-          }
+          {errors.confirmPassword && <span className='font-semibold underline text-danger'>{errors.confirmPassword.message}</span>}
         </span>
         <Button disabled={loading} type={"submit"} active >Submit</Button>
         <p className='self-center transition-all duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
