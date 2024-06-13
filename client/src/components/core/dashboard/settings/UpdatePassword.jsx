@@ -16,7 +16,12 @@ const UpdatePassword = () => {
     const dispatch = useDispatch();
 
     const submitHandler = async (data) => {
-        await updatePassword(data, token, dispatch);
+        const res = await updatePassword(data, token, dispatch);
+        if(res) {
+            setValue("oldPassword", "")
+            setValue("newPassword", "")
+            setValue("confirmPassword", "")
+        }
     }
     return (
 

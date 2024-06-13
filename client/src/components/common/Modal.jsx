@@ -13,14 +13,14 @@ const Modal = ({ modalData, setModalData }) => {
     } = modalData;
 
     return (
-        <div onClick={secondaryButtonHandler} className='w-screen h-screen flex items-center justify-center bg-opec absolute left-0 z-[11]'>
+        <div onClick={secondaryButtonHandler} className='w-full h-screen flex items-center justify-center bg-opec fixed top-0 left-0 z-[11]'>
             <div className=''>
-                <div onClick={(e) => e.stopPropagation()} className='bg-night-25 py-3 px-5 flex items-center flex-col gap-3 rounded-lg'>
+                <div onClick={(e) => e.stopPropagation()} className='max-w-[350px] bg-night-25 py-5 px-10 flex items-center flex-col gap-5 rounded-lg'>
                     <h3 className='text-xl font-semibold'>{title}</h3>
-                    <h3 className='text-night-400'>{description}</h3>
-                    <span className='flex items-center gap-3'>
+                    <h3 className='text-night-400 text-center'>{description}</h3>
+                    <span className='flex  items-center gap-3'>
                         <Button action={secondaryButtonHandler} >{secondaryButtonText}</Button>
-                        <Button active action={() => { primaryButtonHandler(), setModalData() }}  >{primaryButtonText}</Button>
+                        <Button active action={() => { primaryButtonHandler(); secondaryButtonHandler() }}  >{primaryButtonText}</Button>
                     </span>
                 </div>
             </div>

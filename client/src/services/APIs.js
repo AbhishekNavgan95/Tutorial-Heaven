@@ -18,4 +18,5 @@ export const userEndpoints = {
     UPDATE_PROFILE_PICTURE: BASE_URL + "auth/update-pfp",
     UPDATE_USERNAME: BASE_URL + "auth/update-username",
     UPDATE_PASSWORD: BASE_URL + "auth/update-password",
+    SCHEDULE_DELETE_ACCOUNT : BASE_URL + "auth/delete-account"
 }

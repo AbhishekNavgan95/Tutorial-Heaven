@@ -22,9 +22,8 @@ export const login = async (email, password, dispatch) => {
     });
 
     console.log("LOGIN_API_RESPONSE : ", response);
-    dispatch(setProgress(100));
-    if (!response.data.success) {
-      throw new Error("request failed : ", response.data.message);
+    if (!response?.data?.success) {
+      throw new Error("request failed : ", response.data?.message);
     }
 
     // set Token
@@ -48,6 +47,8 @@ export const login = async (email, password, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
+  } finally {
+    dispatch(setProgress(100));
   }
   return false;
 };
@@ -80,11 +81,36 @@ export const signup = async (data, dispatch) => {
       throw new Error("request failed : ", response.data?.message);
     }
 
-    dispatch(setProgress(100));
     console.log("SIGNUP_API_RESPONSE : ", response.data);
+    toast.success(response.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
     return true;
   } catch (e) {
     console.log("SIGNUP_API_ERROR: ", e);
+    toast(e.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } finally {
+    dispatch(setProgress(100));
   }
   return false;
 };

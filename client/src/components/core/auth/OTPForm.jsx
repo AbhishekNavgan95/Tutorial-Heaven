@@ -9,7 +9,7 @@ import { setSignupData } from '../../../slices/authSlice'
 
 const OTPForm = () => {
 
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const { signupData } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,32 +26,9 @@ const OTPForm = () => {
         if (response) {
             navigate("../login");
             dispatch(setSignupData(null))
-            toast.success("Sign Up Successfull", {
-                style: {
-                    border: '1px solid #5252B7',
-                    padding: '8px 16px',
-                    color: '#DFE2E2',
-                    background: "#5252B7"
-                },
-                iconTheme: {
-                    primary: '#5252B7',
-                    secondary: '#DFE2E2',
-                },
-            })
-        } else {
-            toast.error("Sign Up Failed", {
-                style: {
-                    border: '1px solid #5252B7',
-                    padding: '8px 16px',
-                    color: '#DFE2E2',
-                    background: "#5252B7"
-                },
-                iconTheme: {
-                    primary: '#5252B7',
-                    secondary: '#DFE2E2',
-                },
-            })
+
         }
+        
         setLoading(false)
     }
 

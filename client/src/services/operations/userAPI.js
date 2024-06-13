@@ -3,8 +3,9 @@ import { setProgress } from "../../slices/loadingBarSlice";
 import { setUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 import { userEndpoints } from "../APIs";
+import {logout} from "../operations/authAPI"
 
-const { UPDATE_PASSWORD, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME } =
+const { UPDATE_PASSWORD, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, SCHEDULE_DELETE_ACCOUNT } =
   userEndpoints;
 
 export const updateProfilePicture = async (file, token, dispatch) => {
@@ -153,6 +154,7 @@ export const updatePassword = async (data, token, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
+    return true;
   } catch (e) {
     console.log("UPDATE_PASSWORD_API_ERROR : ", e);
     toast(e?.response?.data?.message, {
@@ -170,4 +172,56 @@ export const updatePassword = async (data, token, dispatch) => {
   } finally {
     dispatch(setProgress(100));
   }
+  return false;
+};
+
+export const deleteAccount = async (token, dispatch, navigate) => {
+  setProgress(60);
+  try {
+
+    const response = await apiConnector("PUT", SCHEDULE_DELETE_ACCOUNT, null, {
+      Authorization: `Bearer ${token}`
+    });
+
+    console.log("SCHEDULE_ACCOUNT_DELETE_API_RESPONSE : ", response);
+
+    if(!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+
+    dispatch(logout(navigate));
+    return true
+  } catch (e) {
+
+    console.log("SCHEDULE_ACCOUNT_DELETION_ERROR : ", e);
+    toast(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+
+  } finally {
+    setProgress(100);
+  }
+  return false;
 };

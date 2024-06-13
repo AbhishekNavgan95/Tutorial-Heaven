@@ -177,6 +177,14 @@ exports.login = async (req, res) => {
       });
     }
 
+    if(userExists?.deletionScheduled === true) {
+      console.log("tried to login")
+      return res.status(400).json({
+        success: false,
+        message: "This account is scheduled for deletion"
+      })
+    }
+
     const user = userExists.toObject(); // to make object mutable
     console.log("user : ", user);
 
@@ -267,7 +275,7 @@ exports.updatePassword = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "password has been updated successfully",
+      message: "password updated successfully",
     });
   } catch (e) {
     return res.status(500).json({
@@ -280,7 +288,7 @@ exports.updatePassword = async (req, res) => {
 // schedule account deletion ✅
 exports.scheduleAccountDeletion = async (req, res) => {
   const userId = req.user.id;
-  const deletionDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
+  const deletionDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
   try {
     const user = await User.findByIdAndUpdate(
@@ -292,13 +300,15 @@ exports.scheduleAccountDeletion = async (req, res) => {
       { new: true }
     );
 
+    // todo send am email to user for support
+
     if (user) {
       console.log(
         `Account deletion scheduled for user ${userId} at ${deletionDate}`
       );
       res.status(200).json({
         success: true,
-        message: `Account deletion scheduled for user`,
+        message: `Account will be deleted after 30 days!`,
       });
     } else {
       console.error(`User ${userId} not found.`);
@@ -335,14 +345,14 @@ exports.cancelScheduledDeletion = async (req, res) => {
     } else {
       console.log(`No scheduled deletion found for user ${userId}.`);
       res.status(404).json({
-        success: true,
+        success: false,
         message: "No scheduled deletion found.",
       });
     }
   } catch (err) {
     console.error("Error canceling scheduled account deletion:", err);
     res.status(500).json({
-      success: true,
+      success: false,
       message: "Internal server error.",
     });
   }
