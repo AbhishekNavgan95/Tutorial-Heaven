@@ -43,7 +43,7 @@ const Home = () => {
     dispatch(setProgress(60))
     setLoading(true);
     const endpoint = currentCategory === "All"
-      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=5`
+      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=6`
       : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=5`
 
     try {
@@ -123,13 +123,12 @@ const Home = () => {
 };
 
 const CategoryButton = ({ isActive, onClick, children }) => (
-  <Button
-    active
-    styles={`w-max hover:bg-blue-600 ${isActive ? "bg-blue-600" : ""}`}
-    action={onClick}
+  <button
+    className={`w-max px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-night-25 text-blue-300 border-blue-300" : "bg-blue-300 text-night-25 border-transparent hover:bg-blue-600"}`}
+    onClick={onClick}
   >
     {children}
-  </Button>
+  </button>
 );
 
 const Pagination = ({ page, totalPages, onPageChange }) => (

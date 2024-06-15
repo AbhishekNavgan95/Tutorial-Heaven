@@ -13,7 +13,7 @@ const DeleteAccount = ({ modalData, setModalData }) => {
     return (
         <div className=' flex flex-col gap-y-10'>
             <h3 className='text-xl font-semibold text-danger border-b pb-3'>Delete Account</h3>
-            <div className='w-8/12 mx-auto flex flex-col items-start justify-start gap-5'>
+            <div className='w-10/12 lg:w-8/12 mx-auto flex flex-col items-start justify-start gap-5'>
                 <span className='text-xl flex flex-col gap-2 text-danger'>
                     <p >
                         Deleting your account will permanently remove all your videos and assets from Tutorial Heaven.

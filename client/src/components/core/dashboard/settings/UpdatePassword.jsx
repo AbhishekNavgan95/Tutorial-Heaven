@@ -27,7 +27,7 @@ const UpdatePassword = () => {
 
         <div className=' flex flex-col gap-y-10'>
             <h3 className='text-xl font-semibold text-blue-300 border-b pb-3'>Update Password</h3>
-            <form onSubmit={handleSubmit(submitHandler)} className='w-8/12 mx-auto flex items-center justify-start gap-10'>
+            <form onSubmit={handleSubmit(submitHandler)} className='w-10/12 lg:w-8/12 mx-auto flex items-center justify-start gap-10'>
                 <div className='flex flex-col w-full gap-5'>
                     <span className='flex items-center text-xl border-b border-b-blue-300'>
                         <input

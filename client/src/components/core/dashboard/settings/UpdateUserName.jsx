@@ -22,9 +22,9 @@ const UpdateUserName = () => {
     return (
         <div className=' flex flex-col gap-y-10'>
             <h3 className='text-xl font-semibold text-blue-300 border-b pb-3'>Update Username</h3>
-            <form onSubmit={handleSubmit(submitHandler)} className='w-8/12 mx-auto flex items-center justify-start gap-10'>
+            <form onSubmit={handleSubmit(submitHandler)} className='w-10/12 lg:w-8/12 mx-auto flex items-center justify-start gap-10'>
                 <div className='flex flex-col w-full gap-5'>
-                    <div className='flex gap-5 w-full'>
+                    <div className='flex flex-col xl:flex-row gap-5 w-full'>
                         <span className='flex flex-col gap-3 w-full'>
                             <input
                                 {...register("firstName", { required: true })}

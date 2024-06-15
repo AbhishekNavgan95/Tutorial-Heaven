@@ -19,11 +19,11 @@ const PostCard = ({ post }) => {
     };
 
     return (
-        <Link>
+        <Link to={`/view-post/${post?._id}`}>
             <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group border-night-300 hover:border-night-300 hover:shadow-md hover:shadow-night-300'
+                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group hover:bg-night-50 hover:border-night-300 hover:text-night-25'
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img

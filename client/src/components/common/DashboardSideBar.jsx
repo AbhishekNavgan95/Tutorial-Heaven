@@ -9,7 +9,7 @@ const DashboardSideBar = () => {
     console.log("user : ", user)
 
     return (
-        <div className=' pt-[6rem] fixed left-0 h-screen w-[200px] bg-blue-300 border'>
+        <div className='pt-[6rem] fixed left-0 h-screen w-[200px] translate-x-[-92%] hover:translate-x-0 ease-in-out duration-300 md:translate-x-0 bg-blue-300 border'>
             <div className='flex flex-col px-3 items-center gap-1 text-night-25'>
                 {
                     dropDownLinks.map(link => (
