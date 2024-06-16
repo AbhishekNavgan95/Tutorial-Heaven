@@ -19,7 +19,7 @@ const Navbar = () => {
 
     return (
         <>
-            <header className='fixed w-full shadow-sm bg-night-25 shadow-night-300 z-[5]'>
+            <header className='fixed w-full shadow-sm bg-night-25 shadow-night-300 z-[10]'>
                 <nav className='mx-auto max-w-maxContent'>
                     <div className='flex items-center justify-between px-3 py-3'>
 

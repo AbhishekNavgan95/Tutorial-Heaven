@@ -47,7 +47,7 @@ exports.updateProfilePicture = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Profile picture updated Successfully",
-      data: user
+      data: user,
     });
   } catch (e) {
     return res.status(500).json({
@@ -200,20 +200,33 @@ exports.unSavePost = async (req, res) => {
   }
 };
 
-// get all user posts ✅
+// get all user posts ✅// get all user posts ✅
 exports.getAllUserPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
+  const sortBy = req.query.sortBy || "createdAt"; // Default to sorting by creation date
 
   try {
     const userId = req.user.id;
 
+    const sortOptions = {};
+    if (sortBy === "name") {
+      sortOptions.title = 1; // Sort by title in ascending order
+    } else if (sortBy === "createdAt") {
+      sortOptions.createdAt = -1; // Sort by creation date in descending order
+    }
+
     const user = await User.findById(userId).populate({
       path: "posts",
+      select: "category title description thumbnail likes createdAt",
+      populate: {
+        path: "category",
+        select: "title"
+      },
       options: {
-        sort: { createdAt: -1 }, // Sort by creation date, newest first
-        skip: (page - 1) * limit, // Skip records for pagination
-        limit: limit, // Limit number of records per page
+        sort: sortOptions,
+        skip: (page - 1) * limit,
+        limit: limit,
       },
     });
 

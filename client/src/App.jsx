@@ -14,6 +14,8 @@ import Profile from "./pages/Profile"
 import Settings from "./pages/Settings"
 import PrivateRoute from "./components/common/PrivateRoute"
 import DashboardPageLayout from "./components/common/DashboardPageLayout"
+import MyPosts from "./pages/MyPosts"
+import Bookmarks from "./pages/Bookmarks"
 
 function App() {
 
@@ -45,6 +47,8 @@ function App() {
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
+          <Route path="posts" element={<DashboardPageLayout><MyPosts /></DashboardPageLayout>} />
+          <Route path="bookmarks" element={<DashboardPageLayout><Bookmarks /></DashboardPageLayout>} />
           <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />
         </Route>
       </Routes>

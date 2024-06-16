@@ -13,7 +13,7 @@ export const dropDownLinks = [
   },
   {
     id: 3,
-    path: "/dashboard/my-posts",
+    path: "/dashboard/posts",
     title: "My Posts",
     access: "user",
   },
