@@ -3,10 +3,18 @@ import { setProgress } from "../../slices/loadingBarSlice";
 import { setUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 import { userEndpoints } from "../APIs";
-import {logout} from "../operations/authAPI"
+import { logout } from "../operations/authAPI";
 
-const { UPDATE_PASSWORD, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, SCHEDULE_DELETE_ACCOUNT } =
-  userEndpoints;
+const {
+  UPDATE_PASSWORD,
+  UPDATE_PROFILE_PICTURE,
+  UPDATE_USERNAME,
+  SCHEDULE_DELETE_ACCOUNT,
+  SAVE_POST,
+  UNSAVE_POST,
+  LIKE_POST,
+  UNLIKE_POST,
+} = userEndpoints;
 
 export const updateProfilePicture = async (file, token, dispatch) => {
   try {
@@ -178,14 +186,13 @@ export const updatePassword = async (data, token, dispatch) => {
 export const deleteAccount = async (token, dispatch, navigate) => {
   setProgress(60);
   try {
-
     const response = await apiConnector("PUT", SCHEDULE_DELETE_ACCOUNT, null, {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
 
     console.log("SCHEDULE_ACCOUNT_DELETE_API_RESPONSE : ", response);
 
-    if(!response?.data?.success) {
+    if (!response?.data?.success) {
       throw new Error(response?.data?.message);
     }
 
@@ -203,9 +210,8 @@ export const deleteAccount = async (token, dispatch, navigate) => {
     });
 
     dispatch(logout(navigate));
-    return true
+    return true;
   } catch (e) {
-
     console.log("SCHEDULE_ACCOUNT_DELETION_ERROR : ", e);
     toast(e?.response?.data?.message, {
       style: {
@@ -219,9 +225,89 @@ export const deleteAccount = async (token, dispatch, navigate) => {
         secondary: "#DFE2E2",
       },
     });
-
   } finally {
     setProgress(100);
   }
   return false;
+};
+
+export const savePost = async (token, dispatch, postId) => {
+  try {
+    const response = await apiConnector("PUT", `${SAVE_POST}/${postId}`, null, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    console.log("SAVE_POST_API_RESPONSE : ", response);
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    dispatch(setUser(response?.data?.data));
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } catch (e) {
+    console.log("SAVE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  }
+};
+
+export const unSavePost = async (token, dispatch, postId) => {
+  try {
+    const response = await apiConnector("PUT", `${UNSAVE_POST}/${postId}`, null, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    dispatch(setUser(response?.data?.data));
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } catch (e) {
+    console.log("UNSAVE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  }
 };

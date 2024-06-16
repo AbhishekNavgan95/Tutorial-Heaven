@@ -117,6 +117,14 @@ exports.savePost = async (req, res) => {
       });
     }
 
+    if (user?.savedPosts?.includes(postId)) {
+      console.log("here");
+      return res.status(400).json({
+        success: false,
+        message: "Post already saved",
+      });
+    }
+
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({
@@ -221,7 +229,7 @@ exports.getAllUserPosts = async (req, res) => {
       select: "category title description thumbnail likes createdAt",
       populate: {
         path: "category",
-        select: "title"
+        select: "title",
       },
       options: {
         sort: sortOptions,
@@ -255,6 +263,71 @@ exports.getAllUserPosts = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong while fetching the user posts",
+    });
+  }
+};
+
+// get user saved posts ✅
+exports.getUserSavedPosts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const sortBy = req.query.sortBy || "createdAt"; // Default to sorting by creation date
+
+  try {
+    const userId = req.user.id;
+
+    const sortOptions = {};
+    if (sortBy === "name") {
+      sortOptions.title = 1; // Sort by title in ascending order
+    } else if (sortBy === "createdAt") {
+      sortOptions.createdAt = -1; // Sort by creation date in descending order
+    }
+
+    const user = await User.findById(userId).populate({
+      path: "savedPosts",
+      select: "category title description thumbnail likes createdAt",
+      populate: [
+        {
+          path: "category",
+          select: "title",
+        },
+        {
+          path: "author",
+          select: "firstName lastName image",
+        },
+      ],
+      options: {
+        sort: sortOptions,
+        skip: (page - 1) * limit,
+        limit: limit,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Count the total number of saved posts for the user
+    const userObject = await User.findById(userId);
+    const totalSavedPosts = userObject?.savedPosts?.length;
+    const totalPages = Math.ceil(totalSavedPosts / limit);
+
+    return res.status(200).json({
+      success: true,
+      message: "Saved posts fetched successfully",
+      data: {
+        savedPosts: user.savedPosts,
+        currentPage: page,
+        totalPages: totalPages,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching the user saved posts",
     });
   }
 };

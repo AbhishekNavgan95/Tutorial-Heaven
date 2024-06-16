@@ -1,11 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { formatDistanceToNow } from 'date-fns';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { savePost, unSavePost } from "../../../services/operations/userAPI"
 
 const PostCard = ({ post }) => {
 
+    const [openOptionMenu, setOpenOptionMenu] = useState(false);
+    const navigate = useNavigate();
     const videoRef = useRef(null);
     const hoverTimeoutRef = useRef(null);
+    const { user } = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth)
+    const dispatch = useDispatch();
 
     const handleMouseEnter = () => {
         hoverTimeoutRef.current = setTimeout(() => {
@@ -19,11 +28,11 @@ const PostCard = ({ post }) => {
     };
 
     return (
-        <Link to={`/view-post/${post?._id}`}>
+        <div onClick={() => navigate(`/view/${post?._id}`)}>
             <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group hover:bg-night-50 hover:border-night-300 hover:text-night-25'
+                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group hover:border-blue-300 hover:bg-blue-25'
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
@@ -36,32 +45,60 @@ const PostCard = ({ post }) => {
                         className='absolute top-0 opacity-0 group-hover:opacity-100 delay-500 transition-all duration-100' src={post?.video?.url}
                     ></video>
                 </span>
-                <div className='flex items-start justify-center gap-3'>
+                <div className='flex items-start justify-center gap-3 w-full'>
                     <span className='mt-[5px] w-fitContent'>
-                        <img className='w-[40px] rounded-full' src={post?.author?.image?.url} alt="" />
+                        <img className='w-[40px] aspect-square rounded-full' src={post?.author?.image?.url} alt="" />
 
                     </span>
-                    <span className='flex flex-col w-full'>
-                        <h2 className='text-xl font-semibold text-night-900'>{post.title}</h2>
-                        <h3 className='text-lg text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
-                        <span className='flex items-center gap-2 text-night-900'>
-                            <p className='flex items-center gap-1 text-lg'>
-                                {
-                                    post.likes.length
-                                }
-                                <span>
-                                    likes
+                    <span className='flex justify-between w-full gap-3 items-start'>
+                        <span>
+                            <h2 className='text-xl font-semibold text-night-900'>{post.title}</h2>
+                            <h3 className='text-lg text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
+                            <span className='flex justify-between items-center w-full'>
+                                <span className='flex items-center gap-2 text-night-900'>
+                                    <p className='flex items-center gap-1 text-lg'>
+                                        {
+                                            post.likes.length
+                                        }
+                                        <span>
+                                            likes
+                                        </span>
+                                    </p>
+                                    <span className='w-[3px] h-[3px] bg-night-900'></span>
+                                    {
+                                        post.createdAt && <p>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</p>
+                                    }
                                 </span>
-                            </p>
-                            <span className='w-[3px] h-[3px] bg-night-900'></span>
-                            {
-                                post.createdAt && <p>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</p>
-                            }
+                            </span>
+                        </span>
+                        <span className='relative group/menu'>
+                            <button className='text-blue-300 pt-3 text-xl'><BsThreeDotsVertical /></button>
+                            <div className={`absolute bottom-100 w-[] bg-night-25 border border-night-900 hover:border-blue-300 right-0 transition-all duration-300 hidden group-hover/menu:block`}>
+                                <button
+                                    onClick={
+                                        (e) => {
+                                            e.stopPropagation();
+                                            if (user?.savedPosts?.includes(post._id)) {
+                                                unSavePost(token, dispatch, post?._id)
+                                            } else {
+                                                savePost(token, dispatch, post?._id)
+                                            }
+                                        }
+                                    }
+                                    className='px-10 py-1 text-night-900 hover:bg-blue-300 hover:text-night-25 transition-all duration-300'
+                                >
+                                    {
+                                        user?.savedPosts?.includes(post._id)
+                                            ? <span className='flex items-center gap-2'><PiBookmarkSimpleFill /> unsave</span>
+                                            : <span className='flex items-center gap-2'><PiBookmarkSimpleLight /> save</span>
+                                    }
+                                </button>
+                            </div>
                         </span>
                     </span>
                 </div>
             </div>
-        </Link>
+        </div >
     )
 }
 

@@ -43,8 +43,8 @@ const Home = () => {
     dispatch(setProgress(60))
     setLoading(true);
     const endpoint = currentCategory === "All"
-      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=6`
-      : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=5`
+      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=10`
+      : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=10`
 
     try {
       const response = await apiConnector("GET", endpoint);
@@ -102,10 +102,29 @@ const Home = () => {
           </CategoryButton>
         ))}
       </div>
+      <div className='bg-night-25 -full'>
+        <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
+          <span className='my-2 pt-3 text-blue-300'>
+            Page: {page} of {totalPages}
+          </span>
+          <span className='flex items-start gap-3 py-2'>
+            {page > 1 && (
+              <Button styles="w-max" active action={() => setPage(page - 1)}>
+                Previous
+              </Button>
+            )}
+            {page < totalPages && (
+              <Button styles="w-max" active action={() => setPage(page + 1)}>
+                Next
+              </Button>
+            )}
+          </span>
+        </div>
+      </div>
       {loading ? (
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
           <Spinner />
-         </div>
+        </div>
       ) : (
         <div className='grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 xl:gap-x-3 gap-y-3 xl:gap-y-3'>
           {posts.map((post) => (
@@ -113,11 +132,23 @@ const Home = () => {
           ))}
         </div>
       )}
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        onPageChange={(newPage) => setPage(newPage)}
-      />
+      <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
+        <span className='my-2 py-3 text-blue-300'>
+          Page: {page} of {totalPages}
+        </span>
+        <span className='flex items-start gap-3 py-2'>
+          {page > 1 && (
+            <Button styles="w-max" active action={() => setPage(page - 1)}>
+              Previous
+            </Button>
+          )}
+          {page < totalPages && (
+            <Button styles="w-max" active action={() => setPage(page + 1)}>
+              Next
+            </Button>
+          )}
+        </span>
+      </div>
     </div>
   );
 };
@@ -131,26 +162,5 @@ const CategoryButton = ({ isActive, onClick, children }) => (
   </button>
 );
 
-const Pagination = ({ page, totalPages, onPageChange }) => (
-  <div className='bg-night-25 fixed bottom-0 left-0 w-full'>
-    <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-      <span className='border my-2 border-blue-300 px-3 py-2 rounded-lg bg-blue-300 text-night-5'>
-        Page: {page} of {totalPages}
-      </span>
-      <span className='flex items-start gap-3 py-2'>
-        {page > 1 && (
-          <Button styles="w-max" active action={() => onPageChange(page - 1)}>
-            Previous
-          </Button>
-        )}
-        {page < totalPages && (
-          <Button styles="w-max" active action={() => onPageChange(page + 1)}>
-            Next
-          </Button>
-        )}
-      </span>
-    </div>
-  </div>
-);
 
 export default Home;

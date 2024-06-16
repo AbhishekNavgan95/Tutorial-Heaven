@@ -16,17 +16,36 @@ const MyPosts = () => {
 
     const fetchPosts = useCallback(async (page, sort) => {
         setLoading(true);
-        const res = await apiConnector(
-            "GET",
-            `${userEndpoints.GET_ALL_USER_POSTS}?page=${page}&limit=5&sortBy=${sort}`,
-            null,
-            { Authorization: `Bearer ${token}` }
-        );
+        try {
+            const res = await apiConnector(
+                "GET",
+                `${userEndpoints.GET_ALL_USER_POSTS}?page=${page}&limit=10&sortBy=${sort}`,
+                null,
+                { Authorization: `Bearer ${token}` }
+            );
 
-        console.log("Res: ", res);
-        setPosts(res.data?.data?.posts);
-        setTotalPages(res.data?.data?.totalPages);
-        setLoading(false);
+            // console.log("Res: ", res);
+            setPosts(res.data?.data?.posts);
+            setTotalPages(res.data?.data?.totalPages);
+        } catch (e) {
+            console.log("error fetching user posts : ", e);
+            setPosts([]);
+            setTotalPages(0);
+        } finally {
+            setLoading(false);
+            toast("could't get posts", {
+                style: {
+                  border: "1px solid #5252B7",
+                  padding: "8px 16px",
+                  color: "#DFE2E2",
+                  background: "#5252B7",
+                },
+                iconTheme: {
+                  primary: "#5252B7",
+                  secondary: "#DFE2E2",
+                },
+              });
+        }
     }, [token]);
 
     useEffect(() => {
@@ -47,9 +66,10 @@ const MyPosts = () => {
 
 
     return (
-        <div className='lg:w-8/12 mx-auto py-14'>
+        <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
             <div className='border-b border-blue-300 pb-3'>
-                <h4 className='text-xl font-semibold text-blue-300'>My Posts</h4>
+                <h4 className='text-xl text-center md:text-start font-semibold text-blue-300'>My Posts</h4>
+                <p className='text-blue-300 text-center md:text-start'>Manage your posts</p>
             </div>
             <div className='flex flex-col justify-start w-full'>
                 <div className='flex items-center justify-between gap-3 my-5'>
@@ -59,7 +79,7 @@ const MyPosts = () => {
                         {currentPage < totalPages && <Button styles={"w-max"} active action={handleNextPage}>Next</Button>}
                     </span>
                 </div>
-                <div className='my-5 flex items-center gap-3'>
+                <div className='my-5 flex justify-center md:justify-start items-center gap-3'>
                     <span className='text-blue-300 font-semibold'>Sort By: </span>
                     <span className='flex gap-7 rounded-full py-1 border border-blue-300 relative px-3 overflow-hidden '>
                         <button onClick={() => setSortBy("createdAt")} className={`relative z-[2] transition-all duration-300  ${sortBy === "createdAt" ? "text-night-25" : "text-blue-300"}`}>Created At</button>
@@ -71,12 +91,15 @@ const MyPosts = () => {
                     loading
                         ? <span className='w-full min-h-[50vh] flex items-center justify-center'>
                             <Spinner />
-                          </span>
+                        </span>
                         : <div className='grid xl:grid-cols-2 gap-5'>
                             {posts.map(post => (
                                 <PostCard post={post} key={post._id} />
                             ))}
                         </div>
+                }
+                {
+                    loading === false && posts.length === 0 && <p className='w-full min-h-[50vh] flex items-center justify-center text-blue-300'>No posts found</p>
                 }
             </div>
         </div>

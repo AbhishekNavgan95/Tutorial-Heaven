@@ -12,7 +12,7 @@ const {
   updatePassword,
   generateModeratorToken,
   createModeratorAccount,
-  createAdminAccount
+  createAdminAccount,
 } = require("../Controllers/Auth.controller");
 
 const {
@@ -25,7 +25,8 @@ const {
   updateUserName,
   savePost,
   unSavePost,
-  getAllUserPosts
+  getAllUserPosts,
+  getUserSavedPosts,
 } = require("../Controllers/User.controller");
 
 const { auth, isAdmin, isMod, isUser } = require("../Middlewares/Auth");
@@ -56,6 +57,8 @@ router.put("/unsave-post/:postId", auth, isUser, unSavePost);
 // get all user posts
 // http://localhost:3000/api/v1/auth/user-posts?page=2&limit=2
 router.get("/user-posts", auth, isUser, getAllUserPosts);
+
+router.get("/saved-posts", auth, isUser, getUserSavedPosts);
 
 // generate reset password token
 router.post("/reset-password-token", resetPasswordToken);

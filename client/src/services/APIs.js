@@ -19,5 +19,10 @@ export const userEndpoints = {
     UPDATE_USERNAME: BASE_URL + "auth/update-username",
     UPDATE_PASSWORD: BASE_URL + "auth/update-password",
     SCHEDULE_DELETE_ACCOUNT : BASE_URL + "auth/delete-account",
-    GET_ALL_USER_POSTS: BASE_URL + "auth/user-posts"
+    GET_ALL_USER_POSTS: BASE_URL + "auth/user-posts",
+    GET_USER_SAVED_POSTS: BASE_URL + "auth/saved-posts",
+    SAVE_POST: BASE_URL + "auth/save-post",
+    UNSAVE_POST: BASE_URL + "auth/unsave-post",
+    LIKE_POST: BASE_URL + "auth/like-post",
+    UNLIKE_POST: BASE_URL + "auth/unlike-post",
 }

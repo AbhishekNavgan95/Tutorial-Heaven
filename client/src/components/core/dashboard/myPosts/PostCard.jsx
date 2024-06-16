@@ -8,7 +8,7 @@ const PostCard = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate(`/post/${post?._id}`)} className='relative cursor-pointer rounded-lg overflow-hidden group w-full aspect-video'>
+    <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer rounded-lg overflow-hidden group w-full aspect-video'>
       <span className=' '>
         <img src={post?.thumbnail?.url} alt="" />
         <span
@@ -16,11 +16,11 @@ const PostCard = ({ post }) => {
           px-3 pt-5 pb-3 bg-gradient-to-b from-transparent to-blue-300 translate-y-[100%] group-hover:translate-y-0 
           transition-translate duration-300'
         >
-          <h4 className='line-clamp-1'>{post?.title}</h4>
-          <p>Category : {post?.category?.title}</p>
+          <h4 className='line-clamp-1 text-xl'>{post?.title}</h4>
+          <p className='text-sm'>Category : {post?.category?.title}</p>
           <span className='flex items-center justify-between'>
-            <p className=''>likes : {post?.likes?.length | 0}</p>
-            <button onClick={(e) => { e.stopPropagation(); navigate(`/dashboard/edit/${post?._id}`) }} className='text-3xl hover:scale-[1.15] transiion-all duration-300 w-max'><CiSettings /></button>
+            <p className='text-sm'>likes : {post?.likes?.length | 0}</p>
+            <button onClick={(e) => { e.stopPropagation(); navigate(`/dashboard/edit/${post?._id}`) }} className='text-2xl hover:scale-[1.15] hover:rotate-[45deg] transiion-all duration-300 w-max'><CiSettings /></button>
           </span>
         </span>
       </span>
