@@ -28,11 +28,11 @@ const PostCard = ({ post }) => {
     };
 
     return (
-        <div onClick={() => navigate(`/view/${post?._id}`)}>
+        <div onClick={() => navigate(`/view/${post?._id}`)} className='cursor-pointer'>
             <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group hover:border-blue-300 hover:bg-blue-25'
+                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group'
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
@@ -52,11 +52,11 @@ const PostCard = ({ post }) => {
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>
-                            <h2 className='text-xl font-semibold text-night-900'>{post.title}</h2>
-                            <h3 className='text-lg text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
+                            <h2 className='text-lg font-semibold text-night-900'>{post.title}</h2>
+                            <h3 className='text-md text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
                             <span className='flex justify-between items-center w-full'>
                                 <span className='flex items-center gap-2 text-night-900'>
-                                    <p className='flex items-center gap-1 text-lg'>
+                                    <p className='flex items-center gap-1 text-md'>
                                         {
                                             post.likes.length
                                         }
@@ -71,9 +71,9 @@ const PostCard = ({ post }) => {
                                 </span>
                             </span>
                         </span>
-                        <span className='relative group/menu'>
-                            <button className='text-blue-300 pt-3 text-xl'><BsThreeDotsVertical /></button>
-                            <div className={`absolute bottom-100 w-[] bg-night-25 border border-night-900 hover:border-blue-300 right-0 transition-all duration-300 hidden group-hover/menu:block`}>
+                        <span className='relative group/menu flex justify-center p-2 '>
+                            <button className='text-blue-300 text-xl '><BsThreeDotsVertical /></button>
+                            <div className={`absolute bottom-[-80%]  bg-night-25 border border-night-900 hover:border-blue-300 right-0 rounded-lg transition-all duration-100 hidden group-hover/menu:block`}>
                                 <button
                                     onClick={
                                         (e) => {
@@ -89,8 +89,8 @@ const PostCard = ({ post }) => {
                                 >
                                     {
                                         user?.savedPosts?.includes(post._id)
-                                            ? <span className='flex items-center gap-2'><PiBookmarkSimpleFill /> unsave</span>
-                                            : <span className='flex items-center gap-2'><PiBookmarkSimpleLight /> save</span>
+                                            ? <span className='flex items-center gap-2'><PiBookmarkSimpleFill /> Unsave</span>
+                                            : <span className='flex items-center gap-2'><PiBookmarkSimpleLight /> Save</span>
                                     }
                                 </button>
                             </div>

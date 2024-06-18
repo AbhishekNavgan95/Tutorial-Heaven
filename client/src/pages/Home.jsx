@@ -155,7 +155,7 @@ const Home = () => {
 
 const CategoryButton = ({ isActive, onClick, children }) => (
   <button
-    className={`w-max px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-night-25 text-blue-300 border-blue-300" : "bg-blue-300 text-night-25 border-transparent hover:bg-blue-600"}`}
+    className={`w-max px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-blue-300 text-night-25 border-blue-300" : "bg-night-25 text-blue-300 border-blue-300 hover:bg-blue-300 hover:text-night-25"}`}
     onClick={onClick}
   >
     {children}
