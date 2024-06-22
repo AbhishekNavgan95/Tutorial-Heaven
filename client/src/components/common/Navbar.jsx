@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { IoSearchSharp, IoSearchOutline } from "react-icons/io5";
 import image from "../../assets/svg/logo-no-background.svg"
 import ActionButton from './ActionButton';
@@ -31,7 +31,7 @@ const Navbar = () => {
                         </span>
 
                         {/* search bar */}
-                        <span className='flex overflow-hidden text-lg border rounded-md shadow-sm border-night-300 shadow-night-300'>
+                        <span className='flex overflow-hidden text-lg border rounded-md border-night-300'>
                             <span className='flex items-center'>
                                 <span className={`${navActive ? "text-xl justify-center items-start flex" : "hidden"} pl-3 `}>
                                     <IoSearchOutline />
@@ -91,10 +91,10 @@ const ProfileDropDown = ({ setModalData }) => {
             >
                 {
                     dropDownLinks.map((link, index) => (
-                        user.accountType === link.access || link.access === "all" ?
-                            <Link key={index} to={link.path} className='py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center'>
+                        user && user.accountType === link.access || link.access === "all" ?
+                            <NavLink key={index} to={link.path} className={({isActive}) => !isActive? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center" }>
                                 <span >{link.title}</span>
-                            </Link>
+                            </NavLink>
                             : null
                     ))
                 }

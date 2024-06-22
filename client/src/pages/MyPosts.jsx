@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import PostCard from '../components/core/dashboard/myPosts/PostCard';
 import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
+import toast from 'react-hot-toast';
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -30,21 +31,21 @@ const MyPosts = () => {
         } catch (e) {
             console.log("error fetching user posts : ", e);
             setPosts([]);
-            setTotalPages(0);
-        } finally {
-            setLoading(false);
+            setTotalPages(0); 
             toast("could't get posts", {
                 style: {
-                  border: "1px solid #5252B7",
-                  padding: "8px 16px",
-                  color: "#DFE2E2",
-                  background: "#5252B7",
+                    border: "1px solid #5252B7",
+                    padding: "8px 16px",
+                    color: "#DFE2E2",
+                    background: "#5252B7",
                 },
                 iconTheme: {
-                  primary: "#5252B7",
-                  secondary: "#DFE2E2",
+                    primary: "#5252B7",
+                    secondary: "#DFE2E2",
                 },
-              });
+            });
+        } finally {
+            setLoading(false);
         }
     }, [token]);
 

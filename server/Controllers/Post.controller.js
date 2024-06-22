@@ -15,11 +15,12 @@ function shuffleArray(array) {
 exports.createPost = async (req, res) => {
   try {
     // recieve data
-    const { title, description, categoryId, tags } = req.body;
-    const { thumbnail, video } = req.files;
+    const { title, description, category, tags } = req.body;
+    const thumbnail = req.files?.thumbnail;
+    const video = req.files?.video;
 
     // validate data
-    if (!title || !description || !tags || !categoryId) {
+    if (!title || !description || !tags || !category) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -47,7 +48,7 @@ exports.createPost = async (req, res) => {
     }
 
     // validate category
-    const categoryExist = await Category.findById(categoryId);
+    const categoryExist = await Category.findById(category);
     if (!categoryExist) {
       return res.status(400).json({
         success: false,
@@ -104,7 +105,7 @@ exports.createPost = async (req, res) => {
 
     // update category with new created post
     const updatedCategory = await Category.findByIdAndUpdate(
-      categoryId,
+      category,
       {
         $push: {
           posts: createdPost._id,
@@ -116,7 +117,7 @@ exports.createPost = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Post Created Successfully",
-      data: createdPost,
+      data: updaetdUser,
     });
   } catch (e) {
     console.log("error occurred while creating the post : ", e);

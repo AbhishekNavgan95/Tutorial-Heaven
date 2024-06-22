@@ -17,9 +17,7 @@ const PostCard = ({ post }) => {
     const dispatch = useDispatch();
 
     const handleMouseEnter = () => {
-        hoverTimeoutRef.current = setTimeout(() => {
-            videoRef.current?.play();
-        }, 2000); // 2 seconds delay
+        videoRef.current?.play();
     };
 
     const handleMouseLeave = () => {
