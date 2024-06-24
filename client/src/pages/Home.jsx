@@ -125,6 +125,10 @@ const Home = () => {
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
           <Spinner />
         </div>
+      ) : !loading && posts?.length === 0 ? (
+        <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[75vh]">
+          No posts found
+        </div>
       ) : (
         <div className='grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 xl:gap-x-3 gap-y-3 xl:gap-y-3'>
           {posts.map((post) => (

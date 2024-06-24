@@ -1,11 +1,13 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React from 'react'
 import { CiSettings } from "react-icons/ci";
-import { Link } from "react-router-dom"
+import { setEdit, setPost } from '../../../../slices/postSlice'
 
 const PostCard = ({ post }) => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer rounded-lg overflow-hidden group w-full aspect-video'>
@@ -20,7 +22,7 @@ const PostCard = ({ post }) => {
           <p className='text-sm'>Category : {post?.category?.title}</p>
           <span className='flex items-center justify-between'>
             <p className='text-sm'>likes : {post?.likes?.length | 0}</p>
-            <button onClick={(e) => { e.stopPropagation(); navigate(`/dashboard/edit/${post?._id}`) }} className='text-2xl hover:scale-[1.15] hover:rotate-[45deg] transiion-all duration-300 w-max'><CiSettings /></button>
+            <button onClick={(e) => { e.stopPropagation(); dispatch(setEdit(true)); dispatch(setPost(post)); navigate(`/dashboard/edit/${post?._id}`) }} className='text-2xl hover:scale-[1.15] hover:rotate-[45deg] transiion-all duration-300 w-max'><CiSettings /></button>
           </span>
         </span>
       </span>

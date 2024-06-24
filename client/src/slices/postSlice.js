@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    post: null,
-    edit: false
+  post: null,
+  edit: false,
 };
 
 const postSlice = createSlice({
@@ -18,10 +18,10 @@ const postSlice = createSlice({
     resetPost: (state) => {
       state.post = null;
       state.edit = false;
-    }
+    },
   },
 });
 
-export const { setUser, removeUser } = postSlice.actions;
+export const { setPost, setEdit, resetPost } = postSlice.actions;
 
 export default postSlice.reducer;

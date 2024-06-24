@@ -8,7 +8,7 @@ const TagInput = ({ name, control, setValue, getValues, trigger }) => {
     useEffect(() => {
         const initialTags = getValues(name) || [];
         setTags(initialTags);
-    }, [getValues, name]);
+    }, [getValues("tags"), name]);
 
     const handleKeyDown = (e) => {
         e.stopPropagation();
@@ -44,9 +44,9 @@ const TagInput = ({ name, control, setValue, getValues, trigger }) => {
     };
 
     return (
-        <div className="flex flex-wrap gap-2 border-b border-blue-300 w-full py-1">
-            {tags.map((tag, index) => (
-                <div key={index} className="bg-blue-300 text-night-25 rounded-full px-3 py-1 flex items-center justify-center">
+        <div className="flex flex-wrap items-center gap-2 border-b border-blue-300 w-full py-1">
+            {tags?.map((tag, index) => (
+                <div key={index} className="bg-blue-300 text-night-25 rounded-full h-max px-3 py-1 flex items-center justify-center">
                     {tag}
                     <button type="button" className="ml-2" onClick={() => removeTag(index)}>
                         &#x2715;
@@ -59,7 +59,7 @@ const TagInput = ({ name, control, setValue, getValues, trigger }) => {
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 placeholder="Press Enter to add tags"
-                className="bg-night-25 outline-none placeholder:text-blue-300 text-xl w-full py-2 rounded"
+                className="bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-xl w-max py-2 rounded"
             />
         </div>
     );

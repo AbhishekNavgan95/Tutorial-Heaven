@@ -8,17 +8,20 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux'
 import placeHolder from "../../../../assets/placeHolders/imageUpload.png";
 import { MdOutlineOndemandVideo } from "react-icons/md";
-import { createPost } from '../../../../services/operations/postAPI';
+import { createPost, updatePost } from '../../../../services/operations/postAPI';
 import TagInput from './TagInput';
-import {useNavigate} from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { setEdit, setPost } from "../../../../slices/postSlice"
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ edit, post }) => {
+
     const [image, setImage] = useState(placeHolder);
     const [videoUrl, setVideoUrl] = useState(null); // State for video URL
     const dispatch = useDispatch()
     const { token } = useSelector(state => state.auth)
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
+    const location = useLocation()
 
     const fetchCategories = useCallback(async () => {
         try {
@@ -43,7 +46,31 @@ const CreatePostForm = () => {
 
     useEffect(() => {
         fetchCategories();
-    }, [fetchCategories]);
+    }, [fetchCategories])
+
+    useEffect(() => {
+
+        if (edit) {
+            setValue("title", post?.title);
+            setValue("description", post?.description);
+            setValue("category", post?.category._id);
+            setValue("tags", post?.tags?.split(","));
+            setImage(post?.thumbnail?.url);
+            setVideoUrl(post?.video?.url);
+        } else {
+            setValue("title", "");
+            setValue("description", "");
+            setValue("category", "");
+            setValue("tags", []);
+            setImage(placeHolder);
+            setVideoUrl("");
+        }
+        
+        if(edit === false && location.pathname.includes("edit")) {
+            navigate("/dashboard/posts")
+        }
+
+    }, [categories, edit]);
 
     const {
         register,
@@ -87,6 +114,23 @@ const CreatePostForm = () => {
     }
 
     const submitHandler = async (data) => {
+
+        if (edit) {
+            const response = await updatePost(data, post?._id, dispatch, token);
+            if (response) {
+                setValue("title", "");
+                setValue("description", "");
+                setValue("category", "");
+                setImage(placeHolder);
+                setVideoUrl(null);
+                trigger();
+                dispatch(setEdit(false));
+                dispatch(setPost(null));
+                navigate("/dashboard/posts")
+            }
+            return
+        }
+
         if (!getValues("thumbnail")) {
             setError("thumbnail", { type: "required" });
             return
@@ -98,7 +142,7 @@ const CreatePostForm = () => {
         }
 
         const response = await createPost(data, dispatch, token);
-        if(response) {
+        if (response) {
             setValue("title", "");
             setValue("description", "");
             setValue("category", "");
@@ -156,11 +200,13 @@ const CreatePostForm = () => {
                     <span className='flex flex-col items-start gap-3 w-full group'>
                         <span className='flex flex-col items-center w-full'>
                             <label htmlFor="thumbnail" className='relative self-stretch flex flex-col px-3 py-3 items-center justify-center cursor-pointer border rounded-lg border-blue-300'>
-                                <img
-                                    className='w-full aspect-video min-h-[150px] group-hover:scale-105 transition-all duration-300 rounded-lg object-cover'
-                                    src={image}
-                                    alt=""
-                                />
+                                <span className='w-full rounded-lg overflow-hidden'>
+                                    <img
+                                        className='w-full aspect-video min-h-[150px] group-hover:scale-105 transition-all duration-300 rounded-lg object-cover'
+                                        src={image}
+                                        alt=""
+                                    />
+                                </span>
                                 <input
                                     type="file"
                                     name="thumbnail"
@@ -201,27 +247,31 @@ const CreatePostForm = () => {
                                         src={videoUrl}
                                         autoPlay
                                         muted
+                                        loop
                                     />
                                 }
                                 {
                                     !videoUrl &&
                                     <span className='text-blue-300 flex items-center gap-2 text-xl font-semibold'>Select a Video <MdOutlineOndemandVideo /></span>
                                 }
-                                <input
-                                    type="file"
-                                    name="video"
-                                    id="video"
-                                    className='absolute inset-0 opacity-0 cursor-pointer'
-                                    onChange={handleSetVideo}
-                                    accept="video/*,.mp4,.avi,.mov"
-                                />
+                                {
+                                    !edit &&
+                                    <input
+                                        type="file"
+                                        name="video"
+                                        id="video"
+                                        className='absolute inset-0 opacity-0 cursor-pointer'
+                                        onChange={handleSetVideo}
+                                        accept="video/*,.mp4,.avi,.mov"
+                                    />
+                                }
                             </label>
                             {
                                 errors.video && <span className='font-semibold underline text-danger'>Video is required</span>
                             }
                         </span>
                         {
-                            videoUrl && <button
+                            !edit && videoUrl && <button
                                 type="button"
                                 className='text-blue-300 self-center rounded-full flex items-center gap-1 justify-center '
                                 onClick={(e) => {
@@ -240,7 +290,14 @@ const CreatePostForm = () => {
                     <span className='flex flex-col items-start gap-3 w-full'>
                         <TagInput name={"tags"} control={control} setValue={setValue} getValues={getValues} trigger={trigger} />
                     </span>
-                    <Button type={"submit"} styles={"w-max"} active>Submit</Button>
+                    <span className='flex gap-3'>
+                        <Button type={"submit"} styles={"w-max"} active>Submit</Button>
+                        <Button action={() => {
+                            dispatch(setEdit(false));
+                            dispatch(setPost(null));
+                            navigate("/dashboard/posts")
+                        }} styles={"w-max"} >Cancel</Button>
+                    </span>
                 </div>
             </form>
         </span>

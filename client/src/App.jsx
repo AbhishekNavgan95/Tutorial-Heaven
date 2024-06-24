@@ -17,6 +17,7 @@ import DashboardPageLayout from "./components/common/DashboardPageLayout"
 import MyPosts from "./pages/MyPosts"
 import Bookmarks from "./pages/Bookmarks"
 import CreatePost from "./pages/CreatePost"
+import UpdatePost from "./pages/UpdatePost"
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
           <Route path="create" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />
-          <Route path="edit/:postId" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />
+          <Route path="edit/:postId" element={<DashboardPageLayout><UpdatePost /></DashboardPageLayout>} />
           <Route path="posts" element={<DashboardPageLayout><MyPosts /></DashboardPageLayout>} />
           <Route path="bookmarks" element={<DashboardPageLayout><Bookmarks /></DashboardPageLayout>} />
           <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />

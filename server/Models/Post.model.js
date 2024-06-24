@@ -46,6 +46,10 @@ const PostSchema = new mongoose.Schema(
       type: String,
       enum: ["published", "archived"],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timeseries: true }
 );

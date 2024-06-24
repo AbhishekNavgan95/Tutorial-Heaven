@@ -133,7 +133,8 @@ exports.createPost = async (req, res) => {
 exports.updatePost = async (req, res) => {
   try {
     // receive data
-    const { title, description, categoryId, tags } = req.body;
+    const { title, description, category, tags } = req.body;
+
     const thumbnail = req?.files?.thumbnail;
     const postId = req.params?.id;
 
@@ -155,8 +156,8 @@ exports.updatePost = async (req, res) => {
     }
 
     // validate category if provided
-    if (categoryId) {
-      const categoryExist = await Category.findById(categoryId);
+    if (category) {
+      const categoryExist = await Category.findById(category);
       if (!categoryExist) {
         return res.status(400).json({
           success: false,
@@ -170,7 +171,7 @@ exports.updatePost = async (req, res) => {
     let uploadedThumbnail;
     if (thumbnail) {
       // delete old thumbnail from Cloudinary
-      await deleteImageFromCloudinary(post.thumbnail);
+      await deleteImageFromCloudinary(post?.thumbnail);
 
       // upload new thumbnail to Cloudinary
       uploadedThumbnail = await uploadImageTocloudinary(
@@ -192,16 +193,18 @@ exports.updatePost = async (req, res) => {
         title: title || post.title,
         description: description || post.description,
         tags: tags || post.tags,
-        category: categoryId || post.category,
+        category: category || post.category,
         thumbnail: uploadedThumbnail || post.thumbnail,
       },
       { new: true }
     );
 
+    const updatedUser = await User.findById(req.user.id);
+
     return res.status(200).json({
       success: true,
       message: "Post updated successfully",
-      data: updatedPost,
+      data: updatedUser,
     });
   } catch (e) {
     console.log("error occurred while updating the post: ", e);
@@ -484,8 +487,9 @@ exports.getAllPosts = async (req, res) => {
       .skip(startIndex)
       .limit(limit)
       .populate({
-        path: "author",
+        path: "category author",
         select: "firstName lastName image",
+        // populate: "author",
       });
 
     const finalPosts = shuffleArray(paginatedPosts);
@@ -603,7 +607,7 @@ exports.getCategoryAllPosts = async (req, res) => {
       .limit(limit)
       .populate({
         path: "author",
-        select: "firstName lastName image",
+        select: "firstName lastName image createdAt",
       });
 
     return res.status(200).json({
