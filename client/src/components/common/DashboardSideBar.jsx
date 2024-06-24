@@ -2,6 +2,7 @@ import React from 'react'
 import { dropDownLinks } from '../../data/dropDownLinks'
 import SidebarLink from '../core/dashboard/sidebar/SidebarLink'
 import { useSelector } from 'react-redux'
+import { USER_TYPES } from '../../services/constants'
 
 const DashboardSideBar = () => {
 
@@ -12,7 +13,7 @@ const DashboardSideBar = () => {
             <div className='flex flex-col px-3 items-center gap-1 text-night-25'>
                 {
                     dropDownLinks.map(link => (
-                        user.accountType === link.access || link.access === "all" ?
+                        user.accountType === link.access || link.access ===  USER_TYPES.ALL ?
                             <SidebarLink key={link.id} to={link.path} > {link.title}</SidebarLink>
                             : null
                     ))

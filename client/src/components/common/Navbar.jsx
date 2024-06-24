@@ -9,6 +9,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { dropDownLinks } from '../../data/dropDownLinks';
 import Modal from './Modal';
 import { logout } from "../../services/operations/authAPI"
+import { USER_TYPES } from "../../services/constants"
 
 const Navbar = () => {
 
@@ -55,7 +56,7 @@ const Navbar = () => {
                                 token === null && <ActionButton active to={"/signup"} >Sign up</ActionButton>
                             }
                             {
-                                user?.accountType === "user" &&
+                                user?.accountType === USER_TYPES.USER &&
                                 <Link to={"/dashboard/bookmarks"} className='border border-blue-300 p-2 shadow-sm shadow-night-300 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-blue-300' >
                                     <IoIosBookmark />
                                 </Link>
@@ -91,8 +92,8 @@ const ProfileDropDown = ({ setModalData }) => {
             >
                 {
                     dropDownLinks.map((link, index) => (
-                        user && user.accountType === link.access || link.access === "all" ?
-                            <NavLink key={index} to={link.path} className={({isActive}) => !isActive? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center" }>
+                        user && user.accountType === link.access || link.access === USER_TYPES.ALL ?
+                            <NavLink key={index} to={link.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
                                 <span >{link.title}</span>
                             </NavLink>
                             : null

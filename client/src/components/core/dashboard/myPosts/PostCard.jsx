@@ -5,16 +5,19 @@ import { CiSettings } from "react-icons/ci";
 import { setEdit, setPost } from '../../../../slices/postSlice'
 import { MdDescription, MdOutlineArchive } from "react-icons/md";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { POST_STATUS } from '../../../../services/constants';
+import { FaStar } from "react-icons/fa";
 
 const PostCard = ({ post, modalData, setModalData }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log("post : ", post);
 
   return (
     <div className='flex flex-col gap-3'>
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer rounded-lg overflow-hidden group w-full aspect-video'>
-        <span className=' '>
+        <span className='relative'>
           <img src={post?.thumbnail?.url} alt="" />
           <span
             className='md:flex hidden absolute text-xl w-full bottom-0 gap-2 justify-between items-end text-night-25 
@@ -70,6 +73,12 @@ const PostCard = ({ post, modalData, setModalData }) => {
               </button>
             </span>
           </span>
+          {
+            post?.status === POST_STATUS.DRAFT &&
+            <span className='text-blue-300 m-3 bg-night-25 rounded-full p-2 absolute text-sm top-0 right-0'>
+              <FaStar />
+            </span>
+          }
         </span>
       </div>
       <span className='flex justify-between items-end md:hidden'>
@@ -106,10 +115,10 @@ const PostCard = ({ post, modalData, setModalData }) => {
             <MdOutlineArchive />
           </button>
           <button
-            onClick={() => { 
-              dispatch(setEdit(true)); 
-              dispatch(setPost(post)); 
-              navigate(`/dashboard/edit/${post?._id}`) 
+            onClick={() => {
+              dispatch(setEdit(true));
+              dispatch(setPost(post));
+              navigate(`/dashboard/edit/${post?._id}`)
             }}
             className='text-2xl rounded-full hover:bg-blue-300 p-2 hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
           >
