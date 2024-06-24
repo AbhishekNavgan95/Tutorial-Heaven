@@ -18,6 +18,7 @@ import MyPosts from "./pages/MyPosts"
 import Bookmarks from "./pages/Bookmarks"
 import CreatePost from "./pages/CreatePost"
 import UpdatePost from "./pages/UpdatePost"
+import ViewPost from "./pages/ViewPost"
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
         <Route path="varify-otp" element={<VarifyOtp />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="view/:id" element={<ViewPost />} />
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
           <Route path="create" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />

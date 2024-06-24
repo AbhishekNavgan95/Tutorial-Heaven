@@ -517,6 +517,7 @@ exports.getAllPosts = async (req, res) => {
 
 // get full post details ✅
 exports.getFullPostDetails = async (req, res) => {
+  console.log("here")
   try {
     const postId = req.params?.postId;
 
@@ -535,10 +536,6 @@ exports.getFullPostDetails = async (req, res) => {
       .populate({
         path: "category",
         select: "title description image",
-      })
-      .populate({
-        path: "comments",
-        select: "author description likes",
       })
       .exec();
 

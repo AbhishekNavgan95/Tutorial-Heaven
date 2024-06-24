@@ -32,7 +32,7 @@ export const postEndpoints = {
     CREATE_POST: BASE_URL + "post/create-post",
     UPDATE_POST: BASE_URL + "post/update-post",
     DELETE_POST: BASE_URL + "post/delete-post",
-    GET_POST: BASE_URL + "post/get-post",
+    GET_POST: BASE_URL + "post/get-full-post-details",
     GET_POST_COMMENTS: BASE_URL + "post/get-post-comments",
     CREATE_COMMENT: BASE_URL + "post/create-comment",
     DELETE_COMMENT: BASE_URL + "post/delete-comment",
