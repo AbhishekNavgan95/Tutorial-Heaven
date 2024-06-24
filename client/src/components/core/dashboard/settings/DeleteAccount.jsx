@@ -19,6 +19,12 @@ const DeleteAccount = ({ modalData, setModalData }) => {
                         Deleting your account will permanently remove all your videos and assets from Tutorial Heaven.
                         You have the option to request a cancellation of the account deletion within 30 days. Once this period passes, your account and its contents will be irreversibly deleted.
                     </p>
+                    <ul className='list-disc pl-5 my-5 flex flex-col gap-1 font-semibold'>
+                        <li> All your data, including video tutorials, will be permanently deleted within 30 days.</li>
+                        <li>You can cancel the deletion process within 30 days by contacting our support team.</li>
+                        <li>You will lose access to all your content and data after 30 days.</li>
+                        <li>Contact support '{import.meta.env.VITE_ADMIN_EMAIL}' within 30 days to restore your account.</li>
+                    </ul>
                 </span>
                 <DangerButton action={() => setModalData({
                     title: "Delete Account",
