@@ -4,7 +4,7 @@ import { setProgress } from "../../slices/loadingBarSlice";
 import { setUser, removeUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 
-const { CREATE_POST, UPDATE_POST } = postEndpoints;
+const { CREATE_POST, UPDATE_POST, DELETE_POST } = postEndpoints;
 
 export const createPost = async (data, dispatch, token) => {
   dispatch(setProgress(60));
@@ -139,4 +139,54 @@ export const updatePost = async (data, postId, dispatch, token) => {
     dispatch(setProgress(100));
   }
   return false;
+};
+
+export const deletePost = async (postId, dispatch, token) => {
+  dispatch(setProgress(60));
+
+  try {
+    const response = await apiConnector(
+      "DELETE",
+      `${DELETE_POST}/${postId}`,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    console.log("DELETE_POST_API_RESPONSE : ", response);
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } catch (e) {
+    console.log("DELETE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } finally {
+    dispatch(setProgress(100));
+  }
 };

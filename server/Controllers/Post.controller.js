@@ -222,8 +222,6 @@ exports.updatePostStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    console.log("status : ", status);
-
     // Validate the status
     if (
       status === process.env.POST_STATUS_PUBLISHED ||
@@ -329,7 +327,7 @@ exports.deletePost = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Post and associated data deleted successfully.",
+      message: "Post deleted successfully.",
     });
   } catch (e) {
     console.error("Error occurred while deleting the post:", e);
@@ -472,8 +470,11 @@ exports.getAllPosts = async (req, res) => {
         .json({ success: false, message: "Invalid page or limit parameters." });
     }
 
-    // Count total number of posts
-    const totalPosts = await Post.countDocuments({});
+    // Filter for published posts
+    const filter = { status: "published" };
+
+    // Count total number of published posts
+    const totalPosts = await Post.countDocuments(filter);
     const totalPages = Math.ceil(totalPosts / limit);
 
     if (page > totalPages) {
@@ -482,16 +483,15 @@ exports.getAllPosts = async (req, res) => {
         .json({ success: false, message: "Page not found." });
     }
 
-    // Fetch paginated posts from the database
+    // Fetch paginated published posts from the database
     const startIndex = (page - 1) * limit;
-    const paginatedPosts = await Post.find({})
+    const paginatedPosts = await Post.find(filter)
       .sort({ createdAt: -1 }) // Sort by creation date, newest first
       .skip(startIndex)
       .limit(limit)
       .populate({
         path: "category author",
         select: "firstName lastName image",
-        // populate: "author",
       });
 
     const finalPosts = shuffleArray(paginatedPosts);
@@ -591,9 +591,10 @@ exports.getCategoryAllPosts = async (req, res) => {
       });
     }
 
+    const filter = { status: "published", category: categoryId };
     const skip = (page - 1) * limit;
 
-    const postsCount = await Post.countDocuments({ category: categoryId });
+    const postsCount = await Post.countDocuments(filter);
 
     if (skip >= postsCount) {
       return res.status(404).json({
@@ -603,7 +604,7 @@ exports.getCategoryAllPosts = async (req, res) => {
 
     const totalPages = Math.ceil(postsCount / limit);
 
-    const posts = await Post.find({ category: categoryId })
+    const posts = await Post.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
