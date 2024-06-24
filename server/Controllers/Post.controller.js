@@ -222,6 +222,8 @@ exports.updatePostStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
+    console.log("status : ", status);
+
     // Validate the status
     if (
       status === process.env.POST_STATUS_PUBLISHED ||

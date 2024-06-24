@@ -14,6 +14,7 @@ const {
   UNSAVE_POST,
   LIKE_POST,
   UNLIKE_POST,
+  CHANGE_POST_STATUS
 } = userEndpoints;
 
 export const updateProfilePicture = async (file, token, dispatch) => {
@@ -274,9 +275,14 @@ export const savePost = async (token, dispatch, postId) => {
 
 export const unSavePost = async (token, dispatch, postId) => {
   try {
-    const response = await apiConnector("PUT", `${UNSAVE_POST}/${postId}`, null, {
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await apiConnector(
+      "PUT",
+      `${UNSAVE_POST}/${postId}`,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
 
     if (!response?.data?.success) {
       throw new Error(response?.data?.message);
@@ -309,5 +315,54 @@ export const unSavePost = async (token, dispatch, postId) => {
         secondary: "#DFE2E2",
       },
     });
+  }
+};
+
+export const changePostStatus = async (status, token, postId, dispatch) => {
+  dispatch(setProgress(60));
+
+  try {
+    const response = await apiConnector(
+      "PUT",
+      `${CHANGE_POST_STATUS}/${postId}`,
+      {status: status},
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+
+  } catch (e) {
+    console.log("ARCHIVE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } finally {
+    dispatch(setProgress(100));
   }
 };

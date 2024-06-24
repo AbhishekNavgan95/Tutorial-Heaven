@@ -25,6 +25,7 @@ export const userEndpoints = {
     UNSAVE_POST: BASE_URL + "auth/unsave-post",
     LIKE_POST: BASE_URL + "auth/like-post",
     UNLIKE_POST: BASE_URL + "auth/unlike-post",
+    CHANGE_POST_STATUS: BASE_URL + "post/update-poststatus"
 }
 
 export const postEndpoints = {

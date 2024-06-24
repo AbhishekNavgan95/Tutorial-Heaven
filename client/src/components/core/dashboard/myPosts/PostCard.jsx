@@ -1,18 +1,25 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiSettings } from "react-icons/ci";
 import { setEdit, setPost } from '../../../../slices/postSlice'
 import { MdDescription, MdOutlineArchive } from "react-icons/md";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { POST_STATUS } from '../../../../services/constants';
 import { FaStar } from "react-icons/fa";
+import { changePostStatus } from '../../../../services/operations/userAPI';
 
 const PostCard = ({ post, modalData, setModalData }) => {
 
+  const [postStatus, setPostStatus] = useState("");
+
+  useEffect(() => {
+    setPostStatus(post?.status)
+  }, [])
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("post : ", post);
+  const { token } = useSelector(state => state.auth)
 
   return (
     <div className='flex flex-col gap-3'>
@@ -48,10 +55,10 @@ const PostCard = ({ post, modalData, setModalData }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation(); setModalData({
-                    title: "Archive Post?",
-                    description: "Are you sure you want to Archive this post?",
-                    primaryButtonText: "Archive",
-                    primaryButtonHandler: () => archivePost(),
+                    title: postStatus === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
+                    description: `Are you sure you want to ${postStatus === POST_STATUS.ARCHIVED? "Publish" : "Archive"} this post?`,
+                    primaryButtonText: postStatus === POST_STATUS.PUBLISHED? "Archive" : "Publish",
+                    primaryButtonHandler: () => changePostStatus(postStatus === POST_STATUS.PUBLISHED? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, token, post._id, dispatch),
                     secondaryButtonText: "Cancel",
                     secondaryButtonHandler: () => setModalData(null)
                   })
@@ -74,7 +81,7 @@ const PostCard = ({ post, modalData, setModalData }) => {
             </span>
           </span>
           {
-            post?.status === POST_STATUS.DRAFT &&
+            postStatus === POST_STATUS.ARCHIVED &&
             <span className='text-blue-300 m-3 bg-night-25 rounded-full p-2 absolute text-sm top-0 right-0'>
               <FaStar />
             </span>
@@ -103,10 +110,10 @@ const PostCard = ({ post, modalData, setModalData }) => {
           </button>
           <button
             onClick={() => setModalData({
-              title: "Archive Post?",
-              description: "Are you sure you want to Archive this post?",
-              primaryButtonText: "Archive",
-              primaryButtonHandler: () => archivePost(),
+              title: postStatus === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
+              description: `Are you sure you want to ${postStatus === POST_STATUS.ARCHIVED? "Publish" : "Archive"} this post?`,
+              primaryButtonText: postStatus === POST_STATUS.PUBLISHED? "Archive" : "Publish",
+              primaryButtonHandler: () => changePostStatus(postStatus === POST_STATUS.PUBLISHED? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, token, post._id, dispatch),
               secondaryButtonText: "Cancel",
               secondaryButtonHandler: () => setModalData(null)
             })}
