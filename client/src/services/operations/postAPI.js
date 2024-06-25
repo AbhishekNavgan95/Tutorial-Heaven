@@ -4,7 +4,7 @@ import { setProgress } from "../../slices/loadingBarSlice";
 import { setUser, removeUser } from "../../slices/userSlice";
 import toast from "react-hot-toast";
 
-const { CREATE_POST, UPDATE_POST, DELETE_POST } = postEndpoints;
+const { CREATE_POST, UPDATE_POST, DELETE_POST, CREATE_COMMENT } = postEndpoints;
 
 export const createPost = async (data, dispatch, token) => {
   dispatch(setProgress(60));
@@ -189,4 +189,56 @@ export const deletePost = async (postId, dispatch, token) => {
   } finally {
     dispatch(setProgress(100));
   }
+};
+
+export const addComment = async (data, postId, dispatch, token) => {
+  dispatch(setProgress(60));
+
+  try {
+    const response = await apiConnector(
+      "POST",
+      `${CREATE_COMMENT}/${postId}`,
+      { description: data?.comment },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    console.log("ADD_COMMENT_API_RESPONSE : ", response);
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+    return response?.data?.data;
+  } catch (e) {
+    console.log("ADD_COMMENT_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } finally {
+    dispatch(setProgress(100));
+  }
+  return false;
 };

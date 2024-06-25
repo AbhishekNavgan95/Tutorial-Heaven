@@ -5,17 +5,19 @@ import { formatDistanceToNow } from 'date-fns';
 const VideoSection = ({ post }) => {
 
     const [description, setDescription] = useState(false);
-    console.log("post : ", post)
+    // console.log("post : ", post)
 
     return (
-        <section className='flex flex-col gap-3 py-3'>
-            <ReactPlayer
-                style={{ width: "100%", borderRadius: "10px", overflow: "hidden" }}
-                width={"100%"}
-                height={"auto"}
-                url={post?.video?.url}
-                controls
-            />
+        <section className='flex flex-col gap-3 py-3 w-full'>
+            <span className='bg-night-50 rounded-lg aspect-video w-full'>
+                <ReactPlayer
+                    style={{ minWidth: "100%", aspectRatio: "16/9", borderRadius: "10px", overflow: "hidden" }}
+                    width={"100%"}
+                    height={"auto"}
+                    url={post?.video?.url}
+                    controls
+                />
+            </span>
             <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-3 items-start'>
                     <span className='flex flex-col gap-1'>
@@ -27,7 +29,7 @@ const VideoSection = ({ post }) => {
                             post?.createdAt &&
                             <p>{formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })}</p>
                         }
-                        <span className={`${description ? "block" : "hidden"} flex flex-col gap-1`}>
+                        <span className={`${description ? "block" : "hidden"} py-3`}>
                             <p>{post?.description}</p>
                         </span>
                         <button className='text-blue-300 font-semibold' onClick={() => setDescription(!description)}>{description ? "show less..." : "show more..."}</button>

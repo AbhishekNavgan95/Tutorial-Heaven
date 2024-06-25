@@ -517,7 +517,6 @@ exports.getAllPosts = async (req, res) => {
 
 // get full post details ✅
 exports.getFullPostDetails = async (req, res) => {
-  console.log("here")
   try {
     const postId = req.params?.postId;
 
@@ -610,6 +609,8 @@ exports.getCategoryAllPosts = async (req, res) => {
         select: "firstName lastName image createdAt",
       });
 
+      const shuffledPosts = shuffleArray(posts);
+
     return res.status(200).json({
       success: true,
       message: "Category posts fetched successfully.",
@@ -617,7 +618,7 @@ exports.getCategoryAllPosts = async (req, res) => {
         totalPosts: postsCount,
         totalPages,
         currentPage: page,
-        posts,
+        posts: shuffledPosts,
       },
     });
   } catch (error) {

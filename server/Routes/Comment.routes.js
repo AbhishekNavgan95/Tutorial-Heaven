@@ -9,13 +9,17 @@ const {
   removeComment,
   likeComment,
   unlikeComment,
+  getPostComments
 } = require("../Controllers/Comment.controller");
 const { auth, isUser } = require("../Middlewares/Auth");
 
 /********************* routes *****************************/
 
 // add comment 
-router.post("/add-comment", auth, isUser, addComment);
+router.post("/add-comment/:postId", auth, isUser, addComment);
+
+// get post comments
+router.get("/get-post-comments/:postId", getPostComments);
 
 // remove comment
 router.delete("/remove-comment", auth, isUser, removeComment);
