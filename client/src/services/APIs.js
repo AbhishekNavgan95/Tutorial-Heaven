@@ -36,4 +36,6 @@ export const postEndpoints = {
     GET_POST_COMMENTS: BASE_URL + "comment/get-post-comments",
     CREATE_COMMENT: BASE_URL + "comment/add-comment",
     DELETE_COMMENT: BASE_URL + "comment/delete-comment",
+    LIKE_COMMENT: BASE_URL + "comment/like-comment",
+    UNLIKE_COMMENT: BASE_URL + "comment/unlike-comment"
 }

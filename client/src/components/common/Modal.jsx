@@ -1,15 +1,15 @@
 import React from 'react'
 import Button from './Button'
 
-const Modal = ({ modalData, setModalData }) => {
+const Modal = ({ modalData = {}, setModalData }) => {
 
     const {
-        title,
-        description,
-        primaryButtonText,
-        primaryButtonHandler,
-        secondaryButtonText,
-        secondaryButtonHandler
+        title = "Sample Modal",
+        description = "Modal Description",
+        primaryButtonText = "Action",
+        primaryButtonHandler = () => { },
+        secondaryButtonText = "Close",
+        secondaryButtonHandler = () => { }
     } = modalData;
 
     return (

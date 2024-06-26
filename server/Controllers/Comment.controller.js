@@ -48,7 +48,7 @@ exports.addComment = async (req, res) => {
       post: postId,
     }); // i want to populate this feild
 
-    newComment = await newComment.populate('author');
+    newComment = await newComment.populate("author");
 
     // Add the comment to the post's comments array
     await Post.findByIdAndUpdate(
@@ -74,14 +74,14 @@ exports.addComment = async (req, res) => {
 
 exports.removeComment = async (req, res) => {
   try {
-    const { commentId, postId } = req.body;
+    const { commentId } = req.params;
     const userId = req.user.id;
 
     // Validate received data
-    if (!commentId || !postId) {
+    if (!commentId) {
       return res.status(400).json({
         success: false,
-        message: "Comment ID and Post ID are required",
+        message: "Comment ID id required",
       });
     }
 
@@ -101,6 +101,12 @@ exports.removeComment = async (req, res) => {
       });
     }
 
+    console.log("userId : ", userId);
+    console.log("comment : ", comment?.author?.toString());
+
+    const postId = comment?.post;
+    console.log("post : ", postId);
+
     // Check if the user is the author of the comment or an admin
     const user = await User.findById(userId);
     if (!user) {
@@ -110,32 +116,33 @@ exports.removeComment = async (req, res) => {
       });
     }
 
-    if (comment.author.toString() !== userId && user.accountType !== "admin") {
+    if (comment.author.toString() !== userId || user.accountType !== "admin") {
+      // Remove the comment
+      await Comment.findByIdAndDelete(commentId);
+
+      // Remove the comment from the post's comments array
+      await Post.findByIdAndUpdate(
+        postId,
+        { $pull: { comments: commentId } },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Comment deleted successfully",
+      });
+    } else {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to delete this comment",
       });
     }
-
-    // Remove the comment
-    await Comment.findByIdAndDelete(commentId);
-
-    // Remove the comment from the post's comments array
-    await Post.findByIdAndUpdate(
-      postId,
-      { $pull: { comments: commentId } },
-      { new: true }
-    );
-
-    return res.status(200).json({
-      success: true,
-      message: "Comment removed successfully",
-    });
+    
   } catch (e) {
     console.error("Error occurred while removing the comment:", e);
     return res.status(500).json({
       success: false,
-      message: "An error occurred while removing the comment",
+      message: "An error occurred while deleting the comment",
       error: e.message,
     });
   }
@@ -183,7 +190,7 @@ exports.likeComment = async (req, res) => {
     await comment.save();
 
     // Add comment to the user's likedComments array
-    await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $push: { likedComments: commentId } },
       { new: true }
@@ -191,7 +198,8 @@ exports.likeComment = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Comment liked successfully",
+      message: "Comment liked",
+      data: updatedUser,
     });
   } catch (e) {
     console.error("Error occurred while liking the comment:", e);
@@ -248,7 +256,7 @@ exports.unlikeComment = async (req, res) => {
     );
 
     // Remove comment from the user's likedComments array
-    await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $pull: { likedComments: commentId } },
       { new: true }
@@ -256,7 +264,8 @@ exports.unlikeComment = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Comment unliked successfully",
+      message: "Comment unliked",
+      data: updatedUser,
     });
   } catch (e) {
     console.error("Error occurred while unliking the comment:", e);

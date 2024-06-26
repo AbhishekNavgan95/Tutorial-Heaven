@@ -1,17 +1,37 @@
+import { useEffect, useState } from 'react';
 import React from 'react'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { formatDistanceToNow } from 'date-fns';
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { likeComment, unlikeComment } from '../../../services/operations/commentAPI';
 
 
-const CommentCard = ({ comment }) => {
-    // console.log("Comment : ", comment);
+const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
     const { user } = useSelector(state => state.user)
+    const dispatch = useDispatch();
+    const { token } = useSelector((state) => state.auth);
+    const [likes, setLikes] = useState(comment?.likes);
 
-    const handleLikeComment = () => {
-        console.log("comment liked")
+    const handleLikeComment = async () => {
+        const response = await likeComment(comment?._id, dispatch, token);
+        if (response) {
+            setLikes((prev) => [...prev, user?._id]);
+        }
     }
+
+    const handleUnlikeComment = async () => {
+        const response = await unlikeComment(comment?._id, dispatch, token)
+        if (response) {
+            console.log("like count before : ", likes)
+            setLikes((prev) => prev.filter((like) => like !== user?._id));
+            console.log("like count after : ", likes)
+        }
+    }
+
+    useEffect(() => {
+        // useEffect to load comment again after like for rerender of corrousponding comment
+    }, [likes?.length])
 
     return (
         <div className='py-3 flex gap-5'>
@@ -29,21 +49,33 @@ const CommentCard = ({ comment }) => {
                         </>
                     }
                 </span>
-                <p>{comment?.description}</p>
+                <p style={{ whiteSpace: 'pre-wrap' }}>{comment?.description}</p>
                 <span className='py-1 flex text-xl gap-3 items-center rounded-full w-max'>
-                    <button onClick={handleLikeComment} className='flex gap-2 items-center transition-all duration-300 py-1 hover:text-night-25 hover:bg-blue-300 px-3 rounded-full'>
+                    <button
+                        onClick={
+                            !likes.includes(user?._id)
+                                ? handleLikeComment
+                                : handleUnlikeComment}
+                        className='flex gap-2 items-center transition-all duration-300 py-1 hover:text-night-25 hover:bg-blue-300 px-3 rounded-full'>
                         <span className=''>
                             {
-                                user?.likedPosts.includes(comment._id)
+                                user?.likedComments.includes(comment._id)
                                     ? <AiFillLike />
                                     : <AiOutlineLike />
                             }
                         </span>
-                        <p className='text-lg'>{comment?.likes?.length}</p>
+                        <p className='text-lg'>{likes?.length}</p>
                     </button>
                     {
                         comment?.author._id === user?._id &&
-                        <button className='transition-all duration-300  hover:text-night-25 hover:bg-blue-300 p-2 rounded-full'>
+                        <button onClick={() => setModalData({
+                            title: "Delete Comment?",
+                            description: "This comment will be deleted!",
+                            primaryButtonText: "Delete",
+                            primaryButtonHandler: () => handleDeleteComment(comment?._id),
+                            secondaryButtonText: "Close",
+                            secondaryButtonHandler: () => setModalData(null)
+                        })} className='transition-all duration-300  hover:text-night-25 hover:bg-blue-300 p-2 rounded-full'>
                             <MdOutlineDeleteOutline />
                         </button>
                     }

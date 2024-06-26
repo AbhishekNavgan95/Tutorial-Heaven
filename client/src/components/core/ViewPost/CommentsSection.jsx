@@ -5,6 +5,8 @@ import Button from "../../common/Button"
 import { useForm } from "react-hook-form"
 import { addComment } from '../../../services/operations/postAPI';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from "../../common/Modal"
+import { deleteComment } from '../../../services/operations/commentAPI';
 
 const CommentsSection = ({
     post,
@@ -18,12 +20,23 @@ const CommentsSection = ({
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const [modalData, setModalData] = React.useState(null);
 
     const submitHandler = async (data) => {
         const response = await addComment(data, post._id, dispatch, token);
         if (response) {
             setValue("comment", "")
             setComments(prev => [response, ...prev])
+        }
+    }
+
+    const handleDeleteComment = (commentId) => {
+
+        console.log("delete comment")
+
+        const response = deleteComment(commentId, dispatch, token)
+        if(response) {
+            setComments(prev => prev.filter((c) => c?._id !== commentId))
         }
     }
 
@@ -44,7 +57,7 @@ const CommentsSection = ({
             <div className='py-5'>
                 {
                     comments.length > 0 ? (comments.map((comment) => (
-                        <CommentCard key={comment?._id} comment={comment} />
+                        <CommentCard handleDeleteComment={handleDeleteComment} setModalData={setModalData} key={comment?._id} comment={comment} />
                     ))) : <p>No comments yet</p>
                 }
             </div>
@@ -58,6 +71,9 @@ const CommentsSection = ({
                     ) : null
                 }
             </div>
+            {
+                modalData && <Modal modalData={modalData} setModalData={setModalData} />
+            }
         </div>
     )
 }

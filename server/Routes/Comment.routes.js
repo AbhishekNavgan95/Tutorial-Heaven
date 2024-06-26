@@ -22,7 +22,7 @@ router.post("/add-comment/:postId", auth, isUser, addComment);
 router.get("/get-post-comments/:postId", getPostComments);
 
 // remove comment
-router.delete("/remove-comment", auth, isUser, removeComment);
+router.delete("/delete-comment/:commentId", auth, isUser, removeComment);
 
 // like comment
 router.put("/like-comment/:commentId", auth, isUser, likeComment);
