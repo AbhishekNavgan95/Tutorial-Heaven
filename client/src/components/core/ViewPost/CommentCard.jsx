@@ -12,6 +12,7 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
     const dispatch = useDispatch();
     const { token } = useSelector((state) => state.auth);
     const [likes, setLikes] = useState(comment?.likes);
+    const [expandComment, setExpandComment] = useState(false);
 
     const handleLikeComment = async () => {
         const response = await likeComment(comment?._id, dispatch, token);
@@ -49,7 +50,13 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
                         </>
                     }
                 </span>
-                <p style={{ whiteSpace: 'pre-wrap' }}>{comment?.description}</p>
+                <span>
+                    <p className={`${expandComment ? "" : "line-clamp-3"}`} style={{ whiteSpace: 'pre-wrap' }}>{comment?.description}</p>
+                    {
+                        comment?.description?.length > 100 &&
+                        <button onClick={() => setExpandComment(!expandComment)} className='text-blue-300  mt-2'>{!expandComment ? "Show more..." : "Show less"}</button>
+                    }
+                </span>
                 <span className='py-1 flex text-xl gap-3 items-center rounded-full w-max'>
                     <button
                         onClick={
