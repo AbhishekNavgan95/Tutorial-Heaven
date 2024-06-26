@@ -53,6 +53,7 @@ const MyPosts = () => {
 
     useEffect(() => {
         fetchPosts(currentPage, sortBy);
+        window.scrollTo(0, 0)
     }, [currentPage, sortBy, fetchPosts]);
 
     const handleNextPage = () => {

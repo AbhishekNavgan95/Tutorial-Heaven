@@ -31,7 +31,7 @@ const CommentCard = ({ comment }) => {
                 </span>
                 <p>{comment?.description}</p>
                 <span className='py-1 flex text-xl gap-3 items-center rounded-full w-max'>
-                    <button onClick={handleLikeComment} className='flex gap-2 items-center transition-all duration-300 py-1 hover:text-night-25 hover:bg-blue-300 px-2 rounded-full'>
+                    <button onClick={handleLikeComment} className='flex gap-2 items-center transition-all duration-300 py-1 hover:text-night-25 hover:bg-blue-300 px-3 rounded-full'>
                         <span className=''>
                             {
                                 user?.likedPosts.includes(comment._id)

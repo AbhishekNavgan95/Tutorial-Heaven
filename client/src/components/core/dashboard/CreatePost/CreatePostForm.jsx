@@ -7,7 +7,6 @@ import { toast } from 'react-hot-toast';
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux'
 import placeHolder from "../../../../assets/placeHolders/imageUpload.png";
-import { MdOutlineOndemandVideo } from "react-icons/md";
 import { createPost, updatePost } from '../../../../services/operations/postAPI';
 import TagInput from './TagInput';
 import { useLocation, useNavigate } from "react-router-dom"
@@ -65,8 +64,8 @@ const CreatePostForm = ({ edit, post }) => {
             setImage(placeHolder);
             setVideoUrl("");
         }
-        
-        if(edit === false && location.pathname.includes("edit")) {
+
+        if (edit === false && location.pathname.includes("edit")) {
             navigate("/dashboard/posts")
         }
 
@@ -103,6 +102,24 @@ const CreatePostForm = ({ edit, post }) => {
 
     const handleSetVideo = (e) => {
         const file = e.target.files[0];
+        const maxFileSize = 100 * 1024 * 1024;
+
+        if (file && file.size > maxFileSize) {
+            toast.error("File size exceeds 100 MB!", {
+                style: {
+                    border: '1px solid #5252B7',
+                    padding: '8px 16px',
+                    color: '#DFE2E2',
+                    background: "#5252B7"
+                },
+                iconTheme: {
+                    primary: '#5252B7',
+                    secondary: '#DFE2E2',
+                },
+            });
+            return;
+        }
+
         if (file) {
             setValue("video", file);
             trigger("video");
@@ -138,6 +155,11 @@ const CreatePostForm = ({ edit, post }) => {
 
         if (!getValues("video")) {
             setError("video", { type: "required" });
+            return;
+        }
+
+        if (getValues("tags")?.length === 0) {
+            setError("tags", { type: "required" });
             return;
         }
 
@@ -252,7 +274,12 @@ const CreatePostForm = ({ edit, post }) => {
                                 }
                                 {
                                     !videoUrl &&
-                                    <span className='text-blue-300 flex items-center gap-2 text-xl font-semibold'>Select a Video <MdOutlineOndemandVideo /></span>
+                                    <span
+                                        className='text-blue-300 flex flex-col items-center gap-2 text-xl font-semibold'
+                                    >
+                                        Select or Drag and drop a video
+                                        <span className='font-light text-sm'>(maximum size - 100mb)</span>
+                                    </span>
                                 }
                                 {
                                     !edit &&
@@ -288,7 +315,7 @@ const CreatePostForm = ({ edit, post }) => {
                         }
                     </span>
                     <span className='flex flex-col items-start gap-3 w-full'>
-                        <TagInput name={"tags"} control={control} setValue={setValue} getValues={getValues} trigger={trigger} />
+                        <TagInput setError={setError} clearErrors={clearErrors} name={"tags"} errors={errors} setValue={setValue} getValues={getValues} trigger={trigger} />
                     </span>
                     <span className='flex gap-3'>
                         <Button type={"submit"} styles={"w-max"} active>Submit</Button>

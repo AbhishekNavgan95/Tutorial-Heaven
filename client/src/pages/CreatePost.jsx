@@ -10,6 +10,7 @@ const CreatePost = () => {
 
     const dispatch = useDispatch()
     useEffect(() => {
+        window.scrollTo(0, 0)
         if (edit) {
             dispatch(setEdit(false))
             dispatch(setPost(null))

@@ -14,7 +14,7 @@ exports.uploadImageTocloudinary = async (file, folder, height, quality) => {
     options.resource_type = "auto";
 
     const response = await cloudinary.uploader.upload(
-      file.tempFilePath,
+      file?.tempFilePath,
       options
     );
 
@@ -30,6 +30,6 @@ exports.uploadImageTocloudinary = async (file, folder, height, quality) => {
       "something went wrong while uplaoding the file to cloud",
       e?.message
     );
-    fs.unlink(file);
+    fs?.unlink(file);
   }
 };

@@ -77,6 +77,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
+    window.scrollTo(0, 0)
   }, [fetchPosts, page, currentCategory])
 
   useEffect(() => {

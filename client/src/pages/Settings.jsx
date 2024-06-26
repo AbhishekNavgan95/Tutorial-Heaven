@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import UpdateProfilePic from '../components/core/dashboard/settings/UpdateProfilePic';
 import UpdateUserName from '../components/core/dashboard/settings/UpdateUserName';
@@ -10,6 +10,10 @@ const Settings = () => {
 
   const [modalData, setModalData] = useState(null)
   const { user } = useSelector(state => state.user);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className='lg:w-8/12 mx-auto py-5 md:py-14'>

@@ -25,7 +25,6 @@ const Bookmarks = () => {
                 { Authorization: `Bearer ${token}` }
             );
 
-            console.log("Res: ", res);
             setPosts(res.data?.data?.savedPosts);
             setTotalPages(res.data?.data?.totalPages);
         } catch (error) {
@@ -61,6 +60,7 @@ const Bookmarks = () => {
 
     useEffect(() => {
         fetchSavedPosts(currentPage, sortBy);
+        window.scrollTo(0, 0)
     }, [currentPage, sortBy, fetchSavedPosts]);
 
     return (

@@ -30,6 +30,7 @@ const ViewPost = () => {
     const [commentsCurrentPage, setCommentsCurrentPage] = useState(1);
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         setPostId(id)
         setSimilarPosts([])
     }, [id])
@@ -118,7 +119,7 @@ const ViewPost = () => {
                     <VideoSection post={post} />
                 </section>
 
-                <section className='flex flex-col items-start gap-3 py-3 row-span-2 w-full md:min-w-[500px] md:max-w-[500px] '>
+                <section className='lg:sticky top-[4rem] h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
                     <h5 className='text-xl font-semibold border-b border-night-50 pb-3 text-wrap w-full'>Related Posts from {post?.category?.title} </h5>
                     {
                         similarPosts.length > 0 && similarPosts.map((post) => (
@@ -143,7 +144,7 @@ const ViewPost = () => {
                     }
                 </section>
 
-                <section>
+                <section className='w-full '>
                     <CommentsSection post={post} comments={comments} setComments={setComments} commentsCurrentPage={commentsCurrentPage} setCommentsCurrentPage={setCommentsCurrentPage} commentsTotalPages={commentsTotalPages} />
                 </section>
             </div>
