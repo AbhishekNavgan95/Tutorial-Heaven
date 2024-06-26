@@ -46,8 +46,8 @@ const ResetPasswordForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)}>
-            <div className='flex flex-col w-full gap-5 relative z-[2]'>
+        <form onSubmit={handleSubmit(submitHandler)} className='w-full'>
+            <div className='flex flex-col w-full gap-3 md:gap-5 relative z-[2]'>
                 <span className='flex flex-col gap-1'>
                     <span className='flex items-center text-xl border-b border-b-blue-300'>
                         <input
@@ -89,7 +89,7 @@ const ResetPasswordForm = () => {
                     {errors.confirmPassword && <span className='font-semibold underline text-danger'>{errors.confirmPassword.message}</span>}
                 </span>
                 <Button disabled={loading} type={"submit"} active>Submit</Button>
-                <Link to={"../login"} className='flex items-center self-center gap-3 cursor-pointer group'><span className='text-xl text-blue-300 transition-all duration-300 group-hover:-translate-x-2'><IoArrowBackOutline /></span> Back to Log in</Link>
+                <Link to={"../login"} className='flex items-center text-center self-center gap-3 cursor-pointer group'><span className='text-xl text-blue-300 transition-all duration-300 group-hover:-translate-x-2'><IoArrowBackOutline /></span> Back to Log in</Link>
             </div>
         </form>
     )

@@ -33,8 +33,8 @@ const OTPForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)}>
-            <div className='flex flex-col w-full gap-5 relative z-[2]'>
+        <form onSubmit={handleSubmit(submitHandler)} className='w-full'>
+            <div className='flex flex-col w-full gap-3 md:gap-5 relative z-[2]'>
                 <span className='flex flex-col w-full gap-1'>
                     <input
                         {...register('otp', { required: true })}
@@ -47,7 +47,7 @@ const OTPForm = () => {
                     }
                 </span>
                 <Button disabled={loading} type={"submit"} active >Submit</Button>
-                <p className='self-center transition-all duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
+                <p className='self-center transition-all text-center duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
             </div>
         </form>
     )

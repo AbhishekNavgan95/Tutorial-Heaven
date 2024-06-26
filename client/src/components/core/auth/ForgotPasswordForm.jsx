@@ -21,8 +21,8 @@ const ForgotPasswordForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)}>
-            <div className='flex flex-col w-full gap-5 relative z-[2]'>
+        <form onSubmit={handleSubmit(submitHandler)} className='w-full'>
+            <div className='flex flex-col w-full gap-3 md:gap-5 relative z-[2]'>
                 <span className='flex flex-col w-full gap-1'>
                     <input
                         {...register('email', { required: true })}

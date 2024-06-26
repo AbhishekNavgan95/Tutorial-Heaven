@@ -40,9 +40,9 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)}>
-            <div className='flex flex-col w-full gap-5 relative z-[2]'>
-                <span className='flex flex-col gap-1'>
+        <form onSubmit={handleSubmit(submitHandler)} className='w-full'>
+            <div className='flex flex-col w-full gap-3 sm:gap-5 relative z-[2]'>
+                <span className='flex flex-col gap-1 w-full'>
                     <input
                         {...register('email', { required: true })}
                         placeholder='Email'
@@ -73,9 +73,9 @@ const LoginForm = () => {
                     </span>
                     {errors.password && <span className='font-semibold underline text-danger'>Password is required</span>}
                 </span>
-                <p className='self-end font-semibold text-blue-300 transition-all duration-300 cursor-pointer hover:text-blue-400'><Link to={"../forgot-password"}>Forgot Password?</Link></p>
+                <p className='self-end font-semibold text-blue-300 transition-all duration-300 cursor-pointer text-sm hover:text-blue-400'><Link to={"../forgot-password"}>Forgot Password?</Link></p>
                 <Button disabled={loading} type={"submit"} active>Submit</Button>
-                <p className='self-center transition-all duration-300'>Don't have an Account? <Link to={"/signup"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Sign up</Link></p>
+                <p className='self-center transition-all duration-300 text-center'>Don't have an Account? <Link to={"/signup"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Sign up</Link></p>
             </div>
         </form>
     )

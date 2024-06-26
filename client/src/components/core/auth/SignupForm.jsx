@@ -55,9 +55,9 @@ const SignupForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
+    <form onSubmit={handleSubmit(submitHandler)} className='w-full'>
       <div className='flex flex-col w-full gap-3 relative z-[2]'>
-        <div className='flex gap-5'>
+        <div className='flex gap-3 md:gap-5'>
           <span className='flex flex-col w-full gap-1'>
             <input
               {...register('firstName', { required: true })}
@@ -140,7 +140,7 @@ const SignupForm = () => {
           {errors.confirmPassword && <span className='font-semibold underline text-danger'>{errors.confirmPassword.message}</span>}
         </span>
         <Button disabled={loading} type={"submit"} active >Submit</Button>
-        <p className='self-center transition-all duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
+        <p className='self-center text-center transition-all duration-300'>Already have an Account? <Link to={"/login"} className='font-semibold text-blue-300 cursor-pointer hover:text-blue-400'>Log in</Link></p>
       </div>
     </form>
   )
