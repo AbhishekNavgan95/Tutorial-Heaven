@@ -97,10 +97,7 @@ const MyPosts = () => {
     return (
         <>
             <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
-                <div className='border-b border-blue-300 pb-3'>
-                    <h4 className='text-xl text-center md:text-start font-semibold text-blue-300'>My Posts</h4>
-                    <p className='text-blue-300 text-center md:text-start'>Manage your posts</p>
-                </div>
+                <h4 className='text-xl text-center border-b border-blue-300 pb-3 md:text-start font-semibold text-blue-300'>My Posts</h4>
                 <div className='flex flex-col justify-start w-full'>
                     <div className='flex items-center justify-between gap-3 my-5'>
                         <span className='text-blue-300'>Page {currentPage} of {totalPages}</span>

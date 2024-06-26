@@ -65,11 +65,8 @@ const Bookmarks = () => {
 
     return (
         <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
-            <div className='border-b border-blue-300 pb-3'>
-                <h4 className='text-xl text-center md:text-start font-semibold text-blue-300'>Bookmarks</h4>
-                <p className='text-gray-400 text-center md:text-start text-blue-300'>All your saved posts are listed here</p>
-            </div>
-            <div className='mt-8'>
+            <h4 className='text-xl border-b border-blue-300 text-center md:text-start pb-3 font-semibold text-blue-300'>Bookmarks</h4>
+            <div className='mt-3'>
                 <div className='flex items-center justify-between gap-3 my-5'>
                     <span className='text-blue-300'>Page {currentPage} of {totalPages}</span>
                     <span className='flex gap-3 items-center'>

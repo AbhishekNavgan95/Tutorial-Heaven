@@ -6,7 +6,7 @@ const Post = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate(`/view/${post?._id}`)} className='flex flex-col xl:flex-row gap-3 cursor-pointer bg-blue-50 text-night-25  hover:bg-blue-300 transition-all duration-300 p-3 rounded-lg'>
+    <div onClick={() => navigate(`/view/${post?._id}`)} className='flex flex-col xl:flex-row gap-3 cursor-pointer border-blue-300 border text-night-900 transition-all duration-300 p-3 rounded-lg'>
       <span>
         <img className='w-full h-[150px] xl:h-auto xl:max-w-[300px] xl:aspect-video rounded-lg object-cover' src={post?.thumbnail?.url} alt="" />
       </span>

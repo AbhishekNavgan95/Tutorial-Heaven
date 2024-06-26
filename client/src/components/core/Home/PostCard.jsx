@@ -69,9 +69,9 @@ const PostCard = ({ post }) => {
                                 </span>
                             </span>
                         </span>
-                        <span className='relative group/menu flex justify-center p-2 '>
+                        <span onClick={(e) => e.stopPropagation()} className='relative group/menu flex justify-center p-2 '>
                             <button className='text-blue-300 text-xl '><BsThreeDotsVertical /></button>
-                            <div className={`absolute bottom-[-80%]  bg-night-25 border border-night-900 hover:border-blue-300 right-0 rounded-lg transition-all duration-100 hidden group-hover/menu:block`}>
+                            <div className={`absolute bottom-[-80%]  bg-night-25 border border-night-900 hover:border-blue-300 right-[50%] rounded-lg transition-all duration-100 hidden group-hover/menu:block group-active/menu:block`}>
                                 <button
                                     onClick={
                                         (e) => {
