@@ -347,7 +347,7 @@ export const changePostStatus = async (status, token, postId, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
-
+    return true
   } catch (e) {
     console.log("ARCHIVE_POST_API_ERROR : ", e);
     toast.error(e?.response?.data?.message, {
@@ -365,4 +365,5 @@ export const changePostStatus = async (status, token, postId, dispatch) => {
   } finally {
     dispatch(setProgress(100));
   }
+  return false
 };

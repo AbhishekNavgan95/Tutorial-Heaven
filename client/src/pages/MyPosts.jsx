@@ -8,6 +8,7 @@ import Spinner from '../components/common/Spinner';
 import toast from 'react-hot-toast';
 import Modal from '../components/common/Modal';
 import { deletePost } from '../services/operations/postAPI';
+import { changePostStatus } from '../services/operations/userAPI';
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -76,7 +77,21 @@ const MyPosts = () => {
             console.log("post deleted ")
             setPosts(posts.filter((post) => post._id !== postId))
         }
+    }
 
+    const handleChangePostStatus = async (status, postId) => {
+
+        // console.log("status : ", status);
+        const response = await changePostStatus(status, token, postId, dispatch);
+        if (response) {
+            // console.log("post : ", posts);
+            setPosts(posts.map((post) => {
+                if (post._id === postId) {
+                    post.status = status;
+                }
+                return post;
+            }))
+        }
     }
 
     return (
@@ -109,7 +124,7 @@ const MyPosts = () => {
                             </span>
                             : <div className='grid xl:grid-cols-2 gap-5'>
                                 {posts.map(post => (
-                                    <PostCard handleDeletePost={handleDeletePost} modalData={modalData} setModalData={setModalData} post={post} key={post._id} />
+                                    <PostCard handleChangePostStatus={handleChangePostStatus} handleDeletePost={handleDeletePost} modalData={modalData} setModalData={setModalData} post={post} key={post._id} />
                                 ))}
                             </div>
                     }

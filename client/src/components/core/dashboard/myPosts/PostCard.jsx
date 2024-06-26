@@ -3,23 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { CiSettings } from "react-icons/ci";
 import { setEdit, setPost } from '../../../../slices/postSlice'
-import { MdDescription, MdOutlineArchive } from "react-icons/md";
+import { MdOutlineArchive } from "react-icons/md";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { POST_STATUS } from '../../../../services/constants';
 import { FaStar } from "react-icons/fa";
-import { changePostStatus } from '../../../../services/operations/userAPI';
 
-const PostCard = ({ post, handleDeletePost, setModalData }) => {
-
-  const [postStatus, setPostStatus] = useState("");
-
-  useEffect(() => {
-    setPostStatus(post?.status)
-  }, [])
+const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token } = useSelector(state => state.auth)
 
   return (
     <div className='flex flex-col gap-3'>
@@ -55,10 +47,10 @@ const PostCard = ({ post, handleDeletePost, setModalData }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation(); setModalData({
-                    title: postStatus === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
-                    description: `Are you sure you want to ${postStatus === POST_STATUS.ARCHIVED ? "Publish" : "Archive"} this post?`,
-                    primaryButtonText: postStatus === POST_STATUS.PUBLISHED ? "Archive" : "Publish",
-                    primaryButtonHandler: () => changePostStatus(postStatus === POST_STATUS.PUBLISHED ? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, token, post._id, dispatch),
+                    title: post?.status === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
+                    description: `Are you sure you want to ${post?.status === POST_STATUS.ARCHIVED ? "Publish" : "Archive"} this post?`,
+                    primaryButtonText: post?.status === POST_STATUS.PUBLISHED ? "Archive" : "Publish",
+                    primaryButtonHandler: () => handleChangePostStatus(post?.status === POST_STATUS.PUBLISHED ? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, post._id),
                     secondaryButtonText: "Cancel",
                     secondaryButtonHandler: () => setModalData(null)
                   })
@@ -81,7 +73,7 @@ const PostCard = ({ post, handleDeletePost, setModalData }) => {
             </span>
           </span>
           {
-            postStatus === POST_STATUS.ARCHIVED &&
+            post?.status === POST_STATUS.ARCHIVED &&
             <span className='text-blue-300 m-3 bg-night-25 rounded-full p-2 absolute text-sm top-0 right-0'>
               <FaStar />
             </span>
@@ -110,10 +102,10 @@ const PostCard = ({ post, handleDeletePost, setModalData }) => {
           </button>
           <button
             onClick={() => setModalData({
-              title: postStatus === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
-              description: `Are you sure you want to ${postStatus === POST_STATUS.ARCHIVED ? "Publish" : "Archive"} this post?`,
-              primaryButtonText: postStatus === POST_STATUS.PUBLISHED ? "Archive" : "Publish",
-              primaryButtonHandler: () => changePostStatus(postStatus === POST_STATUS.PUBLISHED ? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, token, post._id, dispatch),
+              title: post?.status === POST_STATUS.ARCHIVED ? "Publish Post?" : "Archive Post?",
+              description: `Are you sure you want to ${post?.status === POST_STATUS.ARCHIVED ? "Publish" : "Archive"} this post?`,
+              primaryButtonText: post?.status === POST_STATUS.PUBLISHED ? "Archive" : "Publish",
+              primaryButtonHandler: () => handleChangePostStatus(post?.status === POST_STATUS.PUBLISHED ? POST_STATUS.ARCHIVED : POST_STATUS.PUBLISHED, post._id),
               secondaryButtonText: "Cancel",
               secondaryButtonHandler: () => setModalData(null)
             })}
