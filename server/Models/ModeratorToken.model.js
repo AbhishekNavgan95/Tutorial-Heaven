@@ -10,6 +10,7 @@ const ModeratorTokenSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    trim: true
   },
   createdAt: {
     type: Date,

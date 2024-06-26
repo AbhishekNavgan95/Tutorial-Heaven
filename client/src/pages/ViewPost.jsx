@@ -139,7 +139,7 @@ const ViewPost = () => {
                     }
                     {
                         similarPosts.length === 0 && (
-                            <p className='px-3 w-full text-center self-center'>No similar posts found</p>
+                            <p className='px-3 w-full text-center self-center'>No posts found</p>
                         )
                     }
                 </section>

@@ -16,6 +16,7 @@ const CreatePostForm = ({ edit, post }) => {
 
     const [image, setImage] = useState(placeHolder);
     const [videoUrl, setVideoUrl] = useState(null); // State for video URL
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const { token } = useSelector(state => state.auth)
     const navigate = useNavigate();
@@ -131,7 +132,7 @@ const CreatePostForm = ({ edit, post }) => {
     }
 
     const submitHandler = async (data) => {
-
+        setLoading(true)
         if (edit) {
             const response = await updatePost(data, post?._id, dispatch, token);
             if (response) {
@@ -174,6 +175,7 @@ const CreatePostForm = ({ edit, post }) => {
             navigate("/dashboard/posts")
         }
 
+        setLoading(false)
     }
 
     return (
@@ -318,7 +320,7 @@ const CreatePostForm = ({ edit, post }) => {
                         <TagInput setError={setError} clearErrors={clearErrors} name={"tags"} errors={errors} setValue={setValue} getValues={getValues} trigger={trigger} />
                     </span>
                     <span className='flex gap-3'>
-                        <Button type={"submit"} styles={"w-max"} active>Submit</Button>
+                        <Button disabled={loading} type={"submit"} styles={"w-max"} active>Submit</Button>
                         <Button action={() => {
                             dispatch(setEdit(false));
                             dispatch(setPost(null));

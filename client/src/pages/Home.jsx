@@ -86,7 +86,7 @@ const Home = () => {
 
   return (
     <div className='pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
-      <div className='flex flex-wrap gap-3 px-3'>
+      <div className='flex gap-3 px-3 pb-3 overflow-auto'>
         <CategoryButton
           isActive={currentCategory === "All"}
           onClick={() => setCurrentCategory("All")}
@@ -160,7 +160,7 @@ const Home = () => {
 
 const CategoryButton = ({ isActive, onClick, children }) => (
   <button
-    className={`w-max px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-blue-300 text-night-25 border-blue-300" : "bg-night-25 text-blue-300 border-blue-300 hover:bg-blue-300 hover:text-night-25"}`}
+    className={`w-max text-nowrap px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-blue-300 text-night-25 border-blue-300" : "bg-night-25 text-blue-300 border-blue-300 hover:bg-blue-300 hover:text-night-25"}`}
     onClick={onClick}
   >
     {children}

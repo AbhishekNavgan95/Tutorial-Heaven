@@ -8,9 +8,8 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { POST_STATUS } from '../../../../services/constants';
 import { FaStar } from "react-icons/fa";
 import { changePostStatus } from '../../../../services/operations/userAPI';
-import { deletePost } from '../../../../services/operations/postAPI';
 
-const PostCard = ({ post, modalData, setModalData }) => {
+const PostCard = ({ post, handleDeletePost, setModalData }) => {
 
   const [postStatus, setPostStatus] = useState("");
 
@@ -44,7 +43,7 @@ const PostCard = ({ post, modalData, setModalData }) => {
                     title: "Delete Post",
                     description: "Are you sure you want to delete this post?",
                     primaryButtonText: "Delete",
-                    primaryButtonHandler: () => deletePost(post._id, dispatch, token),
+                    primaryButtonHandler: () => handleDeletePost(post._id),
                     secondaryButtonText: "Cancel",
                     secondaryButtonHandler: () => setModalData(null)
                   })
@@ -101,7 +100,7 @@ const PostCard = ({ post, modalData, setModalData }) => {
               title: "Delete Post?",
               description: "Are you sure you want to delete this post?",
               primaryButtonText: "Delete",
-              primaryButtonHandler: () => deletePost(post._id, dispatch, token),
+              primaryButtonHandler: () => handleDeletePost(post._id),
               secondaryButtonText: "Cancel",
               secondaryButtonHandler: () => setModalData(null)
             })}

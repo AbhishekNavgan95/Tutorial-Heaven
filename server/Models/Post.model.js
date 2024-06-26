@@ -13,10 +13,12 @@ const PostSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true
     },
     description: {
       type: String,
       required: true,
+      trim: true
     },
     category: {
       type: mongoose.Schema.ObjectId,

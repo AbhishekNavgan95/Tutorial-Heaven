@@ -172,6 +172,8 @@ export const deletePost = async (postId, dispatch, token) => {
         secondary: "#DFE2E2",
       },
     });
+
+    return true;
   } catch (e) {
     console.log("DELETE_POST_API_ERROR : ", e);
     toast.error(e?.response?.data?.message, {
@@ -189,6 +191,7 @@ export const deletePost = async (postId, dispatch, token) => {
   } finally {
     dispatch(setProgress(100));
   }
+  return false;
 };
 
 export const addComment = async (data, postId, dispatch, token) => {

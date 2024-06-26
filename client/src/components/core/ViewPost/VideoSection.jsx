@@ -30,7 +30,7 @@ const VideoSection = ({ post }) => {
                             <p>{formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })}</p>
                         }
                         <span className={`${description ? "block" : "hidden"} py-3`}>
-                            <p>{post?.description}</p>
+                            <p  style={{ whiteSpace: 'pre-wrap' }}>{post?.description}</p>
                         </span>
                         <button className='text-blue-300 font-semibold' onClick={() => setDescription(!description)}>{description ? "show less..." : "show more..."}</button>
                     </span>

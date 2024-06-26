@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { apiConnector } from "../services/apiConnector";
 import { userEndpoints } from '../services/APIs';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PostCard from '../components/core/dashboard/myPosts/PostCard';
 import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
 import toast from 'react-hot-toast';
 import Modal from '../components/common/Modal';
+import { deletePost } from '../services/operations/postAPI';
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -16,6 +17,7 @@ const MyPosts = () => {
     const [sortBy, setSortBy] = useState('createdAt'); // Default sorting by creation date
     const { token } = useSelector((state) => state.auth);
     const [modalData, setModalData] = useState(null);
+    const dispatch = useDispatch()
 
     const fetchPosts = useCallback(async (page, sort) => {
         setLoading(true);
@@ -68,6 +70,14 @@ const MyPosts = () => {
         }
     };
 
+    const handleDeletePost = async (postId) => {
+        const response = await deletePost(postId, dispatch, token);
+        if (response) {
+            console.log("post deleted ")
+            setPosts(posts.filter((post) => post._id !== postId))
+        }
+
+    }
 
     return (
         <>
@@ -99,7 +109,7 @@ const MyPosts = () => {
                             </span>
                             : <div className='grid xl:grid-cols-2 gap-5'>
                                 {posts.map(post => (
-                                    <PostCard modalData={modalData} setModalData={setModalData} post={post} key={post._id} />
+                                    <PostCard handleDeletePost={handleDeletePost} modalData={modalData} setModalData={setModalData} post={post} key={post._id} />
                                 ))}
                             </div>
                     }

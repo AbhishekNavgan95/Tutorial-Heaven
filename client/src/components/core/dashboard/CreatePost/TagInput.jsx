@@ -61,21 +61,23 @@ const TagInput = ({ name, errors, setValue, getValues, trigger, clearErrors, set
                         </button>
                     </div>
                 ))}
-                <input
-                    type="text"
-                    value={tagInput}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Press Enter to add tags"
-                    className="bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-xl w-max py-2 rounded"
-                />
-                <button
-                    type="button"
-                    onClick={addTag}
-                    className=" text-blue-300 px-2 py-3 text-xl"
-                >
-                    <IoMdAdd />
-                </button>
+                <span className='flex items-center justify-between '>
+                    <input
+                        type="text"
+                        value={tagInput}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        placeholder="Press Enter to add tags"
+                        className="w-max min-w-[300px] bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-xl py-2 rounded"
+                    />
+                    <button
+                        type="button"
+                        onClick={addTag}
+                        className=" text-blue-300 px-2 py-3 text-xl md:hidden block"
+                    >
+                        <IoMdAdd />
+                    </button>
+                </span>
             </div>
             {errors.tags && <span className='font-semibold underline text-danger'>Tags are required</span>}
         </div>
