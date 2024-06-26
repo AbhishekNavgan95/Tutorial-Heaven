@@ -43,7 +43,7 @@ const Home = () => {
     dispatch(setProgress(60))
     setLoading(true);
     const endpoint = currentCategory === "All"
-      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=10`
+      ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=30`
       : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=10`
 
     try {
@@ -86,42 +86,22 @@ const Home = () => {
 
   return (
     <div className='pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
-      <div className='flex gap-3 px-3 pb-3 overflow-auto'>
-        <CategoryButton
-          isActive={currentCategory === "All"}
-          onClick={() => setCurrentCategory("All")}
-        >
-          All
-        </CategoryButton>
-        {categories.map((category) => (
-          <CategoryButton
-            key={category._id}
-            isActive={currentCategory === category._id}
-            onClick={() => setCurrentCategory(category._id)}
-          >
-            {category.title}
-          </CategoryButton>
-        ))}
-      </div>
-      <div className='bg-night-25 -full'>
+      <div className='flex justify-between items-center gap-3 px-3 overflow-auto '>
         <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-          <span className='my-2 pt-3 text-blue-300'>
+          <span className=''>
             Page: {page} of {totalPages}
           </span>
-          <span className='flex items-start gap-3 py-2'>
-            {page > 1 && (
-              <Button styles="w-max" active action={() => setPage(page - 1)}>
-                Previous
-              </Button>
-            )}
-            {page < totalPages && (
-              <Button styles="w-max" active action={() => setPage(page + 1)}>
-                Next
-              </Button>
-            )}
-          </span>
         </div>
+        <select className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900' value={currentCategory} onChange={(e) => setCurrentCategory(e.target.value)} name="category" id="category">
+          <option value="All">All</option>
+          {
+            categories?.map((category) => (
+              <option key={category?._id} value={category?._id}>{category.title}</option>
+            ))
+          }
+        </select>
       </div>
+
       {loading ? (
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
           <Spinner />
@@ -138,7 +118,7 @@ const Home = () => {
         </div>
       )}
       <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-        <span className='my-2 py-3 text-blue-300'>
+        <span className='my-2 py-3'>
           Page: {page} of {totalPages}
         </span>
         <span className='flex items-start gap-3 py-2'>
@@ -157,15 +137,6 @@ const Home = () => {
     </div>
   );
 };
-
-const CategoryButton = ({ isActive, onClick, children }) => (
-  <button
-    className={`w-max text-nowrap px-4 py-1 rounded-lg border transition-all duration-300 ${isActive ? "bg-blue-300 text-night-25 border-blue-300" : "bg-night-25 text-blue-300 border-blue-300 hover:bg-blue-300 hover:text-night-25"}`}
-    onClick={onClick}
-  >
-    {children}
-  </button>
-);
 
 
 export default Home;

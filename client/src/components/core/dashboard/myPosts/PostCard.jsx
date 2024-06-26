@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
-import { CiSettings } from "react-icons/ci";
+import { IoSettingsSharp } from "react-icons/io5";
 import { setEdit, setPost } from '../../../../slices/postSlice'
 import { MdOutlineArchive } from "react-icons/md";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -68,7 +68,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
                 }}
                 className='text-2xl hover:scale-[1.15] hover:bg-night-25 p-1 rounded-full hover:text-blue-300 aspect-square  transiion-all duration-300 w-max'
               >
-                <CiSettings />
+                <IoSettingsSharp />
               </button>
             </span>
           </span>
@@ -121,7 +121,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
             }}
             className='text-2xl rounded-full hover:bg-blue-300 p-2 hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
           >
-            <CiSettings />
+            <IoSettingsSharp />
           </button>
         </span>
       </span>
