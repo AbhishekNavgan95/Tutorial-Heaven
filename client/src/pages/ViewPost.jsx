@@ -6,6 +6,7 @@ import VideoSection from '../components/core/ViewPost/VideoSection';
 import PostCard from '../components/core/ViewPost/PostCart';
 import CommentsSection from '../components/core/ViewPost/CommentsSection';
 import { toast } from "react-hot-toast"
+import PostLoader from '../components/core/ViewPost/PostLoader';
 
 const ViewPost = () => {
 
@@ -28,6 +29,9 @@ const ViewPost = () => {
     const [similarPostsTotalPages, setSimilarPostsTotalPages] = useState(0);
     const [commentsTotalPages, setCommentsTotalPages] = useState(0);
     const [commentsCurrentPage, setCommentsCurrentPage] = useState(1);
+    const [isPostLoading, setIsPostLoading] = useState(true)
+    const [isCommentsLoading, setIsCommentsLoading] = useState(true)
+    const [isSimilarPostsLoading, setIsSimilarPostsLoading] = useState(true)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -56,6 +60,7 @@ const ViewPost = () => {
                 });
             }
         }
+        setIsPostLoading(false)
     }, [postId])
 
     const getCategoryPosts = useCallback(async () => {
@@ -65,6 +70,7 @@ const ViewPost = () => {
                 // console.log("response : ", response);
                 setSimilarPosts((prev) => [...prev, ...response?.data?.data?.posts?.filter((elem) => elem?._id !== post?._id)])
                 setSimilarPostsTotalPages(response?.data?.data?.totalPages)
+
             } catch (e) {
                 console.log("error : ", e);
                 toast.error("Could't get related posts", {
@@ -81,6 +87,7 @@ const ViewPost = () => {
                 });
             }
         }
+        setIsSimilarPostsLoading(false)
     }, [post, similarPostsCurrentPage])
 
     const getPostComments = useCallback(async () => {
@@ -94,6 +101,9 @@ const ViewPost = () => {
                 console.log("comments error : ", e)
             }
         }
+        setTimeout(() => {
+            setIsCommentsLoading(false)
+        }, 4000)
     }, [postId, commentsCurrentPage])
 
     useEffect(() => {
@@ -116,13 +126,26 @@ const ViewPost = () => {
             <div className='grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-x-5 w-full'>
 
                 <section className='flex flex-wrap gap-3 h-max w-full'>
-                    <VideoSection post={post} />
+                    <VideoSection post={post} loading={isPostLoading} />
                 </section>
 
                 <section className='lg:sticky top-[4rem] h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
                     <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related Posts from {post?.category?.title} </h5>
                     {
-                        similarPosts.length > 0 && similarPosts.map((post) => (
+                        isSimilarPostsLoading && (
+                            <div className='flex justify-center flex-col gap-y-3 w-full'>
+                                <PostLoader />
+                                <PostLoader />
+                                <PostLoader />
+                                <PostLoader />
+                                <PostLoader />
+                                <PostLoader />
+                                <PostLoader />
+                            </div>
+                        )
+                    }
+                    {
+                        similarPosts.length > 0 && !isSimilarPostsLoading && similarPosts.map((post) => (
                             <PostCard key={post?._id} post={post} />
                         ))
                     }
@@ -138,14 +161,22 @@ const ViewPost = () => {
                         )
                     }
                     {
-                        similarPosts.length === 0 && (
+                        similarPosts.length === 0 && !isSimilarPostsLoading && (
                             <p className='px-3 w-full text-center self-center'>No posts found</p>
                         )
                     }
                 </section>
 
                 <section className='w-full '>
-                    <CommentsSection post={post} comments={comments} setComments={setComments} commentsCurrentPage={commentsCurrentPage} setCommentsCurrentPage={setCommentsCurrentPage} commentsTotalPages={commentsTotalPages} />
+                    <CommentsSection
+                        loading={isCommentsLoading}
+                        post={post}
+                        comments={comments}
+                        setComments={setComments}
+                        commentsCurrentPage={commentsCurrentPage}
+                        setCommentsCurrentPage={setCommentsCurrentPage}
+                        commentsTotalPages={commentsTotalPages}
+                    />
                 </section>
             </div>
         </div >

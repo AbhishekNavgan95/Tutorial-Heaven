@@ -7,6 +7,7 @@ import { addComment } from '../../../services/operations/postAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from "../../common/Modal"
 import { deleteComment } from '../../../services/operations/commentAPI';
+import Spinner from '../../common/Spinner'
 
 const CommentsSection = ({
     post,
@@ -14,7 +15,8 @@ const CommentsSection = ({
     setComments,
     commentsTotalPages,
     setCommentsCurrentPage,
-    commentsCurrentPage
+    commentsCurrentPage,
+    loading
 }) => {
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -31,17 +33,14 @@ const CommentsSection = ({
     }
 
     const handleDeleteComment = (commentId) => {
-
-        console.log("delete comment")
-
         const response = deleteComment(commentId, dispatch, token)
-        if(response) {
+        if (response) {
             setComments(prev => prev.filter((c) => c?._id !== commentId))
         }
     }
 
     return (
-        <div className='py-5 w-full '>
+        <div className='pb-5 w-full '>
             <div className='bg-night-25 w-full lg:sticky top-[4rem] pt-5'>
                 <h5 className='text-xl font-semibold border-b border-night-50 pb-3'>Comments</h5>
                 <form onSubmit={handleSubmit(submitHandler)} className='pt-3 w-full flex flex-col items-end gap-3 border-b border-night-50 pb-3'>
@@ -54,11 +53,11 @@ const CommentsSection = ({
                     <Button type={"submit"} active styles={"w-max"}>Submit</Button>
                 </form>
             </div>
-            <div className='py-5'>
+            <div className='py-5 w-full'>
                 {
-                    comments.length > 0 ? (comments.map((comment) => (
+                    comments.length > 0 && !loading ? (comments?.map((comment) => (
                         <CommentCard handleDeleteComment={handleDeleteComment} setModalData={setModalData} key={comment?._id} comment={comment} />
-                    ))) : <p>No comments yet</p>
+                    ))) : loading ? <div className='flex justify-center'><Spinner /></div> : <div className='flex justify-center'><p>No comments found</p></div>
                 }
             </div>
             <div className='flex flex-col items-center'>
