@@ -10,29 +10,32 @@ import { dropDownLinks } from '../../data/dropDownLinks';
 import Modal from './Modal';
 import { logout } from "../../services/operations/authAPI"
 import { USER_TYPES } from "../../services/constants"
+import { CiMenuFries } from "react-icons/ci";
+import MobileNav from './MobileNav';
 
 const Navbar = () => {
 
     const [navActive, setNavActive] = useState(false);
+    const [mobileNavActive, setMobileNavActive] = useState(false);
     const { token } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.user)
     const [modalData, setModalData] = useState(null);
 
     return (
         <>
-            <header className='fixed w-full shadow-sm bg-night-25 shadow-night-300 z-[10]'>
-                <nav className='mx-auto max-w-maxContent'>
+            <header className='fixed w-full z-[10] '>
+                <nav className='mx-auto max-w-maxContent border-b border-night-50 bg-night-25 relative z-[11]'>
                     <div className='flex items-center justify-between px-3 py-3'>
 
                         {/* logo */}
                         <span>
                             <Link to="/">
-                                <img src={image} className='max-w-[230px]' alt="" />
+                                <img src={image} className='max-w-[150px] lg:max-w-[230px]' alt="" />
                             </Link>
                         </span>
 
                         {/* search bar */}
-                        <span className='flex overflow-hidden text-lg border rounded-md border-night-300'>
+                        <span className='hidden md:flex overflow-hidden text-lg border rounded-md border-night-300'>
                             <span className='flex items-center'>
                                 <span className={`${navActive ? "text-xl justify-center items-start flex" : "hidden"} pl-3 `}>
                                     <IoSearchOutline />
@@ -47,8 +50,14 @@ const Navbar = () => {
                             <button className='px-3 text-xl transition-all duration-300 bg-blue-300 border border-night-300 hover:bg-blue-400 text-night-5'><IoSearchSharp /></button>
                         </span>
 
+                        <span onClick={() => setMobileNavActive(!mobileNavActive)} className='md:hidden text-lg px-2 py-1'>
+                            <p className='cursor-pointer'>
+                                <CiMenuFries />
+                            </p>
+                        </span>
+
                         {/* action buttons */}
-                        <span className='flex items-center gap-3'>
+                        <span className='md:flex hidden items-center gap-3'>
                             {
                                 token === null && <ActionButton to={"/login"} >Log in</ActionButton>
                             }
@@ -68,6 +77,7 @@ const Navbar = () => {
                         </span>
                     </div>
                 </nav>
+                <MobileNav mobileNavActive={mobileNavActive} setMobileNavActive={setMobileNavActive} />
             </header>
             {
                 modalData && <Modal setModalData={setModalData} modalData={modalData} />
@@ -91,10 +101,10 @@ const ProfileDropDown = ({ setModalData }) => {
                 absolute top-full right-0 my-2 border border-blue-300 w-[150px] shadow-sm shadow-night-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300`}
             >
                 {
-                    dropDownLinks.map((link, index) => (
-                        user && user.accountType === link.access || link.access === USER_TYPES.ALL ?
-                            <NavLink key={index} to={link.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
-                                <span >{link.title}</span>
+                    dropDownLinks.map((link) => (
+                        user && user?.accountType === link?.access || link?.access === USER_TYPES.ALL ?
+                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
+                                <span >{link?.title}</span>
                             </NavLink>
                             : null
                     ))
