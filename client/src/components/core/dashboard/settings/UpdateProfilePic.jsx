@@ -23,14 +23,14 @@ const UpdateProfilePic = ({ user }) => {
     };
 
     return (
-        <div className=' flex flex-col gap-y-10'>
-            <h3 className='text-xl font-semibold text-blue-300 border-b pb-3'>Update Profile Picture</h3>
+        <div className=' flex flex-col gap-y-5 md:gap-y-10'>
+            <h3 className='text-base md:text-lg xl:text-xl font-semibold text-blue-300 border-b pb-3'>Update Profile Picture</h3>
             <form onSubmit={handleSubmit(submitHandler)} className='w-10/12 lg:w-8/12 mx-auto flex flex-col md:flex-row items-center justify-start gap-5 md:gap-10'>
                 <img src={file} className='max-w-[100px] md:max-w-[150px] rounded-full object-cover border-4 aspect-square border-blue-300' alt="Profile" />
                 <span className='flex gap-3 items-end justify-center flex-col'>
                     <label
                         htmlFor="userImage"
-                        className='border w-full px-10 rounded-lg py-2 border-blue-300 text-blue-300 shadow-sm shadow-night-300 hover:shadow-night-600 hover:shadow-md transition-all duration-300 active:scale-[0.95]'
+                        className='border w-full  text-sm md:text-base xl:text-xl  text-center rounded-lg py-1 md:py-2 border-blue-300 text-blue-300 shadow-sm shadow-night-300 hover:shadow-night-600 hover:shadow-md transition-all duration-300 active:scale-[0.95]'
                     >
                         Select
                     </label>

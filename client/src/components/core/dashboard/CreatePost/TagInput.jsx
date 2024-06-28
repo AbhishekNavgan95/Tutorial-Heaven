@@ -52,28 +52,28 @@ const TagInput = ({ name, errors, setValue, getValues, trigger, clearErrors, set
 
     return (
         <div className='w-full flex flex-col gap-2'>
-            <div className="flex flex-wrap items-center gap-2 border-b border-blue-300 w-full py-1">
+            <div className="flex flex-wrap items-center gap-2 border-b border-blue-300 w-full md:py-1">
                 {tags?.map((tag, index) => (
-                    <div key={index} className="bg-blue-300 text-night-25 rounded-full h-max px-3 py-1 flex items-center justify-center">
+                    <div key={index} className=" text-sm sm:text-base bg-blue-300 text-night-25 rounded-full h-max px-3 py-1 flex items-center justify-center">
                         {tag}
                         <button type="button" className="ml-2" onClick={() => removeTag(index)}>
                             &#x2715;
                         </button>
                     </div>
                 ))}
-                <span className='flex items-center justify-between '>
+                <span className='flex items-center justify-between'>
                     <input
                         type="text"
                         value={tagInput}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         placeholder="Press Enter to add tags"
-                        className="w-max min-w-[300px] bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-xl py-2 rounded"
+                        className="w-max md:min-w-[300px] bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-sm sm:text-lg lg:text-xl py-2 rounded"
                     />
                     <button
                         type="button"
                         onClick={addTag}
-                        className=" text-blue-300 px-2 py-3 text-xl md:hidden block"
+                        className=" text-blue-300 px-2 py-3 text-sm sm:text-lg lg:text-xl md:hidden block"
                     >
                         <IoMdAdd />
                     </button>

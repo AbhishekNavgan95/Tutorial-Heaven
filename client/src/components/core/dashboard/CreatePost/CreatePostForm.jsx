@@ -180,8 +180,8 @@ const CreatePostForm = ({ edit, post }) => {
 
     return (
         <span>
-            <form onSubmit={handleSubmit(submitHandler)} className='w-10/12 lg:w-8/12 mx-auto flex items-center justify-start gap-10'>
-                <div className='flex flex-col w-full gap-5'>
+            <form onSubmit={handleSubmit(submitHandler)} className='w-full md:w-10/12 lg:w-8/12 mx-auto '>
+                <div className='flex flex-col w-full gap-3 md:gap-5'>
                     <span className='flex flex-col gap-3 w-full'>
                         <input
                             {...register("title", { required: true })}
@@ -189,7 +189,7 @@ const CreatePostForm = ({ edit, post }) => {
                             type="text"
                             name='title'
                             id='title'
-                            className='w-full py-3 text-xl bg-transparent focus:border-b-2 border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl bg-transparent focus:border-b-2 border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
                         />
                         {
                             errors.title && <span className='font-semibold underline text-danger'>Title is required</span>
@@ -202,14 +202,14 @@ const CreatePostForm = ({ edit, post }) => {
                             name='description'
                             rows={3}
                             id='description'
-                            className='w-full py-3 text-xl focus:border-b-2  bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl focus:border-b-2  bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
                         ></textarea>
                         {
                             errors.description && <span className='font-semibold underline text-danger'>Description is required</span>
                         }
                     </span>
                     <span className='flex flex-col gap-3 w-full'>
-                        <select className='w-full py-3 outline-none focus:border-b-2  text-xl text-blue-300 bg-night-25 border-b border-blue-300' defaultValue="" {...register("category", { required: true })} name="category" id="category">
+                        <select className='w-full pb-2 md:py-3 outline-none focus:border-b-2 text-sm sm:text-lg lg:text-xl text-blue-300 bg-night-25 border-b border-blue-300 ' defaultValue="" {...register("category", { required: true })} name="category" id="category">
                             <option className='text-night-900' value="">Select a Category</option>
                             {
                                 categories.length > 0 && categories.map(category => (
@@ -277,7 +277,7 @@ const CreatePostForm = ({ edit, post }) => {
                                 {
                                     !videoUrl &&
                                     <span
-                                        className='text-blue-300 flex flex-col items-center gap-2 text-xl font-semibold'
+                                        className='text-blue-300 flex flex-col items-center gap-2 text-sm sm:text-lg lg:text-xl text-center font-semibold'
                                     >
                                         Select or Drag and drop a video
                                         <span className='font-light text-sm'>(maximum size - 100mb)</span>

@@ -85,7 +85,7 @@ const Home = () => {
   }, [currentCategory])
 
   return (
-    <div className='pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
+    <div className='pt-[4rem] md:pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
       <div className='flex justify-between items-center gap-3 px-3 overflow-auto '>
         <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
           <span className=''>
@@ -118,7 +118,7 @@ const Home = () => {
         </div>
       )}
       <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-        <span className='my-2 py-3'>
+        <span className='my-1 py-1'>
           Page: {page} of {totalPages}
         </span>
         <span className='flex items-start gap-3 py-2'>

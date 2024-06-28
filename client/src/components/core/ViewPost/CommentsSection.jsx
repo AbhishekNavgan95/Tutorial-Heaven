@@ -45,7 +45,7 @@ const CommentsSection = ({
             <div className='bg-night-25 w-full lg:sticky top-[4rem] pt-5'>
                 <h5 className='text-xl font-semibold border-b border-night-50 pb-3'>Comments</h5>
                 <form onSubmit={handleSubmit(submitHandler)} className='pt-3 w-full flex flex-col items-end gap-3 border-b border-night-50 pb-3'>
-                    <textarea {...register("comment", { required: true })} placeholder='Add a commment...' rows={2} type="text" className='w-full py-2 resize-none bg-night-25 text-xl outline-none  border-b border-blue-300'></textarea>
+                    <textarea {...register("comment", { required: true })} placeholder='Add a commment...' rows={2} type="text" className='w-full py-2 text-sm sm:text-base lg:text-lg resize-none bg-night-25 outline-none  border-b border-blue-300'></textarea>
                     <span className='self-start'>
                         {
                             errors.comment && <p className='text-danger-dark underline font-semibold'>Comment is required</p>

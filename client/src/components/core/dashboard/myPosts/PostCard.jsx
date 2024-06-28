@@ -14,7 +14,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
   const dispatch = useDispatch();
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-1 sm:gap-3'>
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer overflow-hidden rounded-lg group w-full aspect-video'>
         <span className='relative w-full'>
           <img src={post?.thumbnail?.url} alt="" className='aspect-video' />
@@ -80,13 +80,13 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
           }
         </span>
       </div>
-      <span className='flex justify-between items-end md:hidden'>
+      <span className='flex flex-col sm:flex-row gap-1 justify-between md:hidden'>
         <span className='flex flex-col'>
-          <h4 className='line-clamp-1 text-lg font-semibold'>{post?.title}</h4>
-          <p className='text-sm'>Category : {post?.category?.title}</p>
-          <p className='text-sm'>likes : {post?.likes?.length | 0}</p>
+          <h4 className='line-clamp-1 text-base sm:text-lg font-semibold'>{post?.title}</h4>
+          <p className='text-xs sm:text-sm font-thin'>Category : {post?.category?.title}</p>
+          <p className='text-xs sm:text-sm font-thin'>likes : {post?.likes?.length | 0}</p>
         </span>
-        <span className='flex gap-3 items-center'>
+        <span className='flex gap-3 items-center self-end '>
           <button
             onClick={() => setModalData({
               title: "Delete Post?",
@@ -96,7 +96,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
               secondaryButtonText: "Cancel",
               secondaryButtonHandler: () => setModalData(null)
             })}
-            className='text-2xl rounded-full hover:text-night-25 aspect-square hover:bg-blue-300 p-2 transiion-all duration-300 w-max'
+            className='text-base sm:text-lg  rounded-full hover:text-night-25 aspect-square hover:bg-blue-300 p-2 transiion-all duration-300 w-max'
           >
             <MdOutlineDeleteOutline />
           </button>
@@ -109,7 +109,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
               secondaryButtonText: "Cancel",
               secondaryButtonHandler: () => setModalData(null)
             })}
-            className='text-2xl  hover:bg-blue-300 p-2 rounded-full hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
+            className='text-base sm:text-lg  hover:bg-blue-300 p-2 rounded-full hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
           >
             <MdOutlineArchive />
           </button>
@@ -119,7 +119,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
               dispatch(setPost(post));
               navigate(`/dashboard/edit/${post?._id}`)
             }}
-            className='text-2xl rounded-full hover:bg-blue-300 p-2 hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
+            className='text-base sm:text-lg rounded-full hover:bg-blue-300 p-2 hover:text-night-25 aspect-square  transiion-all duration-300 w-max'
           >
             <IoSettingsSharp />
           </button>

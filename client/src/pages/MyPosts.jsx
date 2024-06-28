@@ -96,9 +96,9 @@ const MyPosts = () => {
 
     return (
         <>
-            <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
-                <h4 className='text-xl text-center border-b border-blue-300 pb-3 md:text-start font-semibold text-blue-300'>My Posts</h4>
-                <div className='flex flex-col justify-start w-full'>
+        <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
+            <h4 className='text-lg lg:text-xl border-b border-blue-300 text-center md:text-start pb-3 font-semibold text-blue-300'>My Posts</h4>
+                <div className='flex flex-col justify-start w-full text-sm sm:text-base'>
                     <div className='flex items-center justify-between gap-3 my-5'>
                         <span className='text-blue-300'>Page {currentPage} of {totalPages}</span>
                         <span className='flex gap-3 items-center'>
@@ -106,7 +106,7 @@ const MyPosts = () => {
                             {currentPage < totalPages && <Button styles={"w-max"} active action={handleNextPage}>Next</Button>}
                         </span>
                     </div>
-                    <div className='my-5 flex justify-center md:justify-start items-center gap-3'>
+                    <div className='mb-5 flex justify-center md:justify-start items-center gap-3 text-xs sm:text-base'>
                         <span className='text-blue-300 font-semibold'>Sort By: </span>
                         <span className='flex gap-7 rounded-full py-1 border border-blue-300 relative px-3 overflow-hidden '>
                             <button onClick={() => setSortBy("createdAt")} className={`relative z-[2] transition-all duration-300  ${sortBy === "createdAt" ? "text-night-25" : "text-blue-300"}`}>Created At</button>

@@ -12,10 +12,10 @@ const PostCart = ({ post }) => {
             </span>
             <span>
                 <h3 className='font-semibold line-clamp-1'>{post?.title}</h3>
-                <p className='line-clamp-1 text-sm'>{post?.description}</p>
-                <span className='flex items-center text-sm flex-wrap gap-x-1 lg:gap-x-3'>
+                <p className='line-clamp-1 text-sm font-thin'>{post?.author?.firstName} {post?.author?.lastName}</p>
+                <span className='flex items-center text-sm font-thin flex-wrap gap-x-1 lg:gap-x-3'>
                     <p className=''>{post?.likes?.length} likes</p>
-                    <span className='min-w-[3px] rounded-full min-h-[3px] aspect-square bg-night-900'></span>
+                    <span className=''> | </span>
                     <p>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</p>
                 </span>
             </span>

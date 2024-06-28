@@ -23,19 +23,19 @@ const Navbar = () => {
 
     return (
         <>
-            <header className='fixed w-full z-[10] '>
+            <header className='fixed w-full z-[10]  bg-night-25 '>
                 <nav className='mx-auto max-w-maxContent border-b border-night-50 bg-night-25 relative z-[11]'>
                     <div className='flex items-center justify-between px-3 py-3'>
 
                         {/* logo */}
                         <span>
                             <Link to="/">
-                                <img src={image} className='max-w-[150px] lg:max-w-[230px]' alt="" />
+                                <img src={image} className='max-w-[150px] md:max-w-[190px] lg:max-w-[210px]' alt="" />
                             </Link>
                         </span>
 
                         {/* search bar */}
-                        <span className='hidden md:flex overflow-hidden text-lg border rounded-md border-night-300'>
+                        <span className='hidden md:flex overflow-hidden text-sm md:text-base xl:text-xl border rounded-md border-night-300'>
                             <span className='flex items-center'>
                                 <span className={`${navActive ? "text-xl justify-center items-start flex" : "hidden"} pl-3 `}>
                                     <IoSearchOutline />
@@ -44,7 +44,7 @@ const Navbar = () => {
                                     placeholder='Search'
                                     onFocus={() => setNavActive(true)}
                                     onBlur={() => setNavActive(false)}
-                                    className='xl:min-w-[500px] bg-transparent py-2 px-3 outline-none' type="text"
+                                    className='md:min-w-[300px] xl:min-w-[500px] bg-transparent py-2 px-3 outline-none' type="text"
                                 />
                             </span>
                             <button className='px-3 text-xl transition-all duration-300 bg-blue-300 border border-night-300 hover:bg-blue-400 text-night-5'><IoSearchSharp /></button>

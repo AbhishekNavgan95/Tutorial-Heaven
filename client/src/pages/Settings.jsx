@@ -17,7 +17,7 @@ const Settings = () => {
 
   return (
     <div className='lg:w-8/12 mx-auto py-5 md:py-14'>
-      <div className='flex flex-col gap-14'>
+      <div className='flex flex-col gap-y-5 md:gap-y-10 lg:gap-14'>
         <UpdateProfilePic user={user} />
         <UpdateUserName />
         <UpdatePassword />

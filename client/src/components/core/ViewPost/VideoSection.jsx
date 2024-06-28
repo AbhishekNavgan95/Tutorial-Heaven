@@ -24,7 +24,7 @@ const VideoSection = ({ post }) => {
                         <h4 className='text-2xl font-semibold '>{post?.title}</h4>
                         <p className='font-thin text-sm'>{post?.category?.title}</p>
                     </span>
-                    <span className='bg-night-50 w-full px-3 rounded-lg py-2'>
+                    <span className='bg-night-50 w-full text-sm sm:text-base px-3 rounded-lg py-2'>
                         {
                             post?.createdAt &&
                             <p>{formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })}</p>
@@ -40,8 +40,8 @@ const VideoSection = ({ post }) => {
                         <p>{post?.likes?.length} Likes</p>
                     </span>
                     <span className='flex gap-3'>
-                        <button className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-lg py-1'>Like</button>
-                        <button className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-lg py-1'>Save</button>
+                        <button className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'>Like</button>
+                        <button className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'>Save</button>
                     </span>
                 </div>
                 <div className='flex items-center gap-3 py-3'>
@@ -49,7 +49,7 @@ const VideoSection = ({ post }) => {
                         <img src={post?.author?.image?.url} className='w-[50px] rounded-full aspect-square border border-night-900' alt="" />
                     </span>
                     <span>
-                        <p className='font-semibold text-lg'>{post?.author?.firstName} {post?.author?.lastName}</p>
+                        <p className='font-semibold text-base sm:text-lg'>{post?.author?.firstName} {post?.author?.lastName}</p>
                     </span>
                 </div>
             </div>

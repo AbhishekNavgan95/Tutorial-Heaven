@@ -9,7 +9,7 @@ const DangerButton = ({ children, type, action, styles, disabled }) => {
             className={`bg-danger hover:bg-danger-dark text-night-5 
                px-5 text-nowrap transition-all hAover:shadow-night-600 
                 hover:shadow-md shadow-sm shadow-night-300 duration-300 py-2
-                 active:scale-[0.95] rounded-lg w-max ${styles}
+                 active:scale-[0.95] rounded-lg w-max text-sm md:text-base xl:text-xl ${styles}
         `}
         >
             {children}
