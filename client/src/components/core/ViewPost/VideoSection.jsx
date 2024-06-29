@@ -4,14 +4,27 @@ import { formatDistanceToNow } from 'date-fns';
 import { useSelector } from 'react-redux'
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { IoBookmarkSharp, IoBookmarkOutline } from "react-icons/io5";
+import { apiConnector } from '../../../services/apiConnector';
 
 
 const VideoSection = ({ post, loading }) => {
 
     const [description, setDescription] = useState(false);
     const { user } = useSelector(state => state.user)
-    // console.log("post : ", post)
-    // console.log("user ", user);
+
+    const handleLikeVideo = () => {
+        console.log("like")
+        if(user?.likedPosts?.includes(post?._id)) {
+            const response = apiConnector("POST", )
+        } else {
+            const response = apiConnector("POST",)
+        }
+
+    }
+
+    const handleBookmarkVideo = () => {
+        console.log("bookmark")
+    }
 
     return (
         <section className='flex flex-col gap-3 py-3 w-full'>
@@ -26,7 +39,7 @@ const VideoSection = ({ post, loading }) => {
             </span>
             {
                 loading ?
-                // skeleton loading
+                    // skeleton loading
                     <div className='w-full h-[300px] flex justify-center items-start'>
                         <div className='w-full flex flex-col gap-3 mt-3'>
                             <div className='py-3 w-full bg-night-50 animate-pulse'></div>
@@ -64,6 +77,7 @@ const VideoSection = ({ post, loading }) => {
                             </span>
                             <span className='flex gap-3'>
                                 <button
+                                    onClick={handleLikeVideo}
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
                                     {
@@ -73,6 +87,7 @@ const VideoSection = ({ post, loading }) => {
                                     }
                                 </button>
                                 <button
+                                    onCanPlay={handleBookmarkVideo}
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
                                     {

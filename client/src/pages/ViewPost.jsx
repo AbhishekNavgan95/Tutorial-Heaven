@@ -32,6 +32,7 @@ const ViewPost = () => {
     const [isPostLoading, setIsPostLoading] = useState(true)
     const [isCommentsLoading, setIsCommentsLoading] = useState(true)
     const [isSimilarPostsLoading, setIsSimilarPostsLoading] = useState(true)
+    console.log("posts loading : ", isCommentsLoading)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -101,12 +102,12 @@ const ViewPost = () => {
                 console.log("comments error : ", e)
             }
         }
-        setTimeout(() => {
-            setIsCommentsLoading(false)
-        }, 4000)
+        setIsCommentsLoading(false)
     }, [postId, commentsCurrentPage])
 
     useEffect(() => {
+        setIsCommentsLoading(true)
+        setIsSimilarPostsLoading(true)
         getPosts();
         setComments([]);
         setCommentsCurrentPage(1);
@@ -132,7 +133,7 @@ const ViewPost = () => {
                 <section className='lg:sticky top-[4rem] h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
                     <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related Posts from {post?.category?.title} </h5>
                     {
-                        isSimilarPostsLoading && (
+                        isSimilarPostsLoading ? (
                             <div className='flex justify-center flex-col gap-y-3 w-full'>
                                 <PostLoader />
                                 <PostLoader />
@@ -142,12 +143,12 @@ const ViewPost = () => {
                                 <PostLoader />
                                 <PostLoader />
                             </div>
-                        )
-                    }
-                    {
-                        similarPosts.length > 0 && !isSimilarPostsLoading && similarPosts.map((post) => (
+                        ) : similarPosts.length > 0 && similarPosts?.map((post) => (
                             <PostCard key={post?._id} post={post} />
                         ))
+                    }
+                    {
+                        !isSimilarPostsLoading
                     }
                     {
                         similarPostsCurrentPage < similarPostsTotalPages && (
