@@ -17,7 +17,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
     <div className='flex flex-col gap-1 sm:gap-3'>
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer overflow-hidden rounded-lg group w-full aspect-video'>
         <span className='relative w-full'>
-          <img src={post?.thumbnail?.url} alt="" className='aspect-video' />
+          <img loading='lazy' src={post?.thumbnail?.url} alt="" className='aspect-video' />
           <span
             className='md:flex hidden absolute text-xl inset-0 w-full top-0 gap-2 justify-between items-end text-night-25 
           px-3 pt-5 pb-3 bg-gradient-to-b from-transparent to-blue-300 translate-y-[100%] group-hover:translate-y-0 

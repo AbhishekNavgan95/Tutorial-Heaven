@@ -30,11 +30,12 @@ const PostCard = ({ post }) => {
             <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className='flex flex-col items-start h-full gap-3 p-3 transition-all duration-300 border border-transparent rounded-lg group'
+                className='flex flex-col items-start h-full gap-3 transition-all duration-300 rounded-lg group'
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
                         src={post?.thumbnail?.url}
+                        loading='lazy'
                         className='group-hover:opacity-0 transition-all delay-500 duration-100' alt=""
                     />
                     <video
@@ -46,7 +47,6 @@ const PostCard = ({ post }) => {
                 <div className='flex items-start justify-center gap-3 w-full'>
                     <span className='mt-[5px] w-fitContent'>
                         <img className='w-[40px] aspect-square rounded-full' src={post?.author?.image?.url} alt="" />
-
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>

@@ -7,6 +7,7 @@ import Button from "../components/common/Button"
 import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
 import Spinner from '../components/common/Spinner'
+import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
 
 const Home = () => {
 
@@ -19,6 +20,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchCategories = useCallback(async () => {
+    setLoading(true);
     try {
       const res = await apiConnector("GET", dataEndpoints.GET_ALL_CATEGORIES);
       setCategories(res?.data?.data)
@@ -40,8 +42,8 @@ const Home = () => {
   }, []);
 
   const fetchPosts = useCallback(async () => {
-    dispatch(setProgress(60))
     setLoading(true);
+    dispatch(setProgress(60))
     const endpoint = currentCategory === "All"
       ? `${dataEndpoints.GET_ALL_POSTS}?page=${page}&limit=30`
       : `${dataEndpoints.GET_ALL_CATEGORY_POSTS}/${currentCategory}?page=${page}&limit=10`
@@ -104,14 +106,14 @@ const Home = () => {
 
       {loading ? (
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
-          <Spinner />
+          <HomeScreenLoader />
         </div>
-      ) : !loading && posts?.length === 0 ? (
+      ) : loading && posts?.length === 0 ? (
         <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[75vh]">
           No posts found
         </div>
       ) : (
-        <div className='grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 xl:gap-x-3 gap-y-3 xl:gap-y-3'>
+        <div className='px-3 grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
           {posts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
