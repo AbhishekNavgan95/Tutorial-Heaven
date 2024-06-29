@@ -32,7 +32,6 @@ const ViewPost = () => {
     const [isPostLoading, setIsPostLoading] = useState(true)
     const [isCommentsLoading, setIsCommentsLoading] = useState(true)
     const [isSimilarPostsLoading, setIsSimilarPostsLoading] = useState(true)
-    console.log("posts loading : ", isCommentsLoading)
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -106,6 +105,7 @@ const ViewPost = () => {
     }, [postId, commentsCurrentPage])
 
     useEffect(() => {
+        setIsPostLoading(true)
         setIsCommentsLoading(true)
         setIsSimilarPostsLoading(true)
         getPosts();
