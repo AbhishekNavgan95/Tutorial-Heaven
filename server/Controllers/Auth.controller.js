@@ -177,16 +177,15 @@ exports.login = async (req, res) => {
       });
     }
 
-    if(userExists?.deletionScheduled === true) {
-      console.log("tried to login")
+    if (userExists?.deletionScheduled === true) {
+      // console.log("tried to login")
       return res.status(400).json({
         success: false,
-        message: "This account is scheduled for deletion"
-      })
+        message: "This account is scheduled for deletion",
+      });
     }
 
     const user = userExists.toObject(); // to make object mutable
-    console.log("user : ", user);
 
     if (await bcrypt.compare(password, user.password)) {
       const payload = {
@@ -201,6 +200,9 @@ exports.login = async (req, res) => {
 
       user.token = token;
       user.password = undefined;
+      user.token = undefined;
+      user.deletionScheduled = undefined;
+      user.__v = undefined;
 
       res.status(200).json({
         success: true,
@@ -449,6 +451,11 @@ exports.createModeratorAccount = async (req, res) => {
     await newModerator.save();
     await ModeratorToken.findByIdAndDelete(tokenDocument._id);
 
+    newModerator.password = undefined;
+    newModerator.token = undefined;
+    newModerator.deletionScheduled = undefined;
+    newModerator.__v = undefined;
+
     res.status(200).json({
       success: true,
       message: "Moderator Account created Successfully",
@@ -519,12 +526,16 @@ exports.createAdminAccount = async (req, res) => {
 
     await newAdmin.save();
 
+    newAdmin.password = undefined;
+    newAdmin.token = undefined;
+    newAdmin.deletionScheduled = undefined;
+    newAdmin.__v = undefined;
+
     res.status(200).json({
       success: true,
       message: "Admin Account created Successfully",
       data: newAdmin,
     });
-
   } catch (e) {
     res.status(500).json({
       success: false,

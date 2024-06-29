@@ -101,11 +101,11 @@ exports.removeComment = async (req, res) => {
       });
     }
 
-    console.log("userId : ", userId);
-    console.log("comment : ", comment?.author?.toString());
+    // console.log("userId : ", userId);
+    // console.log("comment : ", comment?.author?.toString());
 
     const postId = comment?.post;
-    console.log("post : ", postId);
+    // console.log("post : ", postId);
 
     // Check if the user is the author of the comment or an admin
     const user = await User.findById(userId);
@@ -196,6 +196,11 @@ exports.likeComment = async (req, res) => {
       { new: true }
     );
 
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
+
     return res.status(200).json({
       success: true,
       message: "Comment liked",
@@ -261,6 +266,11 @@ exports.unlikeComment = async (req, res) => {
       { $pull: { likedComments: commentId } },
       { new: true }
     );
+
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
 
     return res.status(200).json({
       success: true,

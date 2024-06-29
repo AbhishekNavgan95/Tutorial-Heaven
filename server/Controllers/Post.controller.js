@@ -93,7 +93,7 @@ exports.createPost = async (req, res) => {
     });
 
     // add created post to user model
-    updaetdUser = await User.findByIdAndUpdate(
+    updatedUser = await User.findByIdAndUpdate(
       author,
       {
         $push: {
@@ -102,6 +102,11 @@ exports.createPost = async (req, res) => {
       },
       { new: true }
     );
+
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
 
     // update category with new created post
     const updatedCategory = await Category.findByIdAndUpdate(
@@ -117,7 +122,7 @@ exports.createPost = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Post Created Successfully",
-      data: updaetdUser,
+      data: updatedUser,
     });
   } catch (e) {
     console.log("error occurred while creating the post : ", e);
@@ -200,6 +205,11 @@ exports.updatePost = async (req, res) => {
     );
 
     const updatedUser = await User.findById(req.user.id);
+
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
 
     return res.status(200).json({
       success: true,

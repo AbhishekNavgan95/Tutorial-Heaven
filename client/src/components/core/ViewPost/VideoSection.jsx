@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { likePost, savePost, unSavePost, unlikePost } from "../../../services/operations/userAPI"
 
 const VideoSection = ({ post, loading }) => {
-    
+
     const [description, setDescription] = useState(false);
     const { user } = useSelector(state => state.user)
     const { token } = useSelector(state => state.auth)
@@ -38,7 +38,6 @@ const VideoSection = ({ post, loading }) => {
     }
 
     const handleBookmarkVideo = async () => {
-        console.log("save post")
         if (user?.savedPosts?.includes(post?._id)) {
             await unSavePost(token, dispatch, post?._id);
         } else {
