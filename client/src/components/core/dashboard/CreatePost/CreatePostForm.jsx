@@ -226,6 +226,7 @@ const CreatePostForm = ({ edit, post }) => {
                             <label htmlFor="thumbnail" className='relative self-stretch flex flex-col px-3 py-3 items-center justify-center cursor-pointer border rounded-lg border-blue-300'>
                                 <span className='w-full rounded-lg overflow-hidden'>
                                     <img
+                                        loading='lazy'
                                         className='w-full aspect-video min-h-[150px] group-hover:scale-105 transition-all duration-300 rounded-lg object-cover'
                                         src={image}
                                         alt=""

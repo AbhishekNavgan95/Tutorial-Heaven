@@ -14,8 +14,8 @@ const VideoSection = ({ post, loading }) => {
 
     const handleLikeVideo = () => {
         console.log("like")
-        if(user?.likedPosts?.includes(post?._id)) {
-            const response = apiConnector("POST", )
+        if (user?.likedPosts?.includes(post?._id)) {
+            const response = apiConnector("POST",)
         } else {
             const response = apiConnector("POST",)
         }
@@ -100,7 +100,7 @@ const VideoSection = ({ post, loading }) => {
                         </div>
                         <div className='flex items-center gap-3 py-3'>
                             <span>
-                                <img src={post?.author?.image?.url} className='w-[50px] rounded-full aspect-square border border-night-900' alt="" />
+                                <img loading='lazy' src={post?.author?.image?.url} className='w-[50px] rounded-full aspect-square border border-night-900' alt="" />
                             </span>
                             <span>
                                 <p className='font-semibold text-base sm:text-lg'>{post?.author?.firstName} {post?.author?.lastName}</p>

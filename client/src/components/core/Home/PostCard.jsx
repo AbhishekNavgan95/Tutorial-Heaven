@@ -46,7 +46,7 @@ const PostCard = ({ post }) => {
                 </span>
                 <div className='flex items-start justify-center gap-3 w-full'>
                     <span className='mt-[5px] w-fitContent'>
-                        <img className='w-[40px] aspect-square rounded-full' src={post?.author?.image?.url} alt="" />
+                        <img loading='lazy' className='w-[40px] aspect-square rounded-full' src={post?.author?.image?.url} alt="" />
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>

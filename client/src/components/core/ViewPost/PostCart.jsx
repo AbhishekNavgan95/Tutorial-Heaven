@@ -6,9 +6,9 @@ const PostCart = ({ post }) => {
     const navigate = useNavigate();
 
     return (
-        <div onClick={() => navigate(`/view/${post?._id}`)}  className='flex cursor-pointer gap-3 w-full'>
+        <div onClick={() => navigate(`/view/${post?._id}`)} className='flex cursor-pointer gap-3 w-full'>
             <span className='bg-night-50 min-w-[200px] lg:min-w-[230px] aspect-video rounded-lg'>
-                <img src={post?.thumbnail?.url} className='max-w-[200px] lg:max-w-[230px] object-cover rounded-lg ' alt="" />
+                <img loading='lazy' src={post?.thumbnail?.url} className='max-w-[200px] lg:max-w-[230px] object-cover rounded-lg ' alt="" />
             </span>
             <span>
                 <h3 className='font-semibold line-clamp-1'>{post?.title}</h3>

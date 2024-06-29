@@ -37,7 +37,7 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
     return (
         <div className='py-3 flex gap-5'>
             <span>
-                <img src={comment?.author?.image?.url} className='max-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
+                <img loading='lazy' src={comment?.author?.image?.url} className='max-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
             </span>
             <span className='flex flex-col gap-2'>
                 <span className='flex items-center gap-3'>
