@@ -50,10 +50,10 @@ const PostCard = ({ post }) => {
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>
-                            <h2 className='text-lg font-semibold text-night-900'>{post.title}</h2>
-                            <h3 className='text-md text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
+                            <h2 className='text-lg line-clamp-2 font-semibold text-night-900'>{post.title}</h2>
+                            <h3 className='text-md  text-night-600'>{post.author.firstName + " " + post.author.lastName}</h3>
                             <span className='flex justify-between items-center w-full'>
-                                <span className='flex items-center gap-2 text-night-900'>
+                                <span className='flex items-center gap-2 font-thin text-night-600'>
                                     <p className='flex items-center gap-1 text-md'>
                                         {
                                             post.likes.length
@@ -62,7 +62,7 @@ const PostCard = ({ post }) => {
                                             likes
                                         </span>
                                     </p>
-                                    <span className='w-[3px] h-[3px] bg-night-900'></span>
+                                    |
                                     {
                                         post.createdAt && <p>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</p>
                                     }
@@ -70,7 +70,7 @@ const PostCard = ({ post }) => {
                             </span>
                         </span>
                         <span onClick={(e) => e.stopPropagation()} className='relative group/menu flex justify-center p-2 '>
-                            <button className='text-blue-300 text-xl '><BsThreeDotsVertical /></button>
+                            <button className=' text-xl '><BsThreeDotsVertical /></button>
                             <div className={`absolute bottom-[-80%]  bg-night-25 border border-night-900 hover:border-blue-300 right-[50%] rounded-lg transition-all duration-100 hidden group-hover/menu:block group-active/menu:block`}>
                                 <button
                                     onClick={

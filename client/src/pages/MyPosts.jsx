@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 import Modal from '../components/common/Modal';
 import { deletePost } from '../services/operations/postAPI';
 import { changePostStatus } from '../services/operations/userAPI';
+import { useNavigate } from 'react-router-dom';
+import ActionButton from '../components/common/ActionButton';
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -19,6 +21,7 @@ const MyPosts = () => {
     const { token } = useSelector((state) => state.auth);
     const [modalData, setModalData] = useState(null);
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const fetchPosts = useCallback(async (page, sort) => {
         setLoading(true);
@@ -96,8 +99,8 @@ const MyPosts = () => {
 
     return (
         <>
-        <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
-            <h4 className='text-lg lg:text-xl border-b border-blue-300 text-center md:text-start pb-3 font-semibold text-blue-300'>My Posts</h4>
+            <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
+                <h4 className='text-lg lg:text-xl border-b border-blue-300 text-center md:text-start pb-3 font-semibold text-blue-300'>My Videos</h4>
                 <div className='flex flex-col justify-start w-full text-sm sm:text-base'>
                     <div className='flex items-center justify-between gap-3 my-5'>
                         <span className='text-blue-300'>Page {currentPage} of {totalPages}</span>
@@ -126,7 +129,11 @@ const MyPosts = () => {
                             </div>
                     }
                     {
-                        loading === false && posts.length === 0 && <p className='w-full min-h-[50vh] flex items-center justify-center text-blue-300'>No posts found</p>
+                        loading === false && posts.length === 0 && (
+                            <div className='w-full min-h-[50vh] flex flex-col gap-3 items-center justify-center'>
+                                <h2 className='text-lg text-blue-300 font-semibold'>No Posts Found</h2>
+                                <ActionButton to={"/dashboard/create"} active> Create New Video</ActionButton>
+                            </div>)
                     }
                 </div>
             </div>

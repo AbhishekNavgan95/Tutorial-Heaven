@@ -19,7 +19,7 @@ const CreatePost = () => {
 
     return (
         <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>
-            <h4 className='text-lg lg:text-xl border-b border-blue-300 pb-3 text-center md:text-start font-semibold text-blue-300'>{edit ? "Edit Your post" : "Create New Post"}</h4>
+            <h4 className='text-lg lg:text-xl border-b border-blue-300 pb-3 text-center md:text-start font-semibold text-blue-300'>{edit ? "Edit Your Video" : "Create New Video"}</h4>
             <div className='mt-5 '>
                 <CreatePostForm edit={edit} post={post} />
             </div>

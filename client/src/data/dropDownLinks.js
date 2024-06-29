@@ -8,13 +8,13 @@ export const dropDownLinks = [
   {
     id: 2,
     path: "/dashboard/create",
-    title: "Create Post",
+    title: "Create Video",
     access: "user",
   },
   {
     id: 3,
     path: "/dashboard/posts",
-    title: "My Posts",
+    title: "My Videos",
     access: "user",
   },
   {

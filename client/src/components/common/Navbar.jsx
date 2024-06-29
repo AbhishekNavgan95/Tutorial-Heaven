@@ -11,6 +11,7 @@ import Modal from './Modal';
 import { logout } from "../../services/operations/authAPI"
 import { USER_TYPES } from "../../services/constants"
 import { CiMenuFries } from "react-icons/ci";
+import { RiMenuFold4Fill } from "react-icons/ri";
 import MobileNav from './MobileNav';
 
 const Navbar = () => {
@@ -50,9 +51,9 @@ const Navbar = () => {
                             <button className='px-3 text-xl transition-all duration-300 bg-blue-300 border border-night-300 hover:bg-blue-400 text-night-5'><IoSearchSharp /></button>
                         </span>
 
-                        <span onClick={() => setMobileNavActive(!mobileNavActive)} className='md:hidden text-lg px-2 py-1'>
+                        <span onClick={() => setMobileNavActive(!mobileNavActive)} className='md:hidden text-lg px-2 py-1 text-blue-300'>
                             <p className='cursor-pointer'>
-                                <CiMenuFries />
+                                <RiMenuFold4Fill />
                             </p>
                         </span>
 

@@ -123,7 +123,7 @@ const ViewPost = () => {
     }, [postId, getPostComments])
 
     return (
-        <div className='pt-[5rem] min-h-[calc(100vh-6rem)] px-3 relative mx-auto w-full max-w-maxContent text-night-900'>
+        <div className='pt-[4rem] min-h-[calc(100vh-6rem)] px-3 relative mx-auto w-full max-w-maxContent text-night-900'>
             <div className='grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-x-5 w-full'>
 
                 <section className='flex flex-wrap gap-3 h-max w-full'>
@@ -131,7 +131,7 @@ const ViewPost = () => {
                 </section>
 
                 <section className='lg:sticky top-[4rem] h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
-                    <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related Posts from {post?.category?.title} </h5>
+                    <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related videos from {post?.category?.title} </h5>
                     {
                         isSimilarPostsLoading ? (
                             <div className='flex justify-center flex-col gap-y-3 w-full'>

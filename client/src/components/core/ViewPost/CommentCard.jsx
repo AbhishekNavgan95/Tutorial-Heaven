@@ -35,9 +35,9 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
     }, [likes?.length])
 
     return (
-        <div className='py-3 flex gap-5'>
+        <div className='py-3 flex gap-3 md:gap-5'>
             <span>
-                <img loading='lazy' src={comment?.author?.image?.url} className='max-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
+                <img src={comment?.author?.image?.url} className='max-w-[40px] min-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
             </span>
             <span className='flex flex-col gap-2'>
                 <span className='flex items-center gap-3'>
@@ -51,7 +51,7 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
                     }
                 </span>
                 <span>
-                    <p className={`${expandComment ? "" : "line-clamp-3"} text-sm sm:text-base`} style={{ whiteSpace: 'pre-wrap' }}>{comment?.description}</p>
+                    <p className={`${expandComment ? "" : "line-clamp-3"} text-sm text-wrap sm:text-base`} style={{ whiteSpace: 'pre-wrap' }}>{comment?.description}</p>
                     {
                         comment?.description?.length > 100 &&
                         <button onClick={() => setExpandComment(!expandComment)} className='text-blue-300 text-sm mt-2'>{!expandComment ? "Show more..." : "Show less"}</button>

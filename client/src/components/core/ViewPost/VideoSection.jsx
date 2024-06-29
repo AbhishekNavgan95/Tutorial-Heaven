@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { IoBookmarkSharp, IoBookmarkOutline } from "react-icons/io5";
 import { apiConnector } from '../../../services/apiConnector';
-
+import { TbArrowBackUp } from "react-icons/tb";
+import { Link } from 'react-router-dom';
 
 const VideoSection = ({ post, loading }) => {
 
@@ -27,7 +28,10 @@ const VideoSection = ({ post, loading }) => {
     }
 
     return (
-        <section className='flex flex-col gap-3 py-3 w-full'>
+        <section className='flex flex-col gap-3 md:py-3 w-full '>
+            <Link to={".."} className='cursor-pointer text-base md:text-lg xl:text-xl p-2 border border-blue-300 text-blue-300 w-max rounded-full hover:bg-blue-300 hover:text-night-25 transition-all duration-300 flex justify-center items-center'>
+                <TbArrowBackUp />
+            </Link>
             <span className='bg-night-50 rounded-lg aspect-video w-full'>
                 <ReactPlayer
                     style={{ minWidth: "100%", aspectRatio: "16/9", borderRadius: "5px", overflow: "hidden" }}
@@ -57,8 +61,8 @@ const VideoSection = ({ post, loading }) => {
                     </div> : <div className='flex flex-col gap-3'>
                         <div className='flex flex-col gap-3 items-start'>
                             <span className='flex flex-col gap-1'>
-                                <h4 className='text-2xl font-semibold '>{post?.title}</h4>
-                                <p className='font-thin text-sm'>{post?.category?.title}</p>
+                                <h4 className='text-xl md:text-2xl font-semibold '>{post?.title}</h4>
+                                <p className='font-thin text-xs md:text-sm'>{post?.category?.title}</p>
                             </span>
                             <span className='bg-night-50 w-full text-sm sm:text-base px-3 rounded-lg py-2'>
                                 {
