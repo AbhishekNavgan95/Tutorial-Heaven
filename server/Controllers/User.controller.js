@@ -143,6 +143,11 @@ exports.savePost = async (req, res) => {
       { new: true }
     );
 
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
+
     return res.status(200).json({
       success: true,
       message: "Post saved successfully",
@@ -195,6 +200,11 @@ exports.unSavePost = async (req, res) => {
       { new: true }
     );
 
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
+
     return res.status(200).json({
       success: true,
       message: "Post unSaved successfully",
@@ -226,7 +236,8 @@ exports.getAllUserPosts = async (req, res) => {
 
     const user = await User.findById(userId).populate({
       path: "posts",
-      select: "category title description thumbnail video tags likes createdAt status",
+      select:
+        "category title description thumbnail video tags likes createdAt status",
       populate: {
         path: "category",
         select: "title",

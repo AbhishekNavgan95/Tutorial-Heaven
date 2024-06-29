@@ -378,16 +378,21 @@ exports.likePost = async (req, res) => {
       { new: true }
     );
 
-    await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $push: { likedPosts: id } },
       { new: true }
     );
 
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
+
     return res.status(200).json({
       success: true,
       message: "Post liked successfully.",
-      data: post,
+      data: updatedUser,
     });
   } catch (e) {
     console.error("Error occurred while liking the post:", e);
@@ -437,16 +442,22 @@ exports.unlikePost = async (req, res) => {
       { $pull: { likes: userId } },
       { new: true }
     );
-    await User.findByIdAndUpdate(
+
+    const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $pull: { likedPosts: id } },
       { new: true }
     );
 
+    updatedUser.password = undefined;
+    updatedUser.token = undefined;
+    updatedUser.deletionScheduled = undefined;
+    updatedUser.__v = undefined;
+
     return res.status(200).json({
       success: true,
       message: "Post unliked successfully.",
-      data: post,
+      data: updatedUser,
     });
   } catch (e) {
     console.error("Error occurred while unliking the post:", e);
@@ -609,7 +620,7 @@ exports.getCategoryAllPosts = async (req, res) => {
         select: "firstName lastName image createdAt",
       });
 
-      const shuffledPosts = shuffleArray(posts);
+    const shuffledPosts = shuffleArray(posts);
 
     return res.status(200).json({
       success: true,

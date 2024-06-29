@@ -14,7 +14,7 @@ const {
   UNSAVE_POST,
   LIKE_POST,
   UNLIKE_POST,
-  CHANGE_POST_STATUS
+  CHANGE_POST_STATUS,
 } = userEndpoints;
 
 export const updateProfilePicture = async (file, token, dispatch) => {
@@ -256,6 +256,7 @@ export const savePost = async (token, dispatch, postId) => {
         secondary: "#DFE2E2",
       },
     });
+    return true;
   } catch (e) {
     console.log("SAVE_POST_API_ERROR : ", e);
     toast.error(e?.response?.data?.message, {
@@ -271,6 +272,7 @@ export const savePost = async (token, dispatch, postId) => {
       },
     });
   }
+  return false;
 };
 
 export const unSavePost = async (token, dispatch, postId) => {
@@ -301,6 +303,7 @@ export const unSavePost = async (token, dispatch, postId) => {
         secondary: "#DFE2E2",
       },
     });
+    return true;
   } catch (e) {
     console.log("UNSAVE_POST_API_ERROR : ", e);
     toast.error(e?.response?.data?.message, {
@@ -316,6 +319,7 @@ export const unSavePost = async (token, dispatch, postId) => {
       },
     });
   }
+  return false;
 };
 
 export const changePostStatus = async (status, token, postId, dispatch) => {
@@ -325,7 +329,7 @@ export const changePostStatus = async (status, token, postId, dispatch) => {
     const response = await apiConnector(
       "PUT",
       `${CHANGE_POST_STATUS}/${postId}`,
-      {status: status},
+      { status: status },
       {
         Authorization: `Bearer ${token}`,
       }
@@ -347,7 +351,7 @@ export const changePostStatus = async (status, token, postId, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
-    return true
+    return true;
   } catch (e) {
     console.log("ARCHIVE_POST_API_ERROR : ", e);
     toast.error(e?.response?.data?.message, {
@@ -365,5 +369,96 @@ export const changePostStatus = async (status, token, postId, dispatch) => {
   } finally {
     dispatch(setProgress(100));
   }
-  return false
+  return false;
+};
+
+export const likePost = async (token, dispatch, postId) => {
+  try {
+    const response = await apiConnector("PUT", `${LIKE_POST}/${postId}`, null, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    console.log("LIKE_POST_API_RESPONSE : ", response);
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    dispatch(setUser(response?.data?.data));
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+    return true;
+  } catch (e) {
+    console.log("LIKE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  }
+  return false;
+};
+
+export const unlikePost = async (token, dispatch, postId) => {
+  try {
+    const response = await apiConnector(
+      "PUT",
+      `${UNLIKE_POST}/${postId}`,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message);
+    }
+
+    dispatch(setUser(response?.data?.data));
+    toast.success(response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+    return true;
+  } catch (e) {
+    console.log("UNLIKE_POST_API_ERROR : ", e);
+    toast.error(e?.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  }
+  return false;
 };

@@ -1,30 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactPlayer from "react-player"
 import { formatDistanceToNow } from 'date-fns';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { IoBookmarkSharp, IoBookmarkOutline } from "react-icons/io5";
-import { apiConnector } from '../../../services/apiConnector';
 import { TbArrowBackUp } from "react-icons/tb";
 import { Link } from 'react-router-dom';
+import { likePost, savePost, unSavePost, unlikePost } from "../../../services/operations/userAPI"
 
 const VideoSection = ({ post, loading }) => {
-
+    
     const [description, setDescription] = useState(false);
     const { user } = useSelector(state => state.user)
+    const { token } = useSelector(state => state.auth)
+    const [postLikes, setPostLikes] = useState(0)
+    const dispatch = useDispatch();
 
-    const handleLikeVideo = () => {
-        console.log("like")
+    useEffect(() => {
+        setPostLikes(post?.likes?.length)
+    }, [post])
+
+    const handleLikeVideo = async () => {
+        let response;
         if (user?.likedPosts?.includes(post?._id)) {
-            const response = apiConnector("POST",)
+            setPostLikes(postLikes - 1)
+            response = await unlikePost(token, dispatch, post?._id);
+            if (!response) {
+                setPostLikes(postLikes + 1);
+            }
         } else {
-            const response = apiConnector("POST",)
+            setPostLikes(postLikes + 1)
+            response = await likePost(token, dispatch, post?._id);
+            if (!response) {
+                setPostLikes(postLikes - 1);
+            }
         }
-
     }
 
-    const handleBookmarkVideo = () => {
-        console.log("bookmark")
+    const handleBookmarkVideo = async () => {
+        console.log("save post")
+        if (user?.savedPosts?.includes(post?._id)) {
+            await unSavePost(token, dispatch, post?._id);
+        } else {
+            await savePost(token, dispatch, post?._id);
+        }
     }
 
     return (
@@ -77,7 +96,7 @@ const VideoSection = ({ post, loading }) => {
                         </div>
                         <div className='border-b border-night-50 w-full flex justify-between items-center px-3 py-4'>
                             <span>
-                                <p>{post?.likes?.length} Likes</p>
+                                <p>{postLikes} Likes</p>
                             </span>
                             <span className='flex gap-3'>
                                 <button
@@ -91,7 +110,7 @@ const VideoSection = ({ post, loading }) => {
                                     }
                                 </button>
                                 <button
-                                    onCanPlay={handleBookmarkVideo}
+                                    onClick={handleBookmarkVideo}
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
                                     {

@@ -23,8 +23,8 @@ export const userEndpoints = {
     GET_USER_SAVED_POSTS: BASE_URL + "auth/saved-posts",
     SAVE_POST: BASE_URL + "auth/save-post",
     UNSAVE_POST: BASE_URL + "auth/unsave-post",
-    LIKE_POST: BASE_URL + "auth/like-post",
-    UNLIKE_POST: BASE_URL + "auth/unlike-post",
+    LIKE_POST: BASE_URL + "post/like-post",
+    UNLIKE_POST: BASE_URL + "post/unlike-post",
     CHANGE_POST_STATUS: BASE_URL + "post/update-poststatus"
 }
 
@@ -37,5 +37,5 @@ export const postEndpoints = {
     CREATE_COMMENT: BASE_URL + "comment/add-comment",
     DELETE_COMMENT: BASE_URL + "comment/delete-comment",
     LIKE_COMMENT: BASE_URL + "comment/like-comment",
-    UNLIKE_COMMENT: BASE_URL + "comment/unlike-comment"
+    UNLIKE_COMMENT: BASE_URL + "comment/unlike-comment",
 }
