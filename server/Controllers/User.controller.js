@@ -2,6 +2,30 @@ const User = require("../Models/User.model");
 const Post = require("../Models/Post.model");
 const { deleteImageFromCloudinary } = require("../Utils/deleteFromCloudinary");
 const { uploadImageTocloudinary } = require("../Utils/uploadToCloudinary");
+const jwt = require("jsonwebtoken");
+
+// refresh token controller
+exports.refreshToken = async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(403).json({ message: "Refresh token is required" });
+  }
+
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid refresh token" });
+    }
+
+    const newAccessToken = jwt.sign(
+      { email: user.email, id: user.id, accountType: user.accountType },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    res.status(200).json({ accessToken: newAccessToken });
+  });
+};
 
 // update profile picture ✅
 exports.updateProfilePicture = async (req, res) => {

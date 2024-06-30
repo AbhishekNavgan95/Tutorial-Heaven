@@ -27,11 +27,15 @@ const {
   unSavePost,
   getAllUserPosts,
   getUserSavedPosts,
+  refreshToken
 } = require("../Controllers/User.controller");
 
 const { auth, isAdmin, isMod, isUser } = require("../Middlewares/Auth");
 
 /********************* routes *****************************/
+
+// refresh token
+router.post("/refresh", refreshToken);
 
 // send otp
 router.post("/send-otp", sendOTP);

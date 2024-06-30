@@ -160,7 +160,6 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // validate data
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -178,14 +177,13 @@ exports.login = async (req, res) => {
     }
 
     if (userExists?.deletionScheduled === true) {
-      // console.log("tried to login")
-      return res.status(400).json({
+      return res.status(406).json({
         success: false,
-        message: "This account is scheduled for deletion",
+        message: "Contact a moderator",
       });
     }
 
-    const user = userExists.toObject(); // to make object mutable
+    const user = userExists.toObject();
 
     if (await bcrypt.compare(password, user.password)) {
       const payload = {
@@ -194,32 +192,31 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "7d",
+      const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "15m",
       });
 
-      user.token = token;
-      user.password = undefined;
-      user.token = undefined;
-      user.deletionScheduled = undefined;
-      user.__v = undefined;
+      const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
+        expiresIn: "7d",
+      });
 
       res.status(200).json({
         success: true,
         message: "Logged in successfully",
         data: {
-          token,
+          accessToken,
+          refreshToken,
           user,
         },
       });
     } else {
       res.status(400).json({
         success: false,
-        message: "password is incorrect!",
+        message: "Password is incorrect!",
       });
     }
   } catch (e) {
-    console.log("error occurred while loggin in ", e);
+    console.log("Error occurred while logging in ", e);
     res.status(500).json({
       success: false,
       message: "Login failed, please try again",

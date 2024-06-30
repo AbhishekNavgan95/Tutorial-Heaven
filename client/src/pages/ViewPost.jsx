@@ -130,7 +130,7 @@ const ViewPost = () => {
                     <VideoSection post={post} loading={isPostLoading} />
                 </section>
 
-                <section className='lg:sticky top-[4rem] h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
+                <section className='h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
                     <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related videos from {post?.category?.title} </h5>
                     {
                         isSimilarPostsLoading ? (
@@ -146,9 +146,6 @@ const ViewPost = () => {
                         ) : similarPosts.length > 0 && similarPosts?.map((post) => (
                             <PostCard key={post?._id} post={post} />
                         ))
-                    }
-                    {
-                        !isSimilarPostsLoading
                     }
                     {
                         similarPostsCurrentPage < similarPostsTotalPages && (

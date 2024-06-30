@@ -5,7 +5,8 @@ export const authEndpoints = {
     SIGNUP_API: BASE_URL + "auth/signup",
     SEND_OTP_API: BASE_URL + "auth/send-otp",
     SEND_RESET_PASSWORD_TOKEN_API: BASE_URL + "auth/reset-password-token",
-    RESET_PASSWORD_API: BASE_URL + "auth/reset-password/"
+    RESET_PASSWORD_API: BASE_URL + "auth/reset-password/",
+    REFRESH_TOKEN_API: BASE_URL + "auth/refresh"
 }
 
 export const dataEndpoints = {

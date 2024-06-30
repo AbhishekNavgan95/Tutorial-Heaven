@@ -3,7 +3,7 @@ import { dropDownLinks } from '../../data/dropDownLinks'
 import { Link, NavLink } from 'react-router-dom'
 import DangerButton from '../common/DangerButton'
 import { useSelector } from 'react-redux'
-import ActionButton from './ActionButton'
+import { USER_TYPES } from '../../services/constants'
 
 const MobileNav = ({ mobileNavActive, setMobileNavActive }) => {
 
@@ -29,18 +29,19 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive }) => {
                             Home
                         </NavLink>
                         {
-                            token && user &&
-                            dropDownLinks.map((link) => (
-                                <NavLink
-                                    to={link.path}
-                                    className={({ isActive }) => isActive
-                                        ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                        : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
-                                    }
-                                    key={link.id}
-                                >
-                                    {link.title}
-                                </NavLink>
+                            token && user && dropDownLinks.map((link) => (
+                                user?.accountType === link?.access || link?.access === USER_TYPES?.ALL ? (
+                                    <NavLink
+                                        to={link.path}
+                                        className={({ isActive }) => isActive
+                                            ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
+                                            : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                        }
+                                        key={link.id}
+                                    >
+                                        {link.title}
+                                    </NavLink>
+                                ) : null
                             ))
                         }
                         {
