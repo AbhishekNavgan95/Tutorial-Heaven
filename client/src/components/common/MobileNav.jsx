@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
 import { dropDownLinks } from '../../data/dropDownLinks'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import DangerButton from '../common/DangerButton'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { USER_TYPES } from '../../services/constants'
+import { logout } from "../../services/operations/authAPI"
 
-const MobileNav = ({ mobileNavActive, setMobileNavActive }) => {
+const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalData }) => {
 
     useEffect(() => {
         document.body.style.overflow = mobileNavActive ? "hidden" : "auto"
     }, [mobileNavActive])
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { user } = useSelector(state => state.user)
     const { token } = useSelector(state => state.auth)
@@ -68,7 +71,14 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive }) => {
                     {
                         user && token &&
                         <div className='w-full flex justify-center'>
-                            <DangerButton styles={""} >Log out</DangerButton>
+                            <DangerButton action={() => setModalData({
+                                title: "Log out?",
+                                description: "You'll be logged out",
+                                primaryButtonText: "Log out",
+                                primaryButtonHandler: () => dispatch(logout(navigate)),
+                                secondaryButtonText: "Cancel",
+                                secondaryButtonHandler: () => setModalData(null)
+                            })}> Log out</DangerButton>
                         </div>
                     }
                 </section>

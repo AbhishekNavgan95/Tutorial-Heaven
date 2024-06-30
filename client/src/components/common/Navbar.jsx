@@ -78,7 +78,7 @@ const Navbar = () => {
                         </span>
                     </div>
                 </nav>
-                <MobileNav mobileNavActive={mobileNavActive} setMobileNavActive={setMobileNavActive} />
+                <MobileNav modalData={modalData} setModalData={setModalData} mobileNavActive={mobileNavActive} setMobileNavActive={setMobileNavActive} />
             </header>
             {
                 modalData && <Modal setModalData={setModalData} modalData={modalData} />
