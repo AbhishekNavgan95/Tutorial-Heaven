@@ -39,7 +39,7 @@ exports.auth = async (req, res, next) => {
 // is authorized user
 exports.isUser = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "user") {
+    if (req.user.accountType !== "user" && req.user.accountType !== "moderator") {
       console.log("trying to access unreachable user route");
       return res.status(400).json({
         success: false,
@@ -50,7 +50,7 @@ exports.isUser = async (req, res, next) => {
   } catch (e) {
     return res.status(400).json({
       success: false,
-      message: "User role cannot be varified",
+      message: "User role cannot be verified",
     });
   }
 };
@@ -58,7 +58,7 @@ exports.isUser = async (req, res, next) => {
 // is moderator
 exports.isMod = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "moderator") {
+    if (req.user.accountType !== "moderator" && req.user.accountType !== "admin") {
       console.log("trying to access unreachable moderator route");
       return res.status(400).json({
         success: false,
@@ -69,7 +69,7 @@ exports.isMod = async (req, res, next) => {
   } catch (e) {
     return res.status(400).json({
       success: false,
-      message: "User role cannot be varified",
+      message: "User role cannot be verified",
     });
   }
 };
@@ -78,7 +78,6 @@ exports.isMod = async (req, res, next) => {
 exports.isAdmin = async (req, res, next) => {
   try {
     if (req.user.accountType !== "admin") {
-      console.log("trying to access unreachable admin route");
       return res.status(400).json({
         success: false,
         message: "You are not authorised to access this route",

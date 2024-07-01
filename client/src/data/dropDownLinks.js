@@ -35,4 +35,34 @@ export const dropDownLinks = [
     title: "Create Category",
     access: "moderator",
   },
+  {
+    id: 7,
+    path: "/dashboard/categories",
+    title: "Categories",
+    access: "all",
+  },
+  {
+    id: 8,
+    path: "/dashboard/manage-deletion",
+    title: "Manage Deletion",
+    access: "moderator",
+  },
+  {
+    id: 9,
+    path: "/dashboard/manage-posts",
+    title: "Manage Posts",
+    access: "moderator",
+  },
+  {
+    id: 10,
+    path: "/dashboard/Appoint-Moderator",
+    title: "Appoint Moderator",
+    access: "admin",
+  },
+  {
+    id: 12,
+    path: "/dashboard/manage-mods",
+    title: "Manage Moderators",
+    access: "admin",
+  },
 ];

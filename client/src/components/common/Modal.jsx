@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from './Button'
 
 const Modal = ({ modalData = {}, setModalData }) => {
@@ -11,6 +11,13 @@ const Modal = ({ modalData = {}, setModalData }) => {
         secondaryButtonText = "Close",
         secondaryButtonHandler = () => { }
     } = modalData;
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        }
+    }, [])
 
     return (
         <div onClick={secondaryButtonHandler} className='w-full h-screen flex items-center justify-center bg-opec fixed top-0 left-0 z-[11]'>

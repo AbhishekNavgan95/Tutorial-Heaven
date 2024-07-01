@@ -6,8 +6,8 @@ import PostCard from '../components/core/Home/PostCard'
 import Button from "../components/common/Button"
 import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
-import Spinner from '../components/common/Spinner'
 import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
+import Explore from "../assets/placeHolders/explore.png"
 
 const Home = () => {
 
@@ -18,6 +18,12 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [headingImage, setHeadingImage] = useState("");
+
+  const setImage = (categoryId) => {
+    const categoryDetails = categories.find(category => category._id === categoryId);
+    setHeadingImage(categoryDetails?.image?.url)
+  }
 
   const fetchCategories = useCallback(async () => {
     setLoading(true);
@@ -88,13 +94,22 @@ const Home = () => {
 
   return (
     <div className='pt-[4rem] md:pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
-      <div className='flex justify-between items-center gap-3 px-3 overflow-auto '>
+      <div className='flex justify-between items-center gap-3 px-3 overflow-auto'>
         <div className='mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
           <span className=''>
             Page: {page} of {totalPages}
           </span>
         </div>
-        <select className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900' value={currentCategory} onChange={(e) => setCurrentCategory(e.target.value)} name="category" id="category">
+        <select
+          className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900'
+          value={currentCategory}
+          onChange={(e) => {
+            setCurrentCategory(e.target.value);
+            setImage(e.target.value)
+          }}
+          name="category"
+          id="category"
+        >
           <option value="All">All</option>
           {
             categories?.map((category) => (
@@ -103,6 +118,10 @@ const Home = () => {
           }
         </select>
       </div>
+
+      <section className='w-full rounded-lg overflow-hidden px-3 py-5'>
+        <img src={currentCategory === "All" ? Explore : headingImage} alt="" className='w-full h-[200px] max-h-[200px] object-cover rounded-lg' />
+      </section>
 
       {loading ? (
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">

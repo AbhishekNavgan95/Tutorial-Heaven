@@ -395,12 +395,18 @@ exports.createModeratorAccount = async (req, res) => {
       !lastName ||
       !email ||
       !password ||
-      !confirmPassword ||
-      !token
+      !confirmPassword
     ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
+      });
+    }
+
+    if(!token) {
+      return res.status(400).json({
+        success: false,
+        message: "Token is required",
       });
     }
 
