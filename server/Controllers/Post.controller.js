@@ -613,9 +613,17 @@ exports.getCategoryAllPosts = async (req, res) => {
 
     const postsCount = await Post.countDocuments(filter);
 
+    if (postsCount <= 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No Videos found for this Category.",
+      });
+    }
+
     if (skip >= postsCount) {
       return res.status(404).json({
-        error: "Page not found.",
+        success: false,
+        message: "Page not found.",
       });
     }
 

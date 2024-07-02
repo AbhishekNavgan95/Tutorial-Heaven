@@ -8,21 +8,29 @@ import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
 import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
 import Explore from "../assets/placeHolders/explore.png"
+import { useSearchParams } from 'react-router-dom'
 
 const Home = () => {
 
   const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentCategory, setCurrentCategory] = useState(searchParams.get('category') || 'All');
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [headingImage, setHeadingImage] = useState("");
 
-  const setImage = (categoryId) => {
-    const categoryDetails = categories.find(category => category._id === categoryId);
-    setHeadingImage(categoryDetails?.image?.url)
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    if (selectedCategory === "All") {
+      setSearchParams({});
+      setCurrentCategory("All");
+      return;
+    }
+    setCurrentCategory(selectedCategory);
+    setSearchParams({ category: selectedCategory });
   }
 
   const fetchCategories = useCallback(async () => {
@@ -61,7 +69,7 @@ const Home = () => {
       setTotalPages(response?.data?.data?.totalPages)
     } catch (e) {
       console.log("post fetching failed : ", e);
-      toast.error("Failed to load posts", {
+      toast.error(e.response?.data?.message, {
         style: {
           border: '1px solid #5252B7',
           padding: '8px 16px',
@@ -86,42 +94,58 @@ const Home = () => {
   useEffect(() => {
     fetchPosts();
     window.scrollTo(0, 0)
-  }, [fetchPosts, page, currentCategory])
+  }, [fetchPosts, page, currentCategory, searchParams])
 
   useEffect(() => {
     setPage(1);
-  }, [currentCategory])
+  }, [currentCategory, searchParams])
+
+  useEffect(() => {
+    if (currentCategory) {
+      const category = categories?.find((cat) => cat._id === currentCategory);
+      setHeadingImage(category?.image?.url);
+    }
+  }, [currentCategory, categories]);
+
+  useEffect(() => {
+    if (!searchParams.get("category")) {
+      setCurrentCategory("All");
+    }
+  }, [searchParams])
 
   return (
     <div className='pt-[4rem] md:pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
       <div className='flex justify-between items-center gap-3 px-3 overflow-auto'>
+
         <div className='mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
           <span className=''>
             Page: {page} of {totalPages}
           </span>
         </div>
+
         <select
           className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900'
           value={currentCategory}
-          onChange={(e) => {
-            setCurrentCategory(e.target.value);
-            setImage(e.target.value)
-          }}
+          onChange={handleCategoryChange}
           name="category"
           id="category"
         >
           <option value="All">All</option>
           {
             categories?.map((category) => (
+              category?.posts?.length > 0 &&
               <option key={category?._id} value={category?._id}>{category.title}</option>
             ))
           }
         </select>
       </div>
 
-      <section className='w-full rounded-lg overflow-hidden px-3 py-5'>
-        <img src={currentCategory === "All" ? Explore : headingImage} alt="" className='w-full h-[200px] max-h-[200px] object-cover rounded-lg' />
-      </section>
+      {
+        headingImage &&
+        <section className='w-full rounded-lg overflow-hidden px-3 my-3'>
+          <img src={currentCategory === "All" ? Explore : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
+        </section>
+      }
 
       {loading ? (
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
@@ -138,6 +162,7 @@ const Home = () => {
           ))}
         </div>
       )}
+
       <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
         <span className='mb-1 py-1'>
           Page: {page} of {totalPages}
@@ -155,6 +180,7 @@ const Home = () => {
           )}
         </span>
       </div>
+
     </div>
   );
 };
