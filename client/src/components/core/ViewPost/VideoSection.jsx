@@ -7,6 +7,9 @@ import { IoBookmarkSharp, IoBookmarkOutline } from "react-icons/io5";
 import { TbArrowBackUp } from "react-icons/tb";
 import { Link } from 'react-router-dom';
 import { likePost, savePost, unSavePost, unlikePost } from "../../../services/operations/userAPI"
+import { IoShareSocialSharp } from "react-icons/io5";
+import toast from 'react-hot-toast';
+
 
 const VideoSection = ({ post, loading }) => {
 
@@ -43,6 +46,22 @@ const VideoSection = ({ post, loading }) => {
         } else {
             await savePost(token, dispatch, post?._id);
         }
+    }
+
+    const handleShareVideo = () => {
+        navigator.clipboard.writeText(window.location.href);
+        toast.success("link copied to clipboard", {
+            style: {
+              border: "1px solid #5252B7",
+              padding: "8px 16px",
+              color: "#DFE2E2",
+              background: "#5252B7",
+            },
+            iconTheme: {
+              primary: "#5252B7",
+              secondary: "#DFE2E2",
+            },
+          });
     }
 
     return (
@@ -107,6 +126,9 @@ const VideoSection = ({ post, loading }) => {
                                             <BiSolidLike className='' /> :
                                             <BiLike className='' />
                                     }
+                                </button>
+                                <button onClick={handleShareVideo} className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'>
+                                    <IoShareSocialSharp />
                                 </button>
                                 <button
                                     onClick={handleBookmarkVideo}
