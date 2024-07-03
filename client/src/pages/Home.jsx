@@ -142,7 +142,7 @@ const Home = () => {
       {
         headingImage &&
         <section className='w-full rounded-lg overflow-hidden px-3 my-3'>
-          <img src={currentCategory === "All" ? Explore : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
+          <img src={currentCategory === "All" ? null : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
         </section>
       }
 
