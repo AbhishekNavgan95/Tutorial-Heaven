@@ -24,6 +24,7 @@ import AdminRoutes from "./components/common/AdminRoutes"
 import ModeratorRoutes from "./components/common/ModeratorRoutes"
 import ManageModerators from "./pages/ManageModerators"
 import ModeratorSignUp from "./pages/ModeratorSignUp"
+import PublicRoute from "./components/common/PublicRoute"
 
 function App() {
 
@@ -50,13 +51,13 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="varify-otp" element={<VarifyOtp />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="signup" element={<PublicRoute><Signup /></PublicRoute>} />
+        <Route path="varify-otp" element={<PublicRoute><VarifyOtp /></PublicRoute>} />
+        <Route path="forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+        <Route path="reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
         <Route path="view/:id" element={<ViewPost />} />
-        <Route path="moderator/signup/:token" element={<ModeratorSignUp />} />
+        <Route path="moderator/signup/:token" element={<PublicRoute><ModeratorSignUp /></PublicRoute>} />
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
           <Route path="create" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />
