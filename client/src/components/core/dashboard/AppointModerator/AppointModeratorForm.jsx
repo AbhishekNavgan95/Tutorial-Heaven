@@ -20,7 +20,6 @@ const AppointModeratorForm = () => {
   const submitHandler = async (data) => {
     setLoading(true)
     dispatch(setProgress(60))
-    console.log("data : ", data);
     try {
       const response = await apiConnector("POST", GENERATE_MODERATOR_TOKEN, data, { Authorization: `Bearer ${token}` })
       console.log("response : ", response);
