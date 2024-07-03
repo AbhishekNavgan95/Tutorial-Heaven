@@ -7,7 +7,6 @@ import Button from "../components/common/Button"
 import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
 import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
-import Explore from "../assets/placeHolders/explore.png"
 import { useSearchParams } from 'react-router-dom'
 
 const Home = () => {

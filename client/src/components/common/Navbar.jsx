@@ -31,7 +31,7 @@ const Navbar = () => {
                         {/* logo */}
                         <span>
                             <Link to="/">
-                                <img  loading='lazy'  src={image} className='max-w-[150px] md:max-w-[190px] lg:max-w-[210px]' alt="" />
+                                <img loading='lazy' src={image} className='max-w-[150px] md:max-w-[190px] lg:max-w-[210px]' alt="" />
                             </Link>
                         </span>
 
@@ -95,16 +95,34 @@ const ProfileDropDown = ({ setModalData }) => {
 
     return (
         <div className='flex group items-center gap-1 relative bg-blue-300 py-2 px-3 rounded-full text-night-25'>
-            <img  loading='lazy'  src={user?.image?.url} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
+            <img loading='lazy' src={user?.image?.url} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
             <span className='text-xl'><IoMdArrowDropdown /></span>
             <span
                 className={`bg-night-25 text-night-900 flex flex-col items-center rounded-lg overflow-hidden 
-                absolute top-full right-0 my-2 border border-blue-300 w-[150px] shadow-sm shadow-night-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300`}
+                absolute top-full right-0 my-2 border border-blue-300 min-w-[150px] shadow-sm shadow-night-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300`}
             >
                 {
-                    dropDownLinks.map((link) => (
-                        user && user?.accountType === link?.access || link?.access === USER_TYPES.ALL ?
-                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center" : "py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
+                    user.accountType === USER_TYPES.USER && dropDownLinks.map((link) => (
+                        user?.accountType === link?.access || link?.access === USER_TYPES.ALL ?
+                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center px-4 text-nowrap " : " px-4 text-nowrap py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
+                                <span >{link?.title}</span>
+                            </NavLink>
+                            : null
+                    ))
+                }
+                {
+                    user.accountType === USER_TYPES.MOD && dropDownLinks.map((link) => (
+                        user?.accountType === link?.access || link?.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
+                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center px-4 text-nowrap " : " px-4 text-nowrap py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
+                                <span >{link?.title}</span>
+                            </NavLink>
+                            : null
+                    ))
+                }
+                {
+                    user.accountType === USER_TYPES.ADMIN && dropDownLinks.map((link) => (
+                        user?.accountType === link?.access || link.access === USER_TYPES.USER || link.access === USER_TYPES.MOD || link?.access === USER_TYPES.ALL ?
+                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center px-4 text-nowrap " : " px-4 text-nowrap py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
                                 <span >{link?.title}</span>
                             </NavLink>
                             : null
