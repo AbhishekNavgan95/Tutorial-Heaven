@@ -19,6 +19,11 @@ import Bookmarks from "./pages/Bookmarks"
 import CreatePost from "./pages/CreatePost"
 import UpdatePost from "./pages/UpdatePost"
 import ViewPost from "./pages/ViewPost"
+import AppointModerator from "./pages/AppointModerator"
+import AdminRoutes from "./components/common/AdminRoutes"
+import ModeratorRoutes from "./components/common/ModeratorRoutes"
+import ManageModerators from "./pages/ManageModerators"
+import ModeratorSignUp from "./pages/ModeratorSignUp"
 
 function App() {
 
@@ -51,6 +56,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="view/:id" element={<ViewPost />} />
+        <Route path="moderator/signup/:token" element={<ModeratorSignUp />} />
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
           <Route path="create" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />
@@ -58,6 +64,8 @@ function App() {
           <Route path="posts" element={<DashboardPageLayout><MyPosts /></DashboardPageLayout>} />
           <Route path="bookmarks" element={<DashboardPageLayout><Bookmarks /></DashboardPageLayout>} />
           <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />
+          <Route path="appoint-Moderator" element={<DashboardPageLayout><AdminRoutes><AppointModerator /></AdminRoutes></DashboardPageLayout>} />
+          <Route path="manage-moderators" element={<DashboardPageLayout><AdminRoutes><ManageModerators /></AdminRoutes></DashboardPageLayout>} />
         </Route>
       </Routes>
     </div>

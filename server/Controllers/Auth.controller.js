@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 require("dotenv").config();
+const moderatorEmailTemplate = require("../EmailTamplates/moderatorEmailTamplate");
 
 // SEND OTP ✅
 exports.sendOTP = async (req, res) => {
@@ -361,15 +362,36 @@ exports.cancelScheduledDeletion = async (req, res) => {
 exports.generateModeratorToken = async (req, res) => {
   try {
     const { email } = req.body;
+
+    const user = User.find({ email: email });
+
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        message: "User with this email already exist",
+      });
+    }
+
+    const tokenExist = ModeratorToken.find({ email: email });
+
+    if (tokenExist) {
+      return res.status(400).json({
+        success: false,
+        message: "Token already created for this email, try after sometime",
+      });
+    }
+
     const token = crypto.randomBytes(32).toString("hex");
 
     const createdToken = await ModeratorToken.create({ email, token });
 
-    await mailSender(
+    const mailTamplate = moderatorEmailTemplate(
+      token,
       email,
-      "Moderator Account Token",
-      `Use this token to create a moderator account: ${token}`
+      process.env.CORS_ORIGIN + "/moderator/signup"
     );
+
+    await mailSender(email, "Create Moderator Account", mailTamplate);
 
     res.status(200).json({
       success: true,
@@ -377,6 +399,7 @@ exports.generateModeratorToken = async (req, res) => {
       data: createdToken,
     });
   } catch (error) {
+    console.log("error while generating moderator token : ", error);
     res.status(500).json({
       success: false,
       message: "Something went wrong while generating moderator token",
@@ -390,20 +413,14 @@ exports.createModeratorAccount = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword, token } =
       req.body;
 
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
 
-    if(!token) {
+    if (!token) {
       return res.status(400).json({
         success: false,
         message: "Token is required",

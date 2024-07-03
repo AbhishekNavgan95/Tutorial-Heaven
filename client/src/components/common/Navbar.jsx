@@ -66,8 +66,8 @@ const Navbar = () => {
                                 token === null && <ActionButton active to={"/signup"} >Sign up</ActionButton>
                             }
                             {
-                                user?.accountType === USER_TYPES.USER &&
-                                <Link to={"/dashboard/bookmarks"} className='border border-blue-300 p-2 shadow-sm shadow-night-300 transition-all duration-300 active:scale-[0.95] rounded-full text-xl text-blue-300' >
+                                token !== null &&
+                                <Link to={"/dashboard/bookmarks"} className='bg-blue-300 border border-transparent hover:bg-night-25 hover:text-blue-300 hover:border-blue-300 p-2 transition-all duration-300  rounded-full text-xl text-night-25' >
                                     <IoIosBookmark />
                                 </Link>
                             }

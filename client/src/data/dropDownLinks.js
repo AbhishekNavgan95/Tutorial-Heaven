@@ -55,13 +55,13 @@ export const dropDownLinks = [
   },
   {
     id: 10,
-    path: "/dashboard/Appoint-Moderator",
+    path: "/dashboard/appoint-Moderator",
     title: "Appoint Moderator", // create a moderator account token
     access: "admin",
   },
   {
     id: 12,
-    path: "/dashboard/manage-mods",
+    path: "/dashboard/manage-moderators",
     title: "Manage Moderators", // manage moderators
     access: "admin",
   },
