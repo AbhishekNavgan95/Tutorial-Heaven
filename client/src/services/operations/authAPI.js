@@ -11,7 +11,7 @@ const {
   SIGNUP_API,
   SEND_RESET_PASSWORD_TOKEN_API,
   RESET_PASSWORD_API,
-  SIGNUP_MODE_API
+  SIGNUP_MODE_API,
 } = authEndpoints;
 
 export const login = async (email, password, dispatch) => {
@@ -191,6 +191,7 @@ export const resetPasswordToken = async (data, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
+    return true;
   } catch (e) {
     console.log("RESET_PASSWORD_TOKEN_API_ERROR : ", e);
     toast.success(e.response?.data?.message, {
@@ -205,8 +206,10 @@ export const resetPasswordToken = async (data, dispatch) => {
         secondary: "#DFE2E2",
       },
     });
+  } finally {
+    dispatch(setProgress(100));
   }
-  dispatch(setProgress(100));
+  return false;
 };
 
 export const resetPassword = async (data, token, dispatch) => {
