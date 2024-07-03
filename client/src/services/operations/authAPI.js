@@ -11,6 +11,7 @@ const {
   SIGNUP_API,
   SEND_RESET_PASSWORD_TOKEN_API,
   RESET_PASSWORD_API,
+  SIGNUP_MODE_API
 } = authEndpoints;
 
 export const login = async (email, password, dispatch) => {
@@ -31,7 +32,7 @@ export const login = async (email, password, dispatch) => {
       accessToken: response.data?.data?.accessToken,
       refreshToken: response.data?.data?.refreshToken,
     };
-    
+
     dispatch(setTokens(tokens));
 
     // set User
@@ -81,6 +82,49 @@ export const signup = async (data, dispatch) => {
   dispatch(setProgress(60));
   try {
     const response = await apiConnector("POST", SIGNUP_API, data);
+
+    if (!response.data.success) {
+      throw new Error("request failed : ", response.data?.message);
+    }
+
+    console.log("SIGNUP_API_RESPONSE : ", response.data);
+    toast.success(response.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+    return true;
+  } catch (e) {
+    console.log("SIGNUP_API_ERROR: ", e);
+    toast(e.response?.data?.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } finally {
+    dispatch(setProgress(100));
+  }
+  return false;
+};
+
+export const signupModerator = async (data, dispatch) => {
+  dispatch(setProgress(60));
+  try {
+    const response = await apiConnector("POST", SIGNUP_MODE_API, data);
 
     if (!response.data.success) {
       throw new Error("request failed : ", response.data?.message);

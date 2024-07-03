@@ -364,7 +364,7 @@ exports.generateModeratorToken = async (req, res) => {
   try {
     const { email } = req.body;
 
-    const user = User.find({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (user) {
       return res.status(400).json({
@@ -373,7 +373,7 @@ exports.generateModeratorToken = async (req, res) => {
       });
     }
 
-    const tokenExist = ModeratorToken.find({ email: email });
+    const tokenExist = await ModeratorToken.findOne({ email: email });
 
     if (tokenExist) {
       return res.status(400).json({
@@ -411,8 +411,16 @@ exports.generateModeratorToken = async (req, res) => {
 // create moderator account ✅
 exports.createModeratorAccount = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, confirmPassword, token } =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      token,
+      otp,
+      accountType = "moderator",
+    } = req.body;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       return res.status(400).json({
@@ -432,6 +440,25 @@ exports.createModeratorAccount = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Passwords do not match",
+      });
+    }
+
+    const recentOtp = await Otp.findOne({ email })
+      .sort({ createdAt: -1 })
+      .limit(1);
+
+    // validating otp
+    if (!recentOtp) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP not found",
+      });
+    }
+
+    if (recentOtp?.otp !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP is invalid",
       });
     }
 
@@ -462,7 +489,7 @@ exports.createModeratorAccount = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
-      accountType: "moderator",
+      accountType,
       image: {
         url: `http://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
         public_id: null,
