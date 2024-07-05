@@ -6,7 +6,7 @@ const { deleteImageFromCloudinary } = require("../Utils/deleteFromCloudinary");
 exports.createCategory = async (req, res) => {
   try {
     const { title, description } = req.body;
-    const { thumbnail } = req.files;
+    const thumbnail = req.files?.thumbnail;
 
     if (!title || !description) {
       return res.status(400).json({

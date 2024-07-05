@@ -42,3 +42,9 @@ export const postEndpoints = {
   LIKE_COMMENT: BASE_URL + "comment/like-comment",
   UNLIKE_COMMENT: BASE_URL + "comment/unlike-comment",
 };
+
+export const categoryEndpoints = {
+  CREATE_CATEGORY: BASE_URL + "category/create-category",
+  UPDATE_CATEGORY: BASE_URL + "category/update-category",
+  DELETE_CATEGORY: BASE_URL + "category/delete-category",
+};
