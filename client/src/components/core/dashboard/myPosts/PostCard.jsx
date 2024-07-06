@@ -26,7 +26,7 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer overflow-hidden rounded-lg group w-full aspect-video'>
         <span className='relative w-full'>
           <div className='w-full bg-night-50 aspect-video '>
-            <img loading='lazy' src={postThumbnail} alt="" className='aspect-video' />
+            <img loading='lazy' src={postThumbnail} alt="" className='aspect-video object-cover' />
           </div>
           <span
             className='md:flex hidden absolute text-xl inset-0 w-full top-0 gap-2 justify-between items-end text-night-25 

@@ -68,7 +68,8 @@ exports.createCategory = async (req, res) => {
 exports.updateCategory = async (req, res) => {
   try {
     // recieve data
-    let { categoryId, title, description } = req.body;
+    let { title, description } = req.body;
+    const { categoryId } = req.params;
     const thumbnail = req?.files?.thumbnail;
     let image;
 
@@ -130,7 +131,15 @@ exports.updateCategory = async (req, res) => {
 // delete category ✅
 exports.deleteCategory = async (req, res) => {
   try {
-    const { categoryId } = req.body;
+    const { categoryId } = req.params;
+
+    if(!categoryId) {
+      return res.status(404).json({
+        success: false,
+        message: "Category id is required",
+      });
+    }
+
     const categoryExist = await Category.findById(categoryId);
 
     if (!categoryExist) {
@@ -139,11 +148,13 @@ exports.deleteCategory = async (req, res) => {
         message: "Category does not exist",
       });
     }
+    
+    console.log("category : ", categoryExist)
 
-    if (categoryExist?.posts?.lenght > 0) {
+    if (categoryExist?.posts?.length > 0) {
       return res.status(402).json({
         success: false,
-        message: "This category cannot be deleted",
+        message: "Category with active posts cannot be deleted",
       });
     }
 
@@ -151,12 +162,12 @@ exports.deleteCategory = async (req, res) => {
     await Category.findByIdAndDelete(categoryId);
 
     res.status(200).json({
-      succes: true,
+      success: true,
       message: "Category deleted successfully!",
     });
   } catch (e) {
     res.status(500).json({
-      succes: false,
+      success: false,
       message: "something went wrong while deleting the category!",
     });
   }

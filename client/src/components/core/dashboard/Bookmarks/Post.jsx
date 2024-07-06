@@ -9,7 +9,6 @@ const Post = ({ post }) => {
     postThumbnail: null,
     authorImage: null
   });
-  // const [authorImage, setAuthorImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {

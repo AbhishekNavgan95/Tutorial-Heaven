@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Button from './Button'
 
-const Modal = ({ modalData = {}, setModalData }) => {
+const Modal = ({ modalData = {} }) => {
 
     const {
         title = "Sample Modal",

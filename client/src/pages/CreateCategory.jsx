@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import CreateCategoryForm from '../components/core/dashboard/CreateCategory/CreateCategoryForm'
 import { useSelector } from 'react-redux'
@@ -5,6 +6,11 @@ import { useSelector } from 'react-redux'
 const CreateCategory = () => {
 
     const { edit, post } = useSelector(state => state.post)
+    const navigate = useNavigate()
+
+    if(edit === true && !post) {
+        navigate('/manage-categories')
+    }
 
     return (
         <div className='w-full lg:w-8/12 mx-auto py-5 md:py-14'>

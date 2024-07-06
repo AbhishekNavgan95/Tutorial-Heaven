@@ -20,9 +20,9 @@ router.get("/get-all-categories", getAllCategories);
 router.post("/create-category", auth, isMod, createCategory);
 
 // update category
-router.put("/update-category", auth, isMod, updateCategory);
+router.put("/update-category/:categoryId", auth, isMod, updateCategory);
 
 // delete category
-router.post("/delete-category", auth, isMod, deleteCategory);
+router.delete("/delete-category/:categoryId", auth, isMod, deleteCategory);
 
 module.exports = router;

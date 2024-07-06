@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../../../common/Button';
 import { RxCross2 } from 'react-icons/rx';
 import { createCategory, updateCategory } from '../../../../services/operations/categoryAPI';
+import { setEdit, setPost } from '../../../../slices/postSlice';
 
 const CreateCategoryForm = ({ edit, category }) => {
     const [image, setImage] = useState(placeHolder);
@@ -81,9 +82,9 @@ const CreateCategoryForm = ({ edit, category }) => {
 
     useEffect(() => {
         if (edit) {
-            setValue("title", post?.title);
-            setValue("description", post?.description);
-            setImage(post?.thumbnail?.url);
+            setValue("title", category?.title);
+            setValue("description", category?.description);
+            setImage(category?.image?.url);
         } else {
             setValue("title", "");
             setValue("description", "");
@@ -92,6 +93,14 @@ const CreateCategoryForm = ({ edit, category }) => {
 
         if (edit === false && location.pathname.includes("edit")) {
             navigate("/dashboard/categories")
+        }
+
+        if(edit && location?.pathname.includes("create-category")) {
+            dispatch(setEdit(false));
+            dispatch(setPost(null));
+            setValue("title", "");
+            setValue("description", "");
+            setImage(placeHolder);
         }
     }, [edit])
 

@@ -8,7 +8,7 @@ export default {
       white: "#fff",
       black: "#000",
       transparent: "#ffffff00",
-      opec: "rgba( 0, 8, 20, 0.85)",
+      opec: "rgba( 0, 8, 20, 0.75)",
       night: {
         5: "#F4F5F5",
         25: "#DFE2E2",

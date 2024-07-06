@@ -26,6 +26,7 @@ import ManageModerators from "./pages/ManageModerators"
 import ModeratorSignUp from "./pages/ModeratorSignUp"
 import PublicRoute from "./components/common/PublicRoute"
 import CreateCategory from "./pages/CreateCategory"
+import ManageCategories from "./pages/ManageCategories"
 
 function App() {
 
@@ -67,6 +68,8 @@ function App() {
           <Route path="bookmarks" element={<DashboardPageLayout><Bookmarks /></DashboardPageLayout>} />
           <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />
           <Route path="create-category" element={<DashboardPageLayout><ModeratorRoutes><CreateCategory /></ModeratorRoutes></DashboardPageLayout>} />
+          <Route path="edit-category/:id" element={<DashboardPageLayout><CreateCategory><CreateCategory /></CreateCategory></DashboardPageLayout>} />
+          <Route path="categories" element={<DashboardPageLayout><ModeratorRoutes><ManageCategories /></ModeratorRoutes></DashboardPageLayout>} />
           <Route path="appoint-Moderator" element={<DashboardPageLayout><AdminRoutes><AppointModerator /></AdminRoutes></DashboardPageLayout>} />
           <Route path="manage-moderators" element={<DashboardPageLayout><AdminRoutes><ManageModerators /></AdminRoutes></DashboardPageLayout>} />
         </Route>
