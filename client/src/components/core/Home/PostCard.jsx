@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { savePost, unSavePost } from "../../../services/operations/userAPI"
 
 const PostCard = ({ post }) => {
-
-    const [openOptionMenu, setOpenOptionMenu] = useState(false);
     const navigate = useNavigate();
     const videoRef = useRef(null);
     const hoverTimeoutRef = useRef(null);
@@ -25,6 +23,15 @@ const PostCard = ({ post }) => {
         videoRef.current?.pause();
     };
 
+    const getCloudinaryUrl = (url, width, height) => {
+        const baseUrl = "http://res.cloudinary.com/dc8ipw43g/image/upload/";
+        const transformation = `w_${width},h_${height},c_fill/`;
+        return url.replace(baseUrl, `${baseUrl}${transformation}`);
+    };
+
+    const thumbnailUrl = getCloudinaryUrl(post?.thumbnail?.url, 600, 400); // Adjust width and height as needed
+    const authorImageUrl = getCloudinaryUrl(post?.author?.image?.url, 40, 40);
+
     return (
         <div onClick={() => navigate(`/view/${post?._id}`)} className='cursor-pointer'>
             <div
@@ -34,7 +41,7 @@ const PostCard = ({ post }) => {
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
-                        src={post?.thumbnail?.url}
+                        src={thumbnailUrl}
                         loading='lazy'
                         className='group-hover:opacity-0 transition-all delay-500 duration-100' alt=""
                     />
@@ -46,7 +53,7 @@ const PostCard = ({ post }) => {
                 </span>
                 <div className='flex items-start justify-center gap-3 w-full'>
                     <span className='mt-[5px] w-fitContent'>
-                        <img loading='lazy' className='w-[40px] aspect-square rounded-full' src={post?.author?.image?.url} alt="" />
+                        <img loading='lazy' className='w-[40px] aspect-square rounded-full' src={authorImageUrl} alt="" />
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>
