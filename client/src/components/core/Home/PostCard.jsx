@@ -1,12 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from "react-router-dom"
 import { PiBookmarkSimpleLight, PiBookmarkSimpleFill } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from 'react-redux';
 import { savePost, unSavePost } from "../../../services/operations/userAPI"
+import { getCloudinaryUrl } from '../../../utils/getCloudinaryUrl';
 
 const PostCard = ({ post }) => {
+
+    const [images, setImages] = useState({
+        postThumbnail: null,
+        authorImage: null
+    })
     const navigate = useNavigate();
     const videoRef = useRef(null);
     const hoverTimeoutRef = useRef(null);
@@ -23,14 +29,16 @@ const PostCard = ({ post }) => {
         videoRef.current?.pause();
     };
 
-    const getCloudinaryUrl = (url, width, height) => {
-        const baseUrl = "http://res.cloudinary.com/dc8ipw43g/image/upload/";
-        const transformation = `w_${width},h_${height},c_fill/`;
-        return url.replace(baseUrl, `${baseUrl}${transformation}`);
-    };
+    useEffect(() => {
 
-    const thumbnailUrl = getCloudinaryUrl(post?.thumbnail?.url, 600, 400); // Adjust width and height as needed
-    const authorImageUrl = getCloudinaryUrl(post?.author?.image?.url, 40, 40);
+        if(post?.thumbnail?.url) {
+            setImages({
+                postThumbnail: getCloudinaryUrl(post?.thumbnail?.url, 600, 400),
+                authorImage: getCloudinaryUrl(post?.author?.image?.url, 40, 40)
+            })
+        }
+
+    }, [post])
 
     return (
         <div onClick={() => navigate(`/view/${post?._id}`)} className='cursor-pointer'>
@@ -41,7 +49,7 @@ const PostCard = ({ post }) => {
             >
                 <span className='overflow-hidden rounded-lg relative aspect-video w-full '>
                     <img
-                        src={thumbnailUrl}
+                        src={images?.postThumbnail}
                         loading='lazy'
                         className='group-hover:opacity-0 transition-all delay-500 duration-100' alt=""
                     />
@@ -53,7 +61,7 @@ const PostCard = ({ post }) => {
                 </span>
                 <div className='flex items-start justify-center gap-3 w-full'>
                     <span className='mt-[5px] w-fitContent'>
-                        <img loading='lazy' className='w-[40px] aspect-square rounded-full' src={authorImageUrl} alt="" />
+                        <img loading='lazy' className='w-[40px] aspect-square rounded-full' src={images?.authorImage} alt="" />
                     </span>
                     <span className='flex justify-between w-full gap-3 items-start'>
                         <span>

@@ -36,7 +36,7 @@ const AuthLayout = ({ title, image, formType, description, token }) => {
           }
         </div>
         <div className='relative hidden lg:block lg:w-5/12'>
-          <img loading='lazy' src={image} className='max-w-full shadow-sm border-4 border-blue-300 relative z-[2]' alt="" />
+          <img loading='lazy' src={image} className='max-w-full min-w-full aspect-square shadow-sm border-4 border-blue-300 relative z-[2]' alt="" />
           <span className='absolute top-0 w-full h-full bg-blue-100 rounded-full random-move-2 blur-3xl'></span>
         </div>
       </section>

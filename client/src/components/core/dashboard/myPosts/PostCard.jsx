@@ -7,18 +7,26 @@ import { MdOutlineArchive } from "react-icons/md";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { POST_STATUS } from '../../../../services/constants';
 import { FaStar } from "react-icons/fa";
+import { getCloudinaryUrl } from '../../../../utils/getCloudinaryUrl';
 
 const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [postThumbnail, setPostThumbnail] = useState(null)
+
+  useEffect(() => {
+    if (post?.thumbnail?.url) {
+      setPostThumbnail(getCloudinaryUrl(post?.thumbnail?.url, 600, 400));
+    }
+  }, [post]);
 
   return (
     <div className='flex flex-col gap-1 sm:gap-3'>
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer overflow-hidden rounded-lg group w-full aspect-video'>
         <span className='relative w-full'>
           <div className='w-full bg-night-50 aspect-video '>
-            <img loading='lazy' src={post?.thumbnail?.url} alt="" className='aspect-video' />
+            <img loading='lazy' src={postThumbnail} alt="" className='aspect-video' />
           </div>
           <span
             className='md:flex hidden absolute text-xl inset-0 w-full top-0 gap-2 justify-between items-end text-night-25 

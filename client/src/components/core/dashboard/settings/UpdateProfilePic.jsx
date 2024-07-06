@@ -3,9 +3,10 @@ import Button from '../../../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfilePicture } from '../../../../services/operations/userAPI';
 import { useForm } from "react-hook-form";
+import { getCloudinaryUrl } from '../../../../utils/getCloudinaryUrl';
 
 const UpdateProfilePic = ({ user }) => {
-    const [file, setFile] = useState(user?.image?.url);
+    const [file, setFile] = useState(() => getCloudinaryUrl(user?.image?.url, 150, 150));
     const { token } = useSelector(state => state.auth);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const UpdateProfilePic = ({ user }) => {
         <div className=' flex flex-col gap-y-5 md:gap-y-10'>
             <h3 className='text-base md:text-lg xl:text-xl font-semibold text-blue-300 border-b pb-3'>Update Profile Picture</h3>
             <form onSubmit={handleSubmit(submitHandler)} className='w-10/12 lg:w-8/12 mx-auto flex flex-col md:flex-row items-center justify-start gap-5 md:gap-10'>
-                <img  loading='lazy'  src={file} className='max-w-[100px] md:max-w-[150px] rounded-full object-cover border-4 aspect-square border-blue-300' alt="Profile" />
+                <img  loading='lazy' src={file} className='max-w-[100px] md:max-w-[150px] min-w-[150px] bg-night-50 rounded-full object-cover border-4 aspect-square border-blue-300' alt="Profile" />
                 <span className='flex gap-3 items-end justify-center flex-col'>
                     <label
                         htmlFor="userImage"

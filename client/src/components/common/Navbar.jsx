@@ -13,6 +13,7 @@ import { USER_TYPES } from "../../services/constants"
 import { CiMenuFries } from "react-icons/ci";
 import { RiMenuFold4Fill } from "react-icons/ri";
 import MobileNav from './MobileNav';
+import { getCloudinaryUrl } from '../../utils/getCloudinaryUrl';
 
 const Navbar = () => {
 
@@ -90,12 +91,13 @@ const Navbar = () => {
 const ProfileDropDown = ({ setModalData }) => {
 
     const { user } = useSelector(state => state.user);
+    const [userImage, setUserImage] = useState(() => getCloudinaryUrl(user?.image?.url, 50, 50));
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     return (
         <div className='flex group items-center gap-1 relative bg-blue-300 py-2 px-3 rounded-full text-night-25'>
-            <img loading='lazy' src={user?.image?.url} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
+            <img loading='lazy' src={userImage} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
             <span className='text-xl'><IoMdArrowDropdown /></span>
             <span
                 className={`bg-night-25 text-night-900 flex flex-col items-center rounded-lg overflow-hidden 

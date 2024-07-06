@@ -5,6 +5,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { formatDistanceToNow } from 'date-fns';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { likeComment, unlikeComment } from '../../../services/operations/commentAPI';
+import { getCloudinaryUrl } from '../../../utils/getCloudinaryUrl';
 
 
 const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
@@ -13,6 +14,11 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
     const { token } = useSelector((state) => state.auth);
     const [likes, setLikes] = useState(comment?.likes);
     const [expandComment, setExpandComment] = useState(false);
+    let authorImage;
+
+    if (comment?.author?.image?.url) {
+        authorImage = getCloudinaryUrl(comment?.author?.image?.url, 40, 40)
+    }
 
     const handleLikeComment = async () => {
         const response = await likeComment(comment?._id, dispatch, token);
@@ -34,10 +40,13 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
         // useEffect to load comment again after like for rerender of corrousponding comment
     }, [likes?.length])
 
+    // useEffect(() => {
+    // }, [])
+
     return (
         <div className='py-3 flex gap-3 md:gap-5'>
             <span>
-                <img src={comment?.author?.image?.url} className='max-w-[40px] min-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
+                <img src={authorImage} className='max-w-[40px] min-w-[40px] sm:max-w-[50px] aspect-square object-cover rounded-full border' alt="" />
             </span>
             <span className='flex flex-col gap-2'>
                 <span className='flex items-center gap-3'>
