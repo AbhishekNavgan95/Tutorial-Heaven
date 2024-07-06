@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import { setProgress } from "../slices/loadingBarSlice"
 import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
 import { useSearchParams } from 'react-router-dom'
+import { getCloudinaryUrl } from '../utils/getCloudinaryUrl'
 
 const Home = () => {
 
@@ -102,7 +103,11 @@ const Home = () => {
   useEffect(() => {
     if (currentCategory) {
       const category = categories?.find((cat) => cat._id === currentCategory);
-      setHeadingImage(category?.image?.url);
+      if (category?.image?.url) {
+        setHeadingImage(() => getCloudinaryUrl(category?.image?.url, 800, 400));
+      } else {
+        setHeadingImage("")
+      }
     }
   }, [currentCategory, categories]);
 
@@ -142,7 +147,7 @@ const Home = () => {
       {
         headingImage &&
         <section className='w-full rounded-lg overflow-hidden px-3 my-3'>
-          <img src={currentCategory === "All" ? null : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
+          <img src={currentCategory === "All" ? "" : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
         </section>
       }
 
