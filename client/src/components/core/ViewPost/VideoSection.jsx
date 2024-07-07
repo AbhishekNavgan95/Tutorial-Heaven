@@ -17,35 +17,42 @@ const VideoSection = ({ post, loading }) => {
     const { token } = useSelector(state => state.auth);
     const [actionLoading, setActionLoading] = useState(false);
     const [postLikes, setPostLikes] = useState(0);
+    const [likedPosts, setLikedPosts] = useState([]);
+    const [savedPosts, setSavedPosts] = useState([]);
     const dispatch = useDispatch();
 
     useEffect(() => {
         setPostLikes(post?.likes?.length);
+        setLikedPosts(user?.likedPosts || []);
+        setSavedPosts(user?.savedPosts || []);
     }, [post]);
 
     const handleLikeVideo = async () => {
         if (actionLoading) return;
-
         setActionLoading(true);
 
         try {
             let response;
-            let updatedLikedPosts = [...user.likedPosts];
+            let updatedLikedPosts = [...likedPosts];
             if (updatedLikedPosts.includes(post._id)) {
                 setPostLikes(prevLikes => prevLikes - 1);
                 updatedLikedPosts = updatedLikedPosts.filter(id => id !== post._id);
+                setLikedPosts(updatedLikedPosts);
                 response = await unlikePost(token, dispatch, post._id);
                 if (!response) {
                     setPostLikes(prevLikes => prevLikes + 1);
                     updatedLikedPosts.push(post._id);
+                    setLikedPosts(updatedLikedPosts);
                 }
             } else {
                 setPostLikes(prevLikes => prevLikes + 1);
                 updatedLikedPosts.push(post._id);
+                setLikedPosts(updatedLikedPosts);
                 response = await likePost(token, dispatch, post._id);
                 if (!response) {
                     setPostLikes(prevLikes => prevLikes - 1);
                     updatedLikedPosts = updatedLikedPosts.filter(id => id !== post._id);
+                    setLikedPosts(updatedLikedPosts);
                 }
             }
             dispatch(setUser({ ...user, likedPosts: updatedLikedPosts }));
@@ -58,16 +65,17 @@ const VideoSection = ({ post, loading }) => {
 
     const handleBookmarkVideo = async () => {
         if (actionLoading) return;
-
         setActionLoading(true);
 
         try {
-            let updatedSavedPosts = [...user.savedPosts];
+            let updatedSavedPosts = [...savedPosts];
             if (updatedSavedPosts.includes(post._id)) {
                 updatedSavedPosts = updatedSavedPosts.filter(id => id !== post._id);
+                setSavedPosts(updatedSavedPosts);
                 await unSavePost(token, dispatch, post._id);
             } else {
                 updatedSavedPosts.push(post._id);
+                setSavedPosts(updatedSavedPosts);
                 await savePost(token, dispatch, post._id);
             }
             dispatch(setUser({ ...user, savedPosts: updatedSavedPosts }));
@@ -154,7 +162,7 @@ const VideoSection = ({ post, loading }) => {
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
                                     {
-                                        user?.likedPosts?.includes(post?._id) ?
+                                        likedPosts.includes(post._id) ?
                                             <BiSolidLike className='' /> :
                                             <BiLike className='' />
                                     }
@@ -168,7 +176,7 @@ const VideoSection = ({ post, loading }) => {
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
                                     {
-                                        user?.savedPosts?.includes(post?._id) ?
+                                        savedPosts.includes(post._id) ?
                                             <IoBookmarkSharp className='' /> :
                                             <IoBookmarkOutline className='' />
                                     }
