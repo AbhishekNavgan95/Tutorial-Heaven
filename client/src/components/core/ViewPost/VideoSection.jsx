@@ -1,79 +1,109 @@
-import React, { useEffect, useState } from 'react'
-import ReactPlayer from "react-player"
+import React, { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player';
 import { formatDistanceToNow } from 'date-fns';
-import { useDispatch, useSelector } from 'react-redux'
-import { BiLike, BiSolidLike } from "react-icons/bi";
-import { IoBookmarkSharp, IoBookmarkOutline } from "react-icons/io5";
-import { TbArrowBackUp } from "react-icons/tb";
+import { useDispatch, useSelector } from 'react-redux';
+import { BiLike, BiSolidLike } from 'react-icons/bi';
+import { IoBookmarkSharp, IoBookmarkOutline } from 'react-icons/io5';
+import { TbArrowBackUp } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
-import { likePost, savePost, unSavePost, unlikePost } from "../../../services/operations/userAPI"
-import { IoShareSocialSharp } from "react-icons/io5";
+import { likePost, savePost, unSavePost, unlikePost } from '../../../services/operations/userAPI';
+import { IoShareSocialSharp } from 'react-icons/io5';
 import toast from 'react-hot-toast';
-
+import { setUser } from '../../../slices/userSlice';
 
 const VideoSection = ({ post, loading }) => {
-
     const [description, setDescription] = useState(false);
-    const { user } = useSelector(state => state.user)
-    const { token } = useSelector(state => state.auth)
-    const [postLikes, setPostLikes] = useState(0)
+    const { user } = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth);
+    const [actionLoading, setActionLoading] = useState(false);
+    const [postLikes, setPostLikes] = useState(0);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setPostLikes(post?.likes?.length)
-    }, [post])
+        setPostLikes(post?.likes?.length);
+    }, [post]);
 
     const handleLikeVideo = async () => {
-        let response;
-        if (user?.likedPosts?.includes(post?._id)) {
-            setPostLikes(postLikes - 1)
-            response = await unlikePost(token, dispatch, post?._id);
-            if (!response) {
-                setPostLikes(postLikes + 1);
+        if (actionLoading) return;
+
+        setActionLoading(true);
+
+        try {
+            let response;
+            let updatedLikedPosts = [...user.likedPosts];
+            if (updatedLikedPosts.includes(post._id)) {
+                setPostLikes(prevLikes => prevLikes - 1);
+                updatedLikedPosts = updatedLikedPosts.filter(id => id !== post._id);
+                response = await unlikePost(token, dispatch, post._id);
+                if (!response) {
+                    setPostLikes(prevLikes => prevLikes + 1);
+                    updatedLikedPosts.push(post._id);
+                }
+            } else {
+                setPostLikes(prevLikes => prevLikes + 1);
+                updatedLikedPosts.push(post._id);
+                response = await likePost(token, dispatch, post._id);
+                if (!response) {
+                    setPostLikes(prevLikes => prevLikes - 1);
+                    updatedLikedPosts = updatedLikedPosts.filter(id => id !== post._id);
+                }
             }
-        } else {
-            setPostLikes(postLikes + 1)
-            response = await likePost(token, dispatch, post?._id);
-            if (!response) {
-                setPostLikes(postLikes - 1);
-            }
+            dispatch(setUser({ ...user, likedPosts: updatedLikedPosts }));
+        } catch (error) {
+            console.error("Failed to like/unlike post:", error);
+        } finally {
+            setActionLoading(false);
         }
-    }
+    };
 
     const handleBookmarkVideo = async () => {
-        if (user?.savedPosts?.includes(post?._id)) {
-            await unSavePost(token, dispatch, post?._id);
-        } else {
-            await savePost(token, dispatch, post?._id);
+        if (actionLoading) return;
+
+        setActionLoading(true);
+
+        try {
+            let updatedSavedPosts = [...user.savedPosts];
+            if (updatedSavedPosts.includes(post._id)) {
+                updatedSavedPosts = updatedSavedPosts.filter(id => id !== post._id);
+                await unSavePost(token, dispatch, post._id);
+            } else {
+                updatedSavedPosts.push(post._id);
+                await savePost(token, dispatch, post._id);
+            }
+            dispatch(setUser({ ...user, savedPosts: updatedSavedPosts }));
+        } catch (error) {
+            console.error("Failed to save/unsave post:", error);
+        } finally {
+            setActionLoading(false);
         }
-    }
+    };
 
     const handleShareVideo = () => {
         navigator.clipboard.writeText(window.location.href);
-        toast.success("link copied to clipboard", {
+        toast.success("Link copied to clipboard", {
             style: {
-              border: "1px solid #5252B7",
-              padding: "8px 16px",
-              color: "#DFE2E2",
-              background: "#5252B7",
+                border: "1px solid #5252B7",
+                padding: "8px 16px",
+                color: "#DFE2E2",
+                background: "#5252B7",
             },
             iconTheme: {
-              primary: "#5252B7",
-              secondary: "#DFE2E2",
+                primary: "#5252B7",
+                secondary: "#DFE2E2",
             },
-          });
-    }
+        });
+    };
 
     return (
-        <section className='flex flex-col gap-3 md:py-3 w-full '>
+        <section className='flex flex-col gap-3 md:py-3 w-full'>
             <Link to={".."} className='cursor-pointer text-base md:text-lg xl:text-xl p-2 border border-blue-300 text-blue-300 w-max rounded-full hover:bg-blue-300 hover:text-night-25 transition-all duration-300 flex justify-center items-center'>
                 <TbArrowBackUp />
             </Link>
             <span className='bg-night-50 rounded-lg aspect-video w-full'>
                 <ReactPlayer
-                    style={{ minWidth: "100%", aspectRatio: "16/9", borderRadius: "5px", overflow: "hidden" }}
-                    width={"100%"}
-                    height={"auto"}
+                    style={{ minWidth: '100%', aspectRatio: '16/9', borderRadius: '5px', overflow: 'hidden' }}
+                    width={'100%'}
+                    height={'auto'}
                     url={post?.video?.url}
                     controls
                 />
@@ -95,7 +125,8 @@ const VideoSection = ({ post, loading }) => {
                             </span>
                             <div className='w-[40%] py-5 mt-5 bg-night-50 animate-pulse'></div>
                         </div>
-                    </div> : <div className='flex flex-col gap-3'>
+                    </div> :
+                    <div className='flex flex-col gap-3'>
                         <div className='flex flex-col gap-3 items-start'>
                             <span className='flex flex-col gap-1'>
                                 <h4 className='text-xl md:text-2xl font-semibold '>{post?.title}</h4>
@@ -106,10 +137,10 @@ const VideoSection = ({ post, loading }) => {
                                     post?.createdAt &&
                                     <p>{formatDistanceToNow(new Date(post?.createdAt), { addSuffix: true })}</p>
                                 }
-                                <span className={`${description ? "block" : "hidden"} py-3`}>
+                                <span className={`${description ? 'block' : 'hidden'} py-3`}>
                                     <p style={{ whiteSpace: 'pre-wrap' }}>{post?.description}</p>
                                 </span>
-                                <button className='text-blue-300 font-semibold' onClick={() => setDescription(!description)}>{description ? "show less..." : "show more..."}</button>
+                                <button className='text-blue-300 font-semibold' onClick={() => setDescription(!description)}>{description ? 'show less...' : 'show more...'}</button>
                             </span>
                         </div>
                         <div className='border-b border-night-50 w-full flex justify-between items-center px-3 py-4'>
@@ -118,6 +149,7 @@ const VideoSection = ({ post, loading }) => {
                             </span>
                             <span className='flex gap-3'>
                                 <button
+                                    disabled={actionLoading}
                                     onClick={handleLikeVideo}
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
@@ -131,6 +163,7 @@ const VideoSection = ({ post, loading }) => {
                                     <IoShareSocialSharp />
                                 </button>
                                 <button
+                                    disabled={actionLoading}
                                     onClick={handleBookmarkVideo}
                                     className='border-blue-300 border px-3 rounded-lg text-blue-300 hover:bg-blue-300  hover:text-night-25 transition-all duration-300 text-sm sm:text-base lg:text-lg py-1'
                                 >
@@ -153,7 +186,7 @@ const VideoSection = ({ post, loading }) => {
                     </div>
             }
         </section>
-    )
-}
+    );
+};
 
-export default VideoSection
+export default VideoSection;

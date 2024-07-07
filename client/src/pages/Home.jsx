@@ -155,8 +155,8 @@ const Home = () => {
         <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
           <HomeScreenLoader />
         </div>
-      ) : loading && posts?.length === 0 ? (
-        <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[75vh]">
+      ) : !loading && posts?.length === 0 ? (
+        <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[60vh]">
           No posts found
         </div>
       ) : (

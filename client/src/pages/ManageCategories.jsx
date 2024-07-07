@@ -72,7 +72,7 @@ const ManageCategories = () => {
                                 ))
                             }
                         </div>
-                    ) : (
+                    ) : !loading && categories?.length === 0 && (
                         <p className='text-center'>No Categories Found</p>
                     )
                 }

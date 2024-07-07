@@ -18,18 +18,6 @@ export const dropDownLinks = [
     access: "user",
   },
   {
-    id: 4,
-    path: "/dashboard/bookmarks",
-    title: "Bookmarks",
-    access: "all",
-  },
-  {
-    id: 5,
-    path: "/dashboard/settings",
-    title: "Settings",
-    access: "all",
-  },
-  {
     id: 6,
     path: "/dashboard/create-category",
     title: "Create Category", // create / update categories
@@ -64,5 +52,17 @@ export const dropDownLinks = [
     path: "/dashboard/manage-moderators",
     title: "Manage Moderators", // manage moderators
     access: "admin",
+  },
+  {
+    id: 4,
+    path: "/dashboard/bookmarks",
+    title: "Bookmarks",
+    access: "all",
+  },
+  {
+    id: 5,
+    path: "/dashboard/settings",
+    title: "Settings",
+    access: "all",
   },
 ];

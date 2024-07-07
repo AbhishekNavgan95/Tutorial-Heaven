@@ -427,6 +427,8 @@ export const unlikePost = async (token, dispatch, postId) => {
       }
     );
 
+    console.log("UNLIKE_POST_API_RESPONSE : ", response)
+
     if (!response?.data?.success) {
       throw new Error(response?.data?.message);
     }
