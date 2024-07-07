@@ -36,9 +36,9 @@ const PostCard = ({ post }) => {
         e.stopPropagation();
         
         if (user?.savedPosts?.includes(post._id)) {
-            unSavePost(token, dispatch, post?._id)
+            await unSavePost(token, dispatch, post?._id)
         } else {
-            savePost(token, dispatch, post?._id)
+            await savePost(token, dispatch, post?._id)
         }
 
         setLoading(false)
