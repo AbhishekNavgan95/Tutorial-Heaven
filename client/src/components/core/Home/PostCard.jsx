@@ -18,6 +18,7 @@ const PostCard = ({ post }) => {
     const hoverTimeoutRef = useRef(null);
     const { user } = useSelector(state => state.user);
     const { token } = useSelector(state => state.auth)
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
 
     const handleMouseEnter = () => {
@@ -29,15 +30,27 @@ const PostCard = ({ post }) => {
         videoRef.current?.pause();
     };
 
-    useEffect(() => {
+    const handleSavePost = async (e) => {
+        if (loading) return;
+        setLoading(true)
+        e.stopPropagation();
+        
+        if (user?.savedPosts?.includes(post._id)) {
+            unSavePost(token, dispatch, post?._id)
+        } else {
+            savePost(token, dispatch, post?._id)
+        }
 
-        if(post?.thumbnail?.url) {
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        if (post?.thumbnail?.url) {
             setImages({
                 postThumbnail: getCloudinaryUrl(post?.thumbnail?.url, 600, 400),
                 authorImage: getCloudinaryUrl(post?.author?.image?.url, 40, 40)
             })
         }
-
     }, [post])
 
     return (
@@ -88,16 +101,8 @@ const PostCard = ({ post }) => {
                             <button className=' text-xl '><BsThreeDotsVertical /></button>
                             <div className={`absolute bottom-[-80%]  bg-night-25 border border-night-900 hover:border-blue-300 right-[50%] rounded-lg transition-all duration-100 hidden group-hover/menu:block group-active/menu:block`}>
                                 <button
-                                    onClick={
-                                        (e) => {
-                                            e.stopPropagation();
-                                            if (user?.savedPosts?.includes(post._id)) {
-                                                unSavePost(token, dispatch, post?._id)
-                                            } else {
-                                                savePost(token, dispatch, post?._id)
-                                            }
-                                        }
-                                    }
+                                    disabled={loading}
+                                    onClick={handleSavePost}
                                     className='px-10 py-1 text-night-900 hover:bg-blue-300 hover:text-night-25 transition-all duration-300'
                                 >
                                     {
