@@ -22,11 +22,11 @@ import ViewPost from "./pages/ViewPost"
 import AppointModerator from "./pages/AppointModerator"
 import AdminRoutes from "./components/common/AdminRoutes"
 import ModeratorRoutes from "./components/common/ModeratorRoutes"
-import ManageModerators from "./pages/ManageModerators"
 import ModeratorSignUp from "./pages/ModeratorSignUp"
 import PublicRoute from "./components/common/PublicRoute"
 import CreateCategory from "./pages/CreateCategory"
 import ManageCategories from "./pages/ManageCategories"
+import ManageAccounts from "./pages/ManageAccounts"
 
 function App() {
 
@@ -71,7 +71,7 @@ function App() {
           <Route path="edit-category/:id" element={<DashboardPageLayout><CreateCategory><CreateCategory /></CreateCategory></DashboardPageLayout>} />
           <Route path="categories" element={<DashboardPageLayout><ModeratorRoutes><ManageCategories /></ModeratorRoutes></DashboardPageLayout>} />
           <Route path="appoint-Moderator" element={<DashboardPageLayout><AdminRoutes><AppointModerator /></AdminRoutes></DashboardPageLayout>} />
-          <Route path="manage-moderators" element={<DashboardPageLayout><AdminRoutes><ManageModerators /></AdminRoutes></DashboardPageLayout>} />
+          <Route path="manage-accounts" element={<DashboardPageLayout><AdminRoutes><ManageAccounts /></AdminRoutes></DashboardPageLayout>} />
         </Route>
       </Routes>
     </div>

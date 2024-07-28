@@ -3,8 +3,10 @@ const Post = require("../Models/Post.model");
 const { deleteImageFromCloudinary } = require("../Utils/deleteFromCloudinary");
 const { uploadImageTocloudinary } = require("../Utils/uploadToCloudinary");
 const jwt = require("jsonwebtoken");
+const mailSender = require("../Utils/mailSender");
+const suspendedAccountTamplate = require("../EmailTamplates/suspendedAccountTamplate");
 
-// refresh token controller
+// refresh token controller ✅
 exports.refreshToken = async (req, res) => {
   const { refreshToken } = req.body;
 
@@ -242,7 +244,7 @@ exports.unSavePost = async (req, res) => {
   }
 };
 
-// get all user posts ✅// get all user posts ✅
+// get all user posts ✅
 exports.getAllUserPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -363,6 +365,49 @@ exports.getUserSavedPosts = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong while fetching the user saved posts",
+    });
+  }
+};
+
+// suspend account ✅
+exports.suspendAccount = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User id is required",
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        accountSuspended: true,
+      },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const mailBody = suspendedAccountTamplate(user.email);
+
+    mailSender(user?.email, "Account Suspended", mailBody);
+
+    return res.status(200).json({
+      success: true,
+      message: "Account suspended successfully",
+      data: user,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while suspending the account",
     });
   }
 };

@@ -288,6 +288,9 @@ exports.updatePassword = async (req, res) => {
 
 // schedule account deletion ✅
 exports.scheduleAccountDeletion = async (req, res) => {
+
+  console.log("here")
+
   const userId = req.user.id;
   const deletionDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 

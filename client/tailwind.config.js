@@ -44,7 +44,7 @@ export default {
       },
     },
     maxWidth: {
-      maxContent: "1260px",
+      maxContent: "1460px",
       maxContentTab: "650px",
     },
   },

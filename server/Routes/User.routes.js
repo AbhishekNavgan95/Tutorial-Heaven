@@ -27,7 +27,8 @@ const {
   unSavePost,
   getAllUserPosts,
   getUserSavedPosts,
-  refreshToken
+  refreshToken,
+  suspendAccount
 } = require("../Controllers/User.controller");
 
 const { auth, isAdmin, isMod, isUser } = require("../Middlewares/Auth");
@@ -81,6 +82,9 @@ router.post("/signup-mod", createModeratorAccount);
 
 // create Admin account
 router.post("/signup-admin", createAdminAccount);
+
+// suspend Account 
+router.post("/suspend-account/:id", auth, isAdmin, suspendAccount);
 
 // schedule account deletion 
 router.put("/delete-account", auth, scheduleAccountDeletion);

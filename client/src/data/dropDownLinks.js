@@ -49,8 +49,8 @@ export const dropDownLinks = [
   },
   {
     id: 12,
-    path: "/dashboard/manage-moderators",
-    title: "Manage Moderators", // manage moderators
+    path: "/dashboard/manage-accounts",
+    title: "Manage Accounts", // manage moderators
     access: "admin",
   },
   {

@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "moderator", "admin"],
       required: true,
     },
+    accountSuspended: {
+      type: Boolean,
+      default: false
+    },
     posts: [
       {
         type: mongoose.Schema.ObjectId,

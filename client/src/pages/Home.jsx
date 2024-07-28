@@ -9,6 +9,7 @@ import { setProgress } from "../slices/loadingBarSlice"
 import HomeScreenLoader from '../components/core/Home/HomeScreenLoader'
 import { useSearchParams } from 'react-router-dom'
 import { getCloudinaryUrl } from '../utils/getCloudinaryUrl'
+import { IoIosArrowForward } from "react-icons/io";
 
 const Home = () => {
 
@@ -168,23 +169,26 @@ const Home = () => {
       )}
 
       <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-        <span className='mb-1 py-1'>
-          Page: {page} of {totalPages}
-        </span>
-        <span className='flex items-start gap-3 py-1'>
-          {page > 1 && (
-            <Button styles="w-max" active action={() => setPage(page - 1)}>
-              Previous
-            </Button>
-          )}
-          {page < totalPages && (
-            <Button styles="w-max" active action={() => setPage(page + 1)}>
-              Next
-            </Button>
-          )}
+        <span className='flex items-center justify-between gap-3 w-full py-3'>
+          <span>
+            {page > 1 && (
+              <Button styles="w-max rotate-180" active action={() => setPage(page - 1)}>
+                <IoIosArrowForward />
+              </Button>
+            )}
+          </span>
+          <span className=''>
+            Page: {page} of {totalPages}
+          </span>
+          <span>
+            {page < totalPages && (
+              <Button styles="w-max" active action={() => setPage(page + 1)}>
+                <IoIosArrowForward />
+              </Button>
+            )}
+          </span>
         </span>
       </div>
-
     </div>
   );
 };
