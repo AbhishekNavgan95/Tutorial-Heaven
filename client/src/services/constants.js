@@ -6,6 +6,5 @@ export const POST_STATUS = {
 export const USER_TYPES = {
     ADMIN: "admin",
     USER: "user",
-    MOD: "moderator",
     ALL: "all"
 }

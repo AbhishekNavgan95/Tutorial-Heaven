@@ -10,8 +10,6 @@ const {
   scheduleAccountDeletion,
   cancelScheduledDeletion,
   updatePassword,
-  generateModeratorToken,
-  createModeratorAccount,
   createAdminAccount,
 } = require("../Controllers/Auth.controller");
 
@@ -31,7 +29,7 @@ const {
   suspendAccount
 } = require("../Controllers/User.controller");
 
-const { auth, isAdmin, isMod, isUser } = require("../Middlewares/Auth");
+const { auth, isAdmin, isUser } = require("../Middlewares/Auth");
 
 /********************* routes *****************************/
 
@@ -74,12 +72,6 @@ router.put("/reset-password/:token", resetPassword);
 // updatePassword
 router.put("/update-password", auth, updatePassword);
 
-// generate moderator account creation token
-router.post("/generate-mod-token", auth, isAdmin, generateModeratorToken);
-
-// create moderator account
-router.post("/signup-mod", createModeratorAccount);
-
 // create Admin account
 router.post("/signup-admin", createAdminAccount);
 
@@ -90,6 +82,6 @@ router.post("/suspend-account/:id", auth, isAdmin, suspendAccount);
 router.put("/delete-account", auth, scheduleAccountDeletion);
 
 // cancel account deletion
-router.put("/cancel-delete-account/:userId", auth, isMod, cancelScheduledDeletion);
+router.put("/cancel-delete-account/:userId", auth, cancelScheduledDeletion);
 
 module.exports = router;

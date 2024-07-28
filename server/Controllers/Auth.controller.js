@@ -1,6 +1,5 @@
 const otpGenerator = require("otp-generator");
 const User = require("../Models/User.model");
-const ModeratorToken = require("../Models/ModeratorToken.model");
 const mailSender = require("../Utils/mailSender");
 const Otp = require("../Models/Otp.model");
 const otpTamplate = require("../EmailTamplates/OtpTamplate");
@@ -8,7 +7,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 require("dotenv").config();
-const moderatorEmailTemplate = require("../EmailTamplates/moderatorEmailTamplate");
 
 // SEND OTP ✅
 exports.sendOTP = async (req, res) => {
@@ -180,7 +178,7 @@ exports.login = async (req, res) => {
     if (userExists?.deletionScheduled === true) {
       return res.status(406).json({
         success: false,
-        message: "Contact a moderator",
+        message: "Contact the Admin",
       });
     }
 
@@ -288,9 +286,6 @@ exports.updatePassword = async (req, res) => {
 
 // schedule account deletion ✅
 exports.scheduleAccountDeletion = async (req, res) => {
-
-  console.log("here")
-
   const userId = req.user.id;
   const deletionDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
@@ -358,164 +353,6 @@ exports.cancelScheduledDeletion = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Internal server error.",
-    });
-  }
-};
-
-// generate moderator account token ✅
-exports.generateModeratorToken = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    const user = await User.findOne({ email: email });
-
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: "User with this email already exist",
-      });
-    }
-
-    const tokenExist = await ModeratorToken.findOne({ email: email });
-
-    if (tokenExist) {
-      return res.status(400).json({
-        success: false,
-        message: "Token already created for this email, try after sometime",
-      });
-    }
-
-    const token = crypto.randomBytes(32).toString("hex");
-
-    const createdToken = await ModeratorToken.create({ email, token });
-
-    const mailTamplate = moderatorEmailTemplate(
-      token,
-      email,
-      process.env.CORS_ORIGIN + "/moderator/signup"
-    );
-
-    await mailSender(email, "Create Moderator Account", mailTamplate);
-
-    res.status(200).json({
-      success: true,
-      message: "Token generated and sent to email",
-      data: createdToken,
-    });
-  } catch (error) {
-    console.log("error while generating moderator token : ", error);
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong while generating moderator token",
-    });
-  }
-};
-
-// create moderator account ✅
-exports.createModeratorAccount = async (req, res) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      token,
-      otp,
-      accountType = "moderator",
-    } = req.body;
-
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required",
-      });
-    }
-
-    if (!token) {
-      return res.status(400).json({
-        success: false,
-        message: "Token is required",
-      });
-    }
-
-    if (password !== confirmPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "Passwords do not match",
-      });
-    }
-
-    const recentOtp = await Otp.findOne({ email })
-      .sort({ createdAt: -1 })
-      .limit(1);
-
-    // validating otp
-    if (!recentOtp) {
-      return res.status(400).json({
-        success: false,
-        message: "OTP not found",
-      });
-    }
-
-    if (recentOtp?.otp !== otp) {
-      return res.status(400).json({
-        success: false,
-        message: "OTP is invalid",
-      });
-    }
-
-    const user = await User.findOne({ email: email });
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: "User with this email already exist",
-      });
-    }
-
-    const tokenDocument = await ModeratorToken.findOne({
-      token: token,
-      email: email,
-    });
-    if (!tokenDocument) {
-      return res.status(400).json({
-        sucess: false,
-        message: "invalid or expired token",
-      });
-    }
-
-    // create new user
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newModerator = new User({
-      firstName,
-      lastName,
-      email,
-      password: hashedPassword,
-      accountType,
-      image: {
-        url: `http://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
-        public_id: null,
-      },
-    });
-
-    await newModerator.save();
-    await ModeratorToken.findByIdAndDelete(tokenDocument._id);
-
-    newModerator.password = undefined;
-    newModerator.token = undefined;
-    newModerator.deletionScheduled = undefined;
-    newModerator.__v = undefined;
-
-    res.status(200).json({
-      success: true,
-      message: "Moderator Account created Successfully",
-      data: newModerator,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong while creating Moderator Account",
     });
   }
 };

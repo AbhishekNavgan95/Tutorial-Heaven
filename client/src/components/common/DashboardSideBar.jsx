@@ -19,13 +19,6 @@ const DashboardSideBar = () => {
                     ))
                 }
                 {
-                    user.accountType === USER_TYPES.MOD && dropDownLinks.map((link) => (
-                        user?.accountType === link?.access || link?.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
-                            <SidebarLink key={link.id} to={link.path} > {link.title}</SidebarLink>
-                            : null
-                    ))
-                }
-                {
                     user.accountType === USER_TYPES.ADMIN && dropDownLinks.map((link) => (
                         user?.accountType === link?.access || link.access === USER_TYPES.USER || link.access === USER_TYPES.MOD || link?.access === USER_TYPES.ALL ?
                             <SidebarLink key={link.id} to={link.path} > {link.title}</SidebarLink>

@@ -19,10 +19,7 @@ import Bookmarks from "./pages/Bookmarks"
 import CreatePost from "./pages/CreatePost"
 import UpdatePost from "./pages/UpdatePost"
 import ViewPost from "./pages/ViewPost"
-import AppointModerator from "./pages/AppointModerator"
 import AdminRoutes from "./components/common/AdminRoutes"
-import ModeratorRoutes from "./components/common/ModeratorRoutes"
-import ModeratorSignUp from "./pages/ModeratorSignUp"
 import PublicRoute from "./components/common/PublicRoute"
 import CreateCategory from "./pages/CreateCategory"
 import ManageCategories from "./pages/ManageCategories"
@@ -59,7 +56,6 @@ function App() {
         <Route path="forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
         <Route path="reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
         <Route path="view/:id" element={<ViewPost />} />
-        <Route path="moderator/signup/:token" element={<PublicRoute><ModeratorSignUp /></PublicRoute>} />
         <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="profile" element={<DashboardPageLayout><Profile /></DashboardPageLayout>} />
           <Route path="create" element={<DashboardPageLayout><CreatePost /></DashboardPageLayout>} />
@@ -67,10 +63,9 @@ function App() {
           <Route path="posts" element={<DashboardPageLayout><MyPosts /></DashboardPageLayout>} />
           <Route path="bookmarks" element={<DashboardPageLayout><Bookmarks /></DashboardPageLayout>} />
           <Route path="settings" element={<DashboardPageLayout><Settings /></DashboardPageLayout>} />
-          <Route path="create-category" element={<DashboardPageLayout><ModeratorRoutes><CreateCategory /></ModeratorRoutes></DashboardPageLayout>} />
+          <Route path="create-category" element={<DashboardPageLayout><CreateCategory /></DashboardPageLayout>} />
           <Route path="edit-category/:id" element={<DashboardPageLayout><CreateCategory><CreateCategory /></CreateCategory></DashboardPageLayout>} />
-          <Route path="categories" element={<DashboardPageLayout><ModeratorRoutes><ManageCategories /></ModeratorRoutes></DashboardPageLayout>} />
-          <Route path="appoint-Moderator" element={<DashboardPageLayout><AdminRoutes><AppointModerator /></AdminRoutes></DashboardPageLayout>} />
+          <Route path="categories" element={<DashboardPageLayout><ManageCategories /></DashboardPageLayout>} />
           <Route path="manage-accounts" element={<DashboardPageLayout><AdminRoutes><ManageAccounts /></AdminRoutes></DashboardPageLayout>} />
         </Route>
       </Routes>

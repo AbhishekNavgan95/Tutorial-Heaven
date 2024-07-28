@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema(
     },
     accountType: {
       type: String,
-      enum: ["user", "moderator", "admin"],
+      enum: ["user", "admin"],
       required: true,
     },
     accountSuspended: {

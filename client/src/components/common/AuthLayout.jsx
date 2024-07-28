@@ -4,13 +4,12 @@ import SignupForm from '../core/auth/SignupForm'
 import OTPForm from '../core/auth/OTPForm'
 import ForgotPasswordForm from '../core/auth/ForgotPasswordForm'
 import ResetPasswordForm from '../core/auth/ResetPasswordForm'
-import ModeratorSignupForm from '../core/auth/ModeratorSignupForm'
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
 
 const AuthLayout = ({ title, image, formType, description, token }) => {
   return (
     <div className={` min-h-screen flex flex-col justify-center gap-5 w-full items-center px-3`}>
-      <section className={`flex ${(formType === "signup" || formType === "moderator-signup" || formType === "forgot-password") ? "flex-row-reverse" : ""} items-center justify-center gap-24 w-full`}>
+      <section className={`flex ${(formType === "signup" || formType === "forgot-password") ? "flex-row-reverse" : ""} items-center justify-center gap-24 w-full`}>
         <div className='flex flex-col items-center lg:items-start w-10/12 sm:w-6/12 md:w-6/12 lg:w-4/12 gap-5 py-10 relative'>
           <h3 className='font-thin text-center lg:text-start text-5xl xl:text-5xl text-blue-300 relative z-[2]'>{title}</h3>
           <p className='mt-3 text-center lg:text-start text-sm sm:text-base lg:text-lg xl:text-xl text-blue-300 relative z-[2]'>{description}</p>
@@ -30,9 +29,6 @@ const AuthLayout = ({ title, image, formType, description, token }) => {
           }
           {
             formType === "reset-password" && <ResetPasswordForm />
-          }
-          {
-            formType === "moderator-signup" && <ModeratorSignupForm token={token} />
           }
         </div>
         <div className='relative hidden lg:block lg:w-5/12'>

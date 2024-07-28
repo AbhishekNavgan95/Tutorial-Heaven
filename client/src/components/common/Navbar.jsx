@@ -113,17 +113,8 @@ const ProfileDropDown = ({ setModalData }) => {
                     ))
                 }
                 {
-                    user.accountType === USER_TYPES.MOD && dropDownLinks.map((link) => (
-                        user?.accountType === link?.access || link?.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
-                            <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center px-4 text-nowrap " : " px-4 text-nowrap py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
-                                <span >{link?.title}</span>
-                            </NavLink>
-                            : null
-                    ))
-                }
-                {
                     user.accountType === USER_TYPES.ADMIN && dropDownLinks.map((link) => (
-                        user?.accountType === link?.access || link.access === USER_TYPES.USER || link.access === USER_TYPES.MOD || link?.access === USER_TYPES.ALL ?
+                        user?.accountType === link?.access || link.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
                             <NavLink key={link?.id} to={link?.path} className={({ isActive }) => !isActive ? "py-1 transition-all duration-300 hover:text-night-25 hover:bg-blue-300 w-full text-center px-4 text-nowrap " : " px-4 text-nowrap py-1 transition-all duration-300 text-night-25 bg-blue-300 w-full text-center"}>
                                 <span >{link?.title}</span>
                             </NavLink>

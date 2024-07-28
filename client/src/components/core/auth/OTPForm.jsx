@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../common/Button'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { signup, signupModerator } from '../../../services/operations/authAPI'
+import { signup } from '../../../services/operations/authAPI'
 import toast from 'react-hot-toast'
 import { setSignupData } from '../../../slices/authSlice'
 
@@ -21,12 +21,7 @@ const OTPForm = () => {
         setLoading(true)
         data = { ...data, ...signupData };
 
-        let response;
-        if (signupData?.token) {
-            response = await signupModerator(data, dispatch);
-        } else {
-            response = await signup(data, dispatch);
-        }
+        response = await signup(data, dispatch);
 
         if (response) {
             navigate("../login");

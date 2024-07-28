@@ -9,20 +9,20 @@ const {
   updateCategory,
   getAllCategories,
 } = require("../Controllers/Category.controller");
-const { auth, isMod } = require("../Middlewares/Auth");
+const { auth } = require("../Middlewares/Auth");
 
 /********************* routes *****************************/
 
 // get all categories
 router.get("/get-all-categories", getAllCategories);
 
-// create category
-router.post("/create-category", auth, isMod, createCategory);
+// create 
+router.post("/create-category", auth, createCategory);
 
 // update category
-router.put("/update-category/:categoryId", auth, isMod, updateCategory);
+router.put("/update-category/:categoryId", auth, updateCategory);
 
 // delete category
-router.delete("/delete-category/:categoryId", auth, isMod, deleteCategory);
+router.delete("/delete-category/:categoryId", auth, deleteCategory);
 
 module.exports = router;

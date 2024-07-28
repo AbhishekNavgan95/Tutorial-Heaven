@@ -48,24 +48,8 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalDat
                             ))
                         }
                         {
-                            token && user && user?.accountType === USER_TYPES.MOD && dropDownLinks.map((link) => (
-                                user?.accountType === link?.access || link?.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
-                                    <NavLink
-                                        to={link.path}
-                                        className={({ isActive }) => isActive
-                                            ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                            : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
-                                        }
-                                        key={link.id}
-                                    >
-                                        {link.title}
-                                    </NavLink>
-                                    : null
-                            ))
-                        }
-                        {
                             token && user && user?.accountType === USER_TYPES.ADMIN && dropDownLinks.map((link) => (
-                                user?.accountType === link?.access || link.access === USER_TYPES.USER || link.access === USER_TYPES.MOD || link?.access === USER_TYPES.ALL ?
+                                user?.accountType === link?.access || link.access === USER_TYPES.USER || link?.access === USER_TYPES.ALL ?
                                     <NavLink
                                         to={link.path}
                                         className={({ isActive }) => isActive

@@ -21,36 +21,24 @@ export const dropDownLinks = [
     id: 6,
     path: "/dashboard/create-category",
     title: "Create Category", // create / update categories
-    access: "moderator",
+    access: "admin",
   },
   {
     id: 7,
     path: "/dashboard/categories",
     title: "Manage Categories", // manage categories, update, delete categories
-    access: "moderator",
-  },
-  {
-    id: 8,
-    path: "/dashboard/manage-deletion",
-    title: "Manage Accounts", // manage all accounts to be deleted
-    access: "moderator",
+    access: "admin",
   },
   {
     id: 9,
     path: "/dashboard/manage-posts",
     title: "Manage Posts", // manage posts by categories
-    access: "moderator",
-  },
-  {
-    id: 10,
-    path: "/dashboard/appoint-Moderator",
-    title: "Appoint Moderator", // create a moderator account token
     access: "admin",
   },
   {
     id: 12,
     path: "/dashboard/manage-accounts",
-    title: "Manage Accounts", // manage moderators
+    title: "Manage Accounts",
     access: "admin",
   },
   {
