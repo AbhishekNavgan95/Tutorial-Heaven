@@ -118,7 +118,7 @@ const ViewPost = () => {
     }, [postId, getPostComments]);
 
     return (
-        <div className='pt-[4rem] min-h-[calc(100vh-6rem)] px-3 relative mx-auto w-full max-w-maxContent text-night-900'>
+        <div className='pt-[4rem] min-h-[calc(100vh-6rem)] px-3 relative mx-auto w-full text-night-900'>
             <div className='grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-x-5 w-full'>
                 <section className='flex flex-wrap gap-3 h-max w-full'>
                     <VideoSection post={post} loading={isPostLoading} />

@@ -119,56 +119,59 @@ const Home = () => {
   }, [searchParams])
 
   return (
-    <div className='pt-[4rem] md:pt-[6rem] min-h-screen relative mx-auto max-w-maxContent'>
-      <div className='flex justify-between items-center gap-3 px-3 overflow-auto'>
+    <div className='pt-[4rem] md:pt-[6rem] min-h-screen relative mx-auto grid grid-rows-[auto_1fr_auto]'>
 
-        <div className='mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
-          <span className=''>
-            Page: {page} of {totalPages}
-          </span>
+      <div className='flex justify-between items-start flex-col gap-3 px-3 overflow-auto '>
+        <div className='flex justify-between w-full'>
+          <div className='mx-auto w-full flex items-center justify-between gap-3'>
+            <span className=''>
+              Page: {page} of {totalPages}
+            </span>
+          </div>
+
+          <select
+            className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900'
+            value={currentCategory}
+            onChange={handleCategoryChange}
+            name="category"
+            id="category"
+          >
+            <option value="All">All</option>
+            {
+              categories?.map((category) => (
+                category?.posts?.length > 0 &&
+                <option key={category?._id} value={category?._id}>{category.title}</option>
+              ))
+            }
+          </select>
         </div>
-
-        <select
-          className='bg-night-25 cursor-pointer text-sm md:text-md rounded-lg outline-none px-1 text-night-900'
-          value={currentCategory}
-          onChange={handleCategoryChange}
-          name="category"
-          id="category"
-        >
-          <option value="All">All</option>
-          {
-            categories?.map((category) => (
-              category?.posts?.length > 0 &&
-              <option key={category?._id} value={category?._id}>{category.title}</option>
-            ))
-          }
-        </select>
+        {
+          headingImage &&
+          <section className='w-full rounded-lg overflow-hidden my-3'>
+            <img src={currentCategory === "All" ? "" : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
+          </section>
+        }
       </div>
 
-      {
-        headingImage &&
-        <section className='w-full rounded-lg overflow-hidden px-3 my-3'>
-          <img src={currentCategory === "All" ? "" : headingImage} alt="" className='w-full h-[100px] md:h-[150px] lg:h-[200px] object-cover rounded-lg' />
-        </section>
-      }
+      <div className=''>
+        {loading ? (
+          <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
+            <HomeScreenLoader />
+          </div>
+        ) : !loading && posts?.length === 0 ? (
+          <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[60vh]">
+            No posts found
+          </div>
+        ) : (
+          <div className='px-3 grid py-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+            {posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
 
-      {loading ? (
-        <div className="flex justify-center text-night-900 items-center text-3xl py-3 min-h-[80vh]">
-          <HomeScreenLoader />
-        </div>
-      ) : !loading && posts?.length === 0 ? (
-        <div className="flex justify-center text-blue-300 items-center text-3xl py-3 min-h-[60vh]">
-          No posts found
-        </div>
-      ) : (
-        <div className='px-3 grid py-3 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
-      )}
-
-      <div className='px-3 mx-auto w-full max-w-maxContent flex items-center justify-between gap-3'>
+      <div className='px-3 mx-auto w-full flex items-center justify-between gap-3'>
         <span className='flex items-center justify-between gap-3 w-full py-3'>
           <span>
             {page > 1 && (

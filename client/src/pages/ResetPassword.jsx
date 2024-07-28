@@ -4,7 +4,7 @@ import poster from "../assets/png/logo-color.png"
 
 const ResetPassword = () => {
   return (
-    <section className='mx-auto max-w-maxContent'>
+    <section className='mx-auto'>
       <AuthLayout title={"Reset Password"} formType={"reset-password"} image={poster} description={"Enter a new password to complete the reset process."} />
     </section>
   )

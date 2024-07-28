@@ -4,7 +4,7 @@ import poster from "../assets/png/logo-color.png"
 
 const Signup = () => {
   return (
-    <section className='mx-auto max-w-maxContent'>
+    <section className='mx-auto '>
       <AuthLayout title={"Sign up"} formType={"signup"} image={poster} description={"Sign up now to access exclusive features and content."} />
     </section>
   )
