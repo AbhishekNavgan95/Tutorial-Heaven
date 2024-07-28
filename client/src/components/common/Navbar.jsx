@@ -25,8 +25,8 @@ const Navbar = () => {
 
     return (
         <>
-            <header className='fixed w-full z-[10]  bg-night-25 '>
-                <nav className='mx-auto max-w-maxContent border-b border-night-50 bg-night-25 relative z-[11]'>
+            <header className='fixed w-full z-[10]  bg-night-5 '>
+                <nav className='mx-auto max-w-maxContent border-b border-night-50 bg-night-5 relative z-[11]'>
                     <div className='flex items-center justify-between px-3 py-3'>
 
                         {/* logo */}
@@ -96,12 +96,12 @@ const ProfileDropDown = ({ setModalData }) => {
     const navigate = useNavigate();
 
     return (
-        <div className='flex group items-center gap-1 relative bg-blue-300 py-2 px-3 rounded-full text-night-25'>
+        <div className='flex group items-center gap-1 relative bg-night-25 py-2 px-3 rounded-full text-night-900'>
             <img loading='lazy' src={userImage} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
             <span className='text-xl'><IoMdArrowDropdown /></span>
             <span
                 className={`bg-night-25 text-night-900 flex flex-col items-center rounded-lg overflow-hidden 
-                absolute top-full right-0 my-2 border border-blue-300 min-w-[150px] shadow-sm shadow-night-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300`}
+                absolute top-full right-0 my-2 border border-night-300 min-w-[150px] shadow-sm shadow-night-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300`}
             >
                 {
                     user.accountType === USER_TYPES.USER && dropDownLinks.map((link) => (
@@ -130,7 +130,7 @@ const ProfileDropDown = ({ setModalData }) => {
                         secondaryButtonText: "Cancel",
                         secondaryButtonHandler: () => setModalData(null)
                     })
-                } className='bg-danger hover:bg-danger-dark w-full py-1 text-night-25 text-center transition-all duration-300'>Log out</button>
+                } className='bg-danger hover:bg-danger-dark w-full py-1 text-night-900 text-center transition-all duration-300'>Log out</button>
             </span>
         </div >
     )

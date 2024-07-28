@@ -19,14 +19,14 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalDat
 
     return (
         <div className={`${mobileNavActive ? "translate-x-0" : "translate-x-[-100%]"} absolute inset-0 transition-all duration-100 z-[10] h-screen`} onClick={() => setMobileNavActive(!mobileNavActive)}>
-            <nav onClick={(e) => e.stopPropagation()} className={` ${mobileNavActive ? "" : ""} absolute top-0 z-[10] left-0 bg-blue-300 px-3 h-full min-w-[150px]`}>
+            <nav onClick={(e) => e.stopPropagation()} className={` ${mobileNavActive ? "" : ""} absolute top-0 z-[10] left-0 bg-night-5 border-r border-night-300 px-3 h-full min-w-[150px]`}>
                 <section className='pt-[4rem] pb-3 flex flex-col text-xs sm:text-sm justify-between items-center h-full w-full'>
                     <div className='flex flex-col gap-1 w-full '>
                         <NavLink
                             to={"/"}
                             className={({ isActive }) => isActive
-                                ? "bg-night-25 w-full text-blue-300 py-2 px-4 text-center rounded-lg"
-                                : "text-night-25 w-full bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                ? "bg-blue-300 w-full text-night-25 py-2 px-4 text-center rounded-lg"
+                                : "text-blue-300 w-full bg-night-25 hover:bg-blue-300 hover:text-night-25 py-2 px-4 text-center rounded-lg"
                             }
                         >
                             Home
@@ -37,8 +37,8 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalDat
                                     <NavLink
                                         to={link.path}
                                         className={({ isActive }) => isActive
-                                            ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                            : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                            ? "bg-blue-300 text-night-25 py-2 px-4 text-center rounded-lg"
+                                            : "text-blue-300 bg-night-25hover:bg-blue-300 hover:text-night-25  py-2 px-4 text-center rounded-lg"
                                         }
                                         key={link.id}
                                     >
@@ -53,8 +53,8 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalDat
                                     <NavLink
                                         to={link.path}
                                         className={({ isActive }) => isActive
-                                            ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                            : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                            ? "bg-blue-300 text-night-25 py-2 px-4 text-center rounded-lg"
+                                            : "text-blue-300 bg-night-25 hover:bg-blue-300 hover:text-night-25  py-2 px-4 text-center rounded-lg"
                                         }
                                         key={link.id}
                                     >
@@ -69,15 +69,15 @@ const MobileNav = ({ mobileNavActive, setMobileNavActive, modalData, setModalDat
                                 <NavLink
                                     to={"/login"}
                                     className={({ isActive }) => isActive
-                                        ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                        : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                        ? "bg-blue-300 text-night-25 py-2 px-4 text-center rounded-lg"
+                                        : "text-blue-300 bg-night-25 hover:bg-blue-300 hover:text-night-25 py-2 px-4 text-center rounded-lg"
                                     }
                                 >Log in</NavLink>
                                 <NavLink
                                     to={"/signup"}
                                     className={({ isActive }) => isActive
-                                        ? "bg-night-25 text-blue-300 py-2 px-4 text-center rounded-lg"
-                                        : "text-night-25 bg-blue-300 hover:bg-night-25 hover:text-blue-300 py-2 px-4 text-center rounded-lg"
+                                        ? "bg-blue-300 text-night-25 py-2 px-4 text-center rounded-lg"
+                                        : "text-blue-300 bg-night-25 hover:bg-blue-300 hover:text-night-25 py-2 px-4 text-center rounded-lg"
                                     }
                                 >Sign up</NavLink>
                             </>

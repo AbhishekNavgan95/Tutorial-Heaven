@@ -209,8 +209,8 @@ const CreatePostForm = ({ edit, post }) => {
                         }
                     </span>
                     <span className='flex flex-col gap-3 w-full'>
-                        <select className='w-full pb-2 md:py-3 outline-none focus:border-b-2 text-sm sm:text-lg lg:text-xl text-blue-300 bg-night-25 border-b border-blue-300 ' defaultValue="" {...register("category", { required: true })} name="category" id="category">
-                            <option className='text-night-900' value="">Select a Category</option>
+                        <select className='w-full pb-2 md:py-3 outline-none focus:border-b-2 text-sm sm:text-lg lg:text-xl text-blue-300 bg-transparent border-b border-blue-300 ' defaultValue="" {...register("category", { required: true })} name="category" id="category">
+                            <option className='text-night-900 bg-night-25' value="">Select a Category</option>
                             {
                                 categories.length > 0 && categories.map(category => (
                                     <option key={category._id} className='bg-night-25 text-night-900' value={category._id}>{category.title}</option>

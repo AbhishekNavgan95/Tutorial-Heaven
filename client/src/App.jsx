@@ -37,7 +37,7 @@ function App() {
   // console.log("user : ", user);
 
   return (
-    <div className="w-full min-h-screen text-night-900 bg-night-25">
+    <div className="w-full min-h-screen text-night-900 bg-night-5">
       <LoadingBar
         color="#5252B7"
         height={4}

@@ -68,7 +68,7 @@ const TagInput = ({ name, errors, setValue, getValues, trigger, clearErrors, set
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         placeholder="Press Enter to add tags"
-                        className="w-max md:min-w-[300px] bg-night-25 outline-none flex-1 placeholder:text-blue-300 text-sm sm:text-lg lg:text-xl py-2 rounded"
+                        className="w-max md:min-w-[300px] bg-night-5 outline-none flex-1 placeholder:text-blue-300 text-sm sm:text-lg lg:text-xl py-2 rounded"
                     />
                     <button
                         type="button"

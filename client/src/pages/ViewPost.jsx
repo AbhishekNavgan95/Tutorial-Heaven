@@ -125,7 +125,7 @@ const ViewPost = () => {
                 </section>
                 <section className='h-max flex flex-col items-start gap-3 py-3 row-span-2 w-full lg:min-w-[500px] lg:max-w-[500px] '>
                     <h5 className='text-xl font-semibold border-b border-night-50 py-3 text-wrap w-full'>Related videos from {post?.category?.title} </h5>
-                    <img src={categoryBanner} loading='lazy' className='w-full h-[100px] bg-night-50 object-cover rounded-lg' alt="" />
+                    <img src={categoryBanner} loading='lazy' className='w-full h-[100px] bg-night-50 object-cover rounded-lg ' alt="" />
                     {isSimilarPostsLoading ? (
                         <div className='flex justify-center flex-col gap-y-3 w-full'>
                             <PostLoader />

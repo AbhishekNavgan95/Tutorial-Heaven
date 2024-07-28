@@ -11,7 +11,7 @@ exports.refreshToken = async (req, res) => {
   const { refreshToken } = req.body;
 
   if (!refreshToken) {
-    return res.status(403).json({ message: "Refresh token is required" });
+    return res.status(403).json({ message: "Please Log in" });
   }
 
   jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
