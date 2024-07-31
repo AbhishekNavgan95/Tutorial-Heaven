@@ -21,7 +21,7 @@ const UpdateUserName = () => {
 
     return (
         <div className=' flex flex-col gap-y-3 md:gap-y-10'>
-            <h3 className='text-base md:text-lg xl:text-xl font-semibold text-blue-300 border-b pb-3'>Update Username</h3>
+            <h3 className='text-base md:text-lg font-semibold text-blue-300 border-b pb-3'>Update Username</h3>
             <form onSubmit={handleSubmit(submitHandler)} className='w-full sm:w-10/12 lg:w-8/12 mx-auto'>
                 <div className='flex flex-col w-full gap-5'>
                     <div className='flex flex-col xl:flex-row gap-y-3 gap-x-5 w-full'>
@@ -32,7 +32,7 @@ const UpdateUserName = () => {
                                 type="text"
                                 name='firstName'
                                 id='firstName'
-                                className='w-full py-3 text-base md:text-lg xl:text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                                className='w-full py-3 text-base md:text-lg bg-transparent border-b outline-none text-night-700 '
                             />
                             {
                                 errors.firstName && <span className='font-semibold underline text-danger'>First name is required</span>
@@ -45,7 +45,7 @@ const UpdateUserName = () => {
                                 type="text"
                                 name='lastName'
                                 id='lastName'
-                                className='w-full py-3 text-base md:text-lg xl:text-xl bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                                className='w-full py-3 text-base md:text-lg bg-transparent border-b outline-none text-night-700 '
                             />
                             {
                                 errors.lastName && <span className='font-semibold underline text-danger'>Last name is required</span>

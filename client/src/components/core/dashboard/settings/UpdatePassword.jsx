@@ -26,19 +26,19 @@ const UpdatePassword = () => {
     return (
 
         <div className=' flex flex-col gap-y-3 md:gap-y-10'>
-            <h3 className='text-base md:text-lg xl:text-xl font-semibold text-blue-300 border-b pb-3'>Update Password</h3>
+            <h3 className='text-base md:text-lg font-semibold text-blue-300 border-b  pb-3'>Update Password</h3>
             <form onSubmit={handleSubmit(submitHandler)} className='w-full sm:w-10/12 lg:w-8/12 mx-auto'>
                 <div className='flex flex-col gap-y-5'>
                     <div className='flex flex-col w-full gap-y-3 md:gap-y-5'>
-                        <span className='flex items-center text-base md:text-lg xl:text-xl border-b border-b-blue-300'>
+                        <span className='flex items-center text-base md:text-lg border-b border-night-700'>
                             <input
                                 {...register('oldPassword', { required: true })}
                                 placeholder='Old Password'
                                 autoComplete="true"
-                                className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
+                                className='w-full py-3 bg-transparent outline-none '
                                 type={!showPass ? "password" : "text"}
                             />
-                            <button type='button' onClick={() => setShowPass(!showPass)} className='text-2xl text-blue-300'>
+                            <button type='button' onClick={() => setShowPass(!showPass)} className='text-2xl'>
                                 {
                                     showPass
                                         ? <IoEyeOffOutline />
@@ -48,15 +48,15 @@ const UpdatePassword = () => {
                         </span>
                         {errors.oldPassword && <span className='font-semibold underline text-danger'>Password is required</span>}
 
-                        <span className='flex items-center text-base md:text-lg xl:text-xl border-b border-b-blue-300'>
+                        <span className='flex items-center text-base md:text-lg border-b border-night-700'>
                             <input
                                 {...register('newPassword', { required: true })}
                                 placeholder='New Password'
                                 autoComplete="true"
-                                className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
+                                className='w-full py-3 bg-transparent outline-none '
                                 type={!showNewPass ? "password" : "text"}
                             />
-                            <button type='button' onClick={() => setShowNewPass(!showNewPass)} className='text-2xl text-blue-300'>
+                            <button type='button' onClick={() => setShowNewPass(!showNewPass)} className='text-2xl'>
                                 {
                                     showNewPass
                                         ? <IoEyeOffOutline />
@@ -66,7 +66,7 @@ const UpdatePassword = () => {
                         </span>
                         {errors.newPassword && <span className='font-semibold underline text-danger'>New Password is required</span>}
 
-                        <span className='flex items-center text-base md:text-lg xl:text-xl border-b border-b-blue-300'>
+                        <span className='flex items-center text-base md:text-lg border-b border-night-700'>
                             <input
                                 {...register('confirmPassword', {
                                     required: "Confirm Password is required",
@@ -75,10 +75,10 @@ const UpdatePassword = () => {
                                 })}
                                 placeholder='Confirm New Password'
                                 autoComplete="true"
-                                className='w-full py-3 bg-transparent outline-none placeholder:text-blue-300'
+                                className='w-full py-3 bg-transparent outline-none '
                                 type={!showConfirmNewPass ? "password" : "text"}
                             />
-                            <button type='button' onClick={() => setShowConfirmNewPass(!showConfirmNewPass)} className='text-2xl text-blue-300'>
+                            <button type='button' onClick={() => setShowConfirmNewPass(!showConfirmNewPass)} className='text-2xl'>
                                 {
                                     showConfirmNewPass
                                         ? <IoEyeOffOutline />

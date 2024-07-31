@@ -116,7 +116,7 @@ const CreateCategoryForm = ({ edit, category }) => {
                             type="text"
                             name='title'
                             id='title'
-                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl bg-transparent focus:border-b-2 border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg bg-transparent border-b outline-none text-night-700'
                         />
                         {
                             errors.title && <span className='font-semibold underline text-danger'>Title is required</span>
@@ -129,7 +129,7 @@ const CreateCategoryForm = ({ edit, category }) => {
                             name='description'
                             rows={3}
                             id='description'
-                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl focus:border-b-2  bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg  bg-transparent border-b outline-none text-night-700'
                         ></textarea>
                         {
                             errors.description && <span className='font-semibold underline text-danger'>Description is required</span>

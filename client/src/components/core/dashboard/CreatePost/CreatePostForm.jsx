@@ -189,7 +189,7 @@ const CreatePostForm = ({ edit, post }) => {
                             type="text"
                             name='title'
                             id='title'
-                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl bg-transparent focus:border-b-2 border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg bg-transparent border-b outline-none text-night-700'
                         />
                         {
                             errors.title && <span className='font-semibold underline text-danger'>Title is required</span>
@@ -202,18 +202,18 @@ const CreatePostForm = ({ edit, post }) => {
                             name='description'
                             rows={3}
                             id='description'
-                            className='w-full pb-2 md:py-3 text-sm sm:text-lg lg:text-xl focus:border-b-2  bg-transparent border-b outline-none placeholder:text-blue-300 text-night-900 border-b-blue-300'
+                            className='w-full pb-2 md:py-3 text-sm sm:text-lg bg-transparent border-b outline-none text-night-700'
                         ></textarea>
                         {
                             errors.description && <span className='font-semibold underline text-danger'>Description is required</span>
                         }
                     </span>
                     <span className='flex flex-col gap-3 w-full'>
-                        <select className='w-full pb-2 md:py-3 outline-none focus:border-b-2 text-sm sm:text-lg lg:text-xl text-blue-300 bg-transparent border-b border-blue-300 ' defaultValue="" {...register("category", { required: true })} name="category" id="category">
-                            <option className='text-night-900 bg-night-25' value="">Select a Category</option>
+                        <select className='w-full pb-2 md:py-3 text-night-700 outline-nonetext-sm sm:text-lg bg-transparent border-b ' defaultValue="" {...register("category", { required: true })} name="category" id="category">
+                            <option className=' bg-night-25' value="">Select a Category</option>
                             {
                                 categories.length > 0 && categories.map(category => (
-                                    <option key={category._id} className='bg-night-25 text-night-900' value={category._id}>{category.title}</option>
+                                    <option key={category._id} className='bg-night-25 text-night-700' value={category._id}>{category.title}</option>
                                 ))
                             }
                         </select>
@@ -227,7 +227,7 @@ const CreatePostForm = ({ edit, post }) => {
                                 <span className='w-full rounded-lg overflow-hidden'>
                                     <img
                                         loading='lazy'
-                                        className='w-full aspect-video min-h-[150px] group-hover:scale-105 transition-all duration-300 rounded-lg object-cover'
+                                        className='w-full aspect-video min-h-[120px] group-hover:scale-105 transition-all duration-300 rounded-lg object-cover'
                                         src={image}
                                         alt=""
                                     />
@@ -244,7 +244,7 @@ const CreatePostForm = ({ edit, post }) => {
                             {
                                 image !== placeHolder && <button
                                     type="button"
-                                    className='text-blue-300 self-center p-2 rounded-full flex items-center gap-1 justify-center '
+                                    className=' self-center p-2 rounded-full flex items-center gap-1 justify-center '
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setImage(placeHolder);
@@ -278,7 +278,7 @@ const CreatePostForm = ({ edit, post }) => {
                                 {
                                     !videoUrl &&
                                     <span
-                                        className='text-blue-300 flex flex-col items-center gap-2 text-sm sm:text-lg lg:text-xl text-center font-semibold'
+                                        className=' flex flex-col items-center gap-2 text-sm sm:text-lg text-night-700 text-center font-semibold'
                                     >
                                         Select or Drag and drop a video
                                         <span className='font-light text-sm'>(maximum size - 100mb)</span>
@@ -303,7 +303,7 @@ const CreatePostForm = ({ edit, post }) => {
                         {
                             !edit && videoUrl && <button
                                 type="button"
-                                className='text-blue-300 self-center rounded-full flex items-center gap-1 justify-center '
+                                className=' self-center rounded-full flex items-center gap-1 justify-center '
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setVideoUrl(null);

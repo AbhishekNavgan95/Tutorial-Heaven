@@ -26,12 +26,12 @@ const CategoryCard = ({ category, setModalData, handleDeleteCategory }) => {
             <div className='w-full max-h-[200px] flex items-center overflow-hidden'>
                 <img src={categoryImage} className=' object-cover w-full' alt="" />
             </div>
-            <div className='text-night-25 absolute top-0 rounded-lg px-5 py-3 bg-opec group-hover:bg-transparent transition-all duration-300 inset-0'>
+            <div className='text-night-700 absolute top-0 rounded-lg px-5 py-3 group-hover:bg-opec bg-transparent transition-all duration-300 inset-0'>
                 <span className='flex flex-col justify-center items-center md:items-start md:justify-between h-full gap-3'>
                     <span>
                         <h5 className='text-center md:text-start text-sm md:text-base lg:text-xl font-semibold'>{category?.title}</h5>
-                        <p className='text-center md:text-start text-base text-night-50 line-clamp-2'>{category?.description} </p>
-                        <p className='text-center md:text-start text-base text-night-50 line-clamp-2'>Total Posts: {category?.posts?.length}</p>
+                        <p className='text-center md:text-start text-base text-night-700 line-clamp-2'>{category?.description} </p>
+                        <p className='text-center md:text-start text-base text-night-700 line-clamp-2'>Total Posts: {category?.posts?.length}</p>
                     </span>
                     <span className='flex gap-3 md:self-end text-xl'>
                         <button onClick={() => navigate(`/?category=${category?._id}`)} className='p-2 transition-all duration-300 hover:bg-blue-300 bg-night-25 text-blue-300 hover:text-night-25 rounded-full'><IoEyeOutline /></button>
