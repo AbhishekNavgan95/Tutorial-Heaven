@@ -52,7 +52,7 @@ const TagInput = ({ name, errors, setValue, getValues, trigger, clearErrors, set
 
     return (
         <div className='w-full flex flex-col gap-2'>
-            <div className="flex flex-wrap items-center gap-2 border-b border-blue-300 w-full md:py-1">
+            <div className="flex flex-wrap items-center gap-2 border-b border-night-700 w-full md:py-1">
                 {tags?.map((tag, index) => (
                     <div key={index} className=" text-sm sm:text-base bg-blue-300 text-night-25 rounded-full h-max px-3 py-1 flex items-center justify-center">
                         {tag}

@@ -68,7 +68,7 @@ const Navbar = () => {
                             }
                             {
                                 token !== null &&
-                                <Link to={"/dashboard/bookmarks"} className='bg-blue-300 border border-transparent hover:bg-night-25 hover:text-blue-300 hover:border-blue-300 p-2 transition-all duration-300  rounded-full text-xl text-night-25' >
+                                <Link to={"/dashboard/bookmarks"} className='bg-night-200 border border-transparent text-night-700 hover:text-blue-300 p-2 transition-all duration-300 rounded-full' >
                                     <IoIosBookmark />
                                 </Link>
                             }
@@ -96,8 +96,8 @@ const ProfileDropDown = ({ setModalData }) => {
     const navigate = useNavigate();
 
     return (
-        <div className='flex group items-center gap-1 relative bg-night-25 py-2 px-3 rounded-full text-night-900'>
-            <img loading='lazy' src={userImage} className='w-[25px] h-[25px] border border-night-25 rounded-full' alt="" />
+        <div className='flex group items-center gap-1 relative bg-night-200  p-2 rounded-full text-night-900'>
+            <img loading='lazy' src={userImage} className='w-[24px] h-[24px] border border-night-25 rounded-full' alt="" />
             <span className='text-xl'><IoMdArrowDropdown /></span>
             <span
                 className={`bg-night-25 text-night-900 flex flex-col items-center rounded-lg overflow-hidden 

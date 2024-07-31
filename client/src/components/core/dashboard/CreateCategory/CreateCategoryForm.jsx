@@ -137,7 +137,7 @@ const CreateCategoryForm = ({ edit, category }) => {
                     </span>
                     <span className='flex flex-col items-start gap-3 w-full group'>
                         <span className='flex flex-col items-center w-full'>
-                            <label htmlFor="thumbnail" className='relative self-stretch flex flex-col px-3 py-3 items-center justify-center cursor-pointer border rounded-lg border-blue-300'>
+                            <label htmlFor="thumbnail" className='relative self-stretch flex flex-col px-3 py-3 items-center justify-center cursor-pointer border rounded-lg border-night-700'>
                                 <span className='w-full rounded-lg overflow-hidden'>
                                     <img
                                         loading='lazy'
