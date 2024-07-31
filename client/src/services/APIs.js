@@ -14,6 +14,7 @@ export const dataEndpoints = {
   GET_ALL_CATEGORIES: BASE_URL + "category/get-all-categories",
   GET_ALL_POSTS: BASE_URL + "post/get-all-posts",
   GET_ALL_CATEGORY_POSTS: BASE_URL + "post/get-all-category-posts",
+  GET_ACCOUNTS: BASE_URL + "auth/getAccounts"
 };
 
 export const userEndpoints = {
@@ -28,6 +29,7 @@ export const userEndpoints = {
   LIKE_POST: BASE_URL + "post/like-post",
   UNLIKE_POST: BASE_URL + "post/unlike-post",
   CHANGE_POST_STATUS: BASE_URL + "post/update-poststatus",
+  CANCEL_ACCOUNT_DELETION: BASE_URL + "auth/cancel-delete-account",
 };
 
 export const postEndpoints = {

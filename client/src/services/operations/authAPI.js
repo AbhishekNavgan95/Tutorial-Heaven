@@ -1,4 +1,4 @@
-import { authEndpoints } from "../APIs";
+import { authEndpoints, userEndpoints } from "../APIs";
 import { apiConnector } from "../apiConnector";
 import { setProgress } from "../../slices/loadingBarSlice";
 import { setTokens, removeTokens } from "../../slices/authSlice";
@@ -13,6 +13,8 @@ const {
   RESET_PASSWORD_API,
   SIGNUP_MODE_API,
 } = authEndpoints;
+
+const { CANCEL_ACCOUNT_DELETION } = userEndpoints;
 
 export const login = async (email, password, dispatch) => {
   dispatch(setProgress(60));
@@ -235,3 +237,47 @@ export function logout(navigate) {
     navigate("/");
   };
 }
+
+export const cancelAccountDeletion = async (userId, token) => {
+  try {
+    const response = await apiConnector(
+      "PUT",
+      `${CANCEL_ACCOUNT_DELETION}/${userId}`,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+
+    toast.success(response.data.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  } catch (error) {
+    console.log("Error in cancelAccountDeletion: ", error);
+    toast.error(error.response.data.message, {
+      style: {
+        border: "1px solid #5252B7",
+        padding: "8px 16px",
+        color: "#DFE2E2",
+        background: "#5252B7",
+      },
+      iconTheme: {
+        primary: "#5252B7",
+        secondary: "#DFE2E2",
+      },
+    });
+  }
+};

@@ -26,7 +26,8 @@ const {
   getAllUserPosts,
   getUserSavedPosts,
   refreshToken,
-  suspendAccount
+  suspendAccount,
+  getAllAccounts
 } = require("../Controllers/User.controller");
 
 const { auth, isAdmin, isUser } = require("../Middlewares/Auth");
@@ -63,6 +64,8 @@ router.get("/user-posts", auth, isUser, getAllUserPosts);
 
 router.get("/saved-posts", auth, isUser, getUserSavedPosts);
 
+router.get("/getAccounts", auth, isAdmin, getAllAccounts);
+
 // generate reset password token
 router.post("/reset-password-token", resetPasswordToken);
 
@@ -82,6 +85,6 @@ router.post("/suspend-account/:id", auth, isAdmin, suspendAccount);
 router.put("/delete-account", auth, scheduleAccountDeletion);
 
 // cancel account deletion
-router.put("/cancel-delete-account/:userId", auth, cancelScheduledDeletion);
+router.put("/cancel-delete-account/:userId", auth, isAdmin, cancelScheduledDeletion);
 
 module.exports = router;

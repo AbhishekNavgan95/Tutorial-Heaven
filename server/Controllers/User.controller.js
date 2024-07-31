@@ -31,7 +31,6 @@ exports.refreshToken = async (req, res) => {
 
 // update profile picture ✅
 exports.updateProfilePicture = async (req, res) => {
-  console.log("here ");
   try {
     const userId = req.user.id;
     const newPfp = req.files?.image;
@@ -144,7 +143,6 @@ exports.savePost = async (req, res) => {
     }
 
     if (user?.savedPosts?.includes(postId)) {
-      console.log("here");
       return res.status(400).json({
         success: false,
         message: "Post already saved",
@@ -408,6 +406,25 @@ exports.suspendAccount = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong while suspending the account",
+    });
+  }
+};
+
+exports.getAllAccounts = async (req, res) => {
+  try {
+    const users = await User.find({}).select(
+      "firstName lastName email accountType image deletionScheduled deletionDate"
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Accounts fetched successfully",
+      data: users,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching the accounts",
     });
   }
 };

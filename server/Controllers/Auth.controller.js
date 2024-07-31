@@ -328,7 +328,7 @@ exports.scheduleAccountDeletion = async (req, res) => {
 // Cancel scheduled deletion ✅
 exports.cancelScheduledDeletion = async (req, res) => {
   const { userId } = req.params;
-
+  console.log("cancelling account deletion")
   try {
     const user = await User.findById(userId);
     if (user && user.deletionScheduled) {

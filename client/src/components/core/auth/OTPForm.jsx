@@ -21,7 +21,7 @@ const OTPForm = () => {
         setLoading(true)
         data = { ...data, ...signupData };
 
-        response = await signup(data, dispatch);
+        const response = await signup(data, dispatch);
 
         if (response) {
             navigate("../login");
