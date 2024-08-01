@@ -5,6 +5,8 @@ const { uploadImageTocloudinary } = require("../Utils/uploadToCloudinary");
 const { deleteImageFromCloudinary } = require("../Utils/deleteFromCloudinary");
 require("dotenv").config();
 const Comment = require("../Models/Comment.model");
+const mailSender = require("../Utils/mailSender");
+const VideoRemovedEmailTamplate = require("../EmailTamplates/VideoRemovedEmailTamplate");
 
 // Utility function to shuffle an array
 function shuffleArray(array) {
@@ -283,9 +285,13 @@ exports.updatePostStatus = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.user);
 
     // Find the post
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate({
+      path: "author",
+      select: "firstName lastName email",
+    });
     if (!post) {
       return res.status(404).json({
         success: false,
@@ -294,12 +300,18 @@ exports.deletePost = async (req, res) => {
     }
 
     // Check if the authenticated user is the author of the post
-    if (post.author.toString() !== req.user.id) {
+    if (
+      post.author._id.toString() !== req.user.id &&
+      req.user.accountType !== "admin"
+    ) {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to delete this post.",
       });
     }
+
+    const authorEmail = post?.author?.email;
+    const videoTitle = post.title;
 
     // Delete thumbnail and video from Cloudinary
     await deleteImageFromCloudinary(post.thumbnail);
@@ -334,6 +346,11 @@ exports.deletePost = async (req, res) => {
 
     // Delete the post from the database
     await Post.findByIdAndDelete(id);
+
+    if (req.user.accountType === "admin") {
+      const emailTamplate = VideoRemovedEmailTamplate(videoTitle);
+      const mailResponse = await mailSender(authorEmail, "Your video has been removed", emailTamplate);
+    }
 
     return res.status(200).json({
       success: true,
@@ -649,6 +666,40 @@ exports.getCategoryAllPosts = async (req, res) => {
         currentPage: page,
         posts: shuffledPosts,
       },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching category posts.",
+      error: error.message,
+    });
+  }
+};
+
+exports.getCategoryPosts = async (req, res) => {
+  try {
+    const categoryId = req.params?.categoryId;
+
+    if (!categoryId) {
+      return res.status(400).json({
+        success: false,
+        message: "Category ID is required.",
+      });
+    }
+
+    const posts = await Post.find({ status: "published", category: categoryId })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "author",
+        select: "firstName lastName image createdAt",
+      });
+
+    const shuffledPosts = shuffleArray(posts);
+
+    return res.status(200).json({
+      success: true,
+      message: "Category posts fetched successfully.",
+      data: shuffledPosts,
     });
   } catch (error) {
     return res.status(500).json({

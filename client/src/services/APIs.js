@@ -13,6 +13,7 @@ export const authEndpoints = {
 export const dataEndpoints = {
   GET_ALL_CATEGORIES: BASE_URL + "category/get-all-categories",
   GET_ALL_POSTS: BASE_URL + "post/get-all-posts",
+  GET_CATEGORY_POSTS: BASE_URL + "post/get-category-posts",
   GET_ALL_CATEGORY_POSTS: BASE_URL + "post/get-all-category-posts",
   GET_ACCOUNTS: BASE_URL + "auth/getAccounts"
 };

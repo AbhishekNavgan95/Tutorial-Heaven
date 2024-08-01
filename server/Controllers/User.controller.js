@@ -261,10 +261,10 @@ exports.getAllUserPosts = async (req, res) => {
     const user = await User.findById(userId).populate({
       path: "posts",
       select:
-        "category title description thumbnail video tags likes createdAt status",
+        "category author title description thumbnail video tags likes createdAt status",
       populate: {
-        path: "category",
-        select: "title",
+        path: "category author",
+        select: "title firstName lastName",
       },
       options: {
         sort: sortOptions,

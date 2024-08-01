@@ -13,7 +13,8 @@ const {
   unlikePost,
   getAllPosts,
   getFullPostDetails,
-  getCategoryAllPosts
+  getCategoryAllPosts,
+  getCategoryPosts
 } = require("../Controllers/Post.controller");
 const { auth, isUser } = require("../Middlewares/Auth");
 
@@ -47,5 +48,8 @@ router.get("/get-all-posts", getAllPosts);
 // get category vice all posts
 // http://localhost:3000/api/v1/post//get-all-category-posts/665d6df7b081546e2338211c?page=1&limit=5
 router.get("/get-all-category-posts/:categoryId", getCategoryAllPosts);
+
+// get category vise posts without pagiination
+router.get("/get-category-posts/:categoryId", getCategoryPosts);
 
 module.exports = router;

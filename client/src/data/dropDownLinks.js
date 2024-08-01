@@ -32,7 +32,7 @@ export const dropDownLinks = [
   {
     id: 9,
     path: "/dashboard/manage-posts",
-    title: "Manage Posts", // manage posts by categories
+    title: "Manage Videos", // manage posts by categories
     access: "admin",
   },
   {
