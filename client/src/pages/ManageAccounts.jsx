@@ -55,7 +55,7 @@ const ManageAccounts = () => {
               <th className='py-2 px-4 text-start'>Name</th>
               <th className='py-2 px-4 text-start'>Email</th>
               <th className='py-2 px-4 text-start'>Role</th>
-              <th className='py-2 px-4 text-start'>Deletetion Date</th>
+              <th className='py-2 px-4 text-start'>Deleteting in</th>
               <th className='py-2 px-4 text-center'>Actions</th>
             </tr>
           </thead>

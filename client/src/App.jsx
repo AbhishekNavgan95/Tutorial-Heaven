@@ -24,6 +24,7 @@ import PublicRoute from "./components/common/PublicRoute"
 import CreateCategory from "./pages/CreateCategory"
 import ManageCategories from "./pages/ManageCategories"
 import ManageAccounts from "./pages/ManageAccounts"
+import ManagePosts from "./pages/ManagePosts"
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
           <Route path="create-category" element={<DashboardPageLayout><CreateCategory /></DashboardPageLayout>} />
           <Route path="edit-category/:id" element={<DashboardPageLayout><CreateCategory><CreateCategory /></CreateCategory></DashboardPageLayout>} />
           <Route path="categories" element={<DashboardPageLayout><ManageCategories /></DashboardPageLayout>} />
+          <Route path="manage-posts" element={<DashboardPageLayout><ManagePosts /></DashboardPageLayout>} />
           <Route path="manage-accounts" element={<DashboardPageLayout><AdminRoutes><ManageAccounts /></AdminRoutes></DashboardPageLayout>} />
         </Route>
       </Routes>

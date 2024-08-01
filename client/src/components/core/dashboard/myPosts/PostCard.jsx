@@ -24,14 +24,14 @@ const PostCard = ({ post, handleDeletePost, setModalData, handleChangePostStatus
   return (
     <div className='flex flex-col gap-1 sm:gap-3'>
       <div onClick={() => navigate(`/view/${post?._id}`)} className='relative cursor-pointer overflow-hidden rounded-lg group w-full aspect-video'>
-        <span className='relative w-full'>
+        <span className='relative w-full aspect-video'>
           <div className='w-full bg-night-50 aspect-video '>
-            <img loading='lazy' src={postThumbnail} alt="" className='aspect-video object-cover' />
+            <img loading='lazy' src={postThumbnail} alt="" className='aspect-video object-cover w-full' />
           </div>
           <span
-            className='md:flex hidden absolute text-xl inset-0 w-full top-0 gap-2 justify-between items-end text-night-25 
-          px-3 pt-5 pb-3 bg-gradient-to-b from-transparent to-blue-300 translate-y-[100%] group-hover:translate-y-0 
-          transition-translate duration-300'
+            className='md:flex hidden absolute text-xl inset-0 w-full bottom-0 gap-2 justify-between items-end text-night-25 
+                  px-3 pt-5 pb-3 bg-gradient-to-b from-transparent to-blue-300 translate-y-[100%] group-hover:translate-y-0 
+                  transition-translate duration-300'
           >
             <span className='flex flex-col gap-1'>
               <h4 className='line-clamp-1 font-semibold text-xl'>{post?.title}</h4>
