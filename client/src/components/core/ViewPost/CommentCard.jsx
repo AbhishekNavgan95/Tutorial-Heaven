@@ -83,7 +83,7 @@ const CommentCard = ({ comment, setModalData, handleDeleteComment }) => {
                         <p className='text-lg'>{likes?.length}</p>
                     </button>
                     {
-                        comment?.author?._id === user?._id &&
+                        (comment?.author?._id === user?._id || user?.accountType === "admin") &&
                         <button onClick={() => setModalData({
                             title: "Delete Comment?",
                             description: "This comment will be deleted!",

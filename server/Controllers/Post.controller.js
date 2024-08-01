@@ -285,7 +285,6 @@ exports.updatePostStatus = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.user);
 
     // Find the post
     const post = await Post.findById(id).populate({
@@ -676,6 +675,7 @@ exports.getCategoryAllPosts = async (req, res) => {
   }
 };
 
+// get all category posts ✅
 exports.getCategoryPosts = async (req, res) => {
   try {
     const categoryId = req.params?.categoryId;

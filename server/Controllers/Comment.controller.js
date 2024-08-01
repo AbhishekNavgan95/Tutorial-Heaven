@@ -1,6 +1,8 @@
 const Post = require("../Models/Post.model");
 const User = require("../Models/User.model");
 const Comment = require("../Models/Comment.model");
+const deleteCommentTamplate = require("../EmailTamplates/DeleteCommentTamplate");
+const mailSender = require("../Utils/mailSender");
 
 exports.addComment = async (req, res) => {
   try {
@@ -93,7 +95,11 @@ exports.removeComment = async (req, res) => {
     }
 
     // Find the comment
-    const comment = await Comment.findById(commentId);
+    const comment = await Comment.findById(commentId).populate({
+      path: "author post",
+      select: "email title"
+    });
+
     if (!comment) {
       return res.status(404).json({
         success: false,
@@ -101,14 +107,14 @@ exports.removeComment = async (req, res) => {
       });
     }
 
-    // console.log("userId : ", userId);
-    // console.log("comment : ", comment?.author?.toString());
-
-    const postId = comment?.post;
-    // console.log("post : ", postId);
+    const userEmail = comment?.author?.email;
+    const commentBody = comment?.description
+    const postTitle = comment?.post?.title;
+    const postId = comment?.post?._id;
 
     // Check if the user is the author of the comment or an admin
     const user = await User.findById(userId);
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -117,6 +123,7 @@ exports.removeComment = async (req, res) => {
     }
 
     if (comment.author.toString() !== userId || user.accountType !== "admin") {
+
       // Remove the comment
       await Comment.findByIdAndDelete(commentId);
 
@@ -126,6 +133,11 @@ exports.removeComment = async (req, res) => {
         { $pull: { comments: commentId } },
         { new: true }
       );
+
+      if(user.accountType === "admin" && userEmail) {
+        const emailTamplate = deleteCommentTamplate(postTitle, commentBody) 
+        await mailSender(userEmail, "Comment Deleted", emailTamplate)
+      }
 
       return res.status(200).json({
         success: true,
