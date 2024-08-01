@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="w-full min-h-screen text-night-900 bg-night-5">
       <LoadingBar
-        color="#5252B7"
+        color="#6EA3CE"
         height={4}
         progress={progress}
         onLoaderFinished={() => dispatch(setProgress(0))}
